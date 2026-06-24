@@ -33,10 +33,11 @@
                 radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 25%);
             background-attachment: fixed;
+            font-size: 14px;
         }
 
         header {
-            padding: 2.5rem 2rem;
+            padding: 1.5rem 2rem;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
             background: rgba(11, 15, 25, 0.8);
@@ -48,17 +49,17 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(to right, #60a5fa, #34d399);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .meta-info {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
@@ -66,48 +67,76 @@
             flex: 1;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2.5rem 1.5rem;
+            padding: 2rem 1.5rem;
             width: 100%;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .filters {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .filter-btn {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
             color: var(--text-muted);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 999px;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             backdrop-filter: blur(8px);
         }
 
         .filter-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-main);
-            transform: translateY(-2px);
         }
 
         .filter-btn.active {
             background: var(--accent);
             color: white;
             border-color: var(--accent);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .copy-btn {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(16, 185, 129, 0.25);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
         }
 
         .table-container {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 12px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             overflow: hidden;
@@ -124,19 +153,19 @@
 
         th {
             background: rgba(255, 255, 255, 0.03);
-            padding: 1.2rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             font-weight: 600;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             border-bottom: 1px solid var(--border-color);
         }
 
         td {
-            padding: 1.2rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         tr:last-child td {
@@ -150,16 +179,16 @@
         .symbol-name {
             font-weight: 700;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .category-tag {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
             background: rgba(255, 255, 255, 0.05);
-            padding: 0.25rem 0.6rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 4px;
             display: inline-block;
         }
@@ -171,23 +200,22 @@
         
         .date-value {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
         .badges {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-wrap: wrap;
         }
 
         .badge {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
         }
 
         .badge-narrow {
@@ -204,24 +232,24 @@
 
         .empty-state {
             text-align: center;
-            padding: 4rem;
+            padding: 3rem;
             color: var(--text-muted);
         }
 
         .loading-spinner {
             text-align: center;
-            padding: 3rem;
-            font-size: 1.2rem;
+            padding: 2rem;
+            font-size: 1rem;
             color: var(--text-muted);
         }
         
         .loading-spinner::after {
             content: '';
             display: block;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             margin: 1rem auto;
-            border: 3px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.1);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -233,10 +261,10 @@
 
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             border-top: 1px solid var(--border-color);
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
     </style>
 </head>
@@ -248,11 +276,18 @@
     </header>
 
     <main>
-        <div class="filters">
-            <button class="filter-btn active" data-filter="All">All Assets</button>
-            <button class="filter-btn" data-filter="FNO">F&O Stocks</button>
-            <button class="filter-btn" data-filter="Indices">Indices</button>
-            <button class="filter-btn" data-filter="Commodities">Commodities</button>
+        <div class="controls-row">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="All">All Assets</button>
+                <button class="filter-btn" data-filter="FNO">F&O Stocks</button>
+                <button class="filter-btn" data-filter="Indices">Indices</button>
+                <button class="filter-btn" data-filter="Commodities">Commodities</button>
+            </div>
+            
+            <button class="copy-btn" id="copy-btn" onclick="copyTickers()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Tickers
+            </button>
         </div>
 
         <div class="table-container" id="table-container">
@@ -266,6 +301,7 @@
 
     <script>
         let allData = [];
+        let currentDisplayedTickers = [];
 
         async function fetchData() {
             try {
@@ -283,7 +319,7 @@
                 document.getElementById('table-container').innerHTML = `
                     <div class="empty-state">
                         <h3>No Data Available Yet</h3>
-                        <p style="margin-top:0.5rem">If you just deployed this, please wait for the GitHub Action to run at 5:00 PM IST.</p>
+                        <p style="margin-top:0.5rem; font-size:0.8rem;">If you just deployed this, please wait for the GitHub Action to run at 5:00 PM IST.</p>
                     </div>
                 `;
                 document.getElementById('update-time').innerText = "Data pending generation";
@@ -298,11 +334,14 @@
                 ? allData 
                 : allData.filter(item => item.category === filter);
 
+            // Update state for copy button
+            currentDisplayedTickers = filteredData.map(item => item.symbol);
+
             if (filteredData.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <h3>No Setups Found</h3>
-                        <p style="margin-top:0.5rem">There are no ${filter === 'All' ? '' : filter} assets matching Narrow or Inside CPR today.</p>
+                        <p style="margin-top:0.5rem; font-size:0.8rem;">There are no ${filter === 'All' ? '' : filter} assets matching Narrow or Inside CPR today.</p>
                     </div>
                 `;
                 return;
@@ -329,8 +368,8 @@
                 const tr = document.createElement('tr');
                 
                 let badgesHTML = '';
-                if(item.is_narrow) badgesHTML += `<span class="badge badge-narrow">● Narrow</span>`;
-                if(item.is_inside) badgesHTML += `<span class="badge badge-inside">● Inside</span>`;
+                if(item.is_narrow) badgesHTML += `<span class="badge badge-narrow">Narrow</span>`;
+                if(item.is_inside) badgesHTML += `<span class="badge badge-inside">Inside</span>`;
 
                 tr.innerHTML = `
                     <td><span class="symbol-name">${item.symbol}</span></td>
@@ -353,6 +392,27 @@
                 renderTable(e.target.getAttribute('data-filter'));
             });
         });
+
+        // Copy Tickers functionality
+        function copyTickers() {
+            if (currentDisplayedTickers.length === 0) return;
+            
+            const textToCopy = currentDisplayedTickers.join(', ');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+                btn.style.background = 'rgba(16, 185, 129, 0.4)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert("Failed to copy. Your browser might block clipboard access.");
+            });
+        }
 
         // Initialize
         fetchData();
