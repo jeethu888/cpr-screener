@@ -41,6 +41,22 @@
             font-weight: 600;
         }
 
+        .data-banner {
+            background: #f0f5ff;
+            border-bottom: 1px solid #c8d5ef;
+            padding: 4px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            font-size: 11px;
+            color: #4a5a7a;
+        }
+
+        .data-banner .label { font-weight: 600; color: #3a4a6b; }
+        .data-banner .value { color: #4a7fd4; font-weight: 700; }
+        .data-banner .dot { color: #c0c8d8; }
+
         main {
             max-width: 860px;
             margin: 16px auto;
@@ -238,9 +254,16 @@
 <body>
 
     <header>
-        <h1>CPR Screener</h1>
+        <h1>&#9685; CPR Screener</h1>
         <div class="meta-info" id="update-time">Loading...</div>
     </header>
+    <div class="data-banner" id="data-banner" style="display:none">
+        <span><span class="label">NSE Data:</span> <span class="value" id="banner-date"></span></span>
+        <span class="dot">|</span>
+        <span><span class="label">Imported:</span> <span class="value" id="banner-time"></span></span>
+        <span class="dot">|</span>
+        <span><span class="label">Symbols Scanned:</span> <span class="value" id="banner-count"></span></span>
+    </div>
 
     <main>
         <div class="controls-row">
@@ -283,8 +306,19 @@
                 if (!response.ok) throw new Error("Not found");
                 const data = await response.json();
                 allData = data.results;
+                const genAt = data.generated_at || '';
+                // Show banner
+                document.getElementById('data-banner').style.display = 'flex';
+                // EOD date is the eod_date of first result
+                const eodDate = allData.length > 0 ? allData[0].eod_date : 'N/A';
+                // Format eod_date as DD-MM-YYYY
+                const dp = (eodDate || '').split('-');
+                const fmtEod = dp.length === 3 ? `${dp[2]}-${dp[1]}-${dp[0]}` : eodDate;
+                document.getElementById('banner-date').innerText = fmtEod;
+                document.getElementById('banner-time').innerText = genAt;
+                document.getElementById('banner-count').innerText = data.total_scanned;
                 document.getElementById('update-time').innerHTML =
-                    `Last Updated: ${data.generated_at} &nbsp;|&nbsp; <span>Scanned ${data.total_scanned} symbols</span>`;
+                    `Last Updated: <span>${genAt}</span>`;
                 renderTable(currentFilter);
             } catch (e) {
                 document.getElementById('table-container').innerHTML =
