@@ -72,6 +72,9 @@ def main():
             
             today_close = today['Close']
             
+            # Extract EOD Date
+            eod_date = today.name.strftime('%Y-%m-%d')
+            
             # Calculate Today's CPR (using yesterday's data)
             today_cpr = calculate_cpr(yesterday['High'], yesterday['Low'], yesterday['Close'])
             
@@ -107,6 +110,7 @@ def main():
                     "ticker": ticker,
                     "category": category_map[ticker],
                     "close": round(today_close, 2),
+                    "eod_date": eod_date,
                     "today_cpr_width": round(today_cpr['width'], 2),
                     "tom_cpr_width": round(tom_cpr['width'], 2),
                     "is_narrow": bool(is_narrow),
