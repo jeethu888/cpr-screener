@@ -29,10 +29,15 @@ def get_nse_fno_symbols():
 
 def get_fyers_client():
     client_id = os.environ.get("FYERS_CLIENT_ID")
+    if not client_id:
+        client_id = "WY1A1JUOA0-100"  # Fallback to known App ID
+        
     access_token = os.environ.get("FYERS_ACCESS_TOKEN")
-    if not client_id or not access_token:
-        print("ERROR: FYERS_CLIENT_ID or FYERS_ACCESS_TOKEN not set in environment.")
+    
+    if not access_token:
+        print("ERROR: FYERS_ACCESS_TOKEN not set in environment.")
         return None
+        
     return fyersModel.FyersModel(client_id=client_id, is_async=False, token=access_token, log_path="")
 
 def fetch_history_for_symbol(fyers, symbol_fyers, range_from, range_to):
