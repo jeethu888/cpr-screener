@@ -7,26 +7,71 @@ import pytz
 # Group symbols by category
 SYMBOLS = {
     "FNO": [
-        "RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "ICICIBANK.NS", "INFY.NS", 
-        "SBIN.NS", "BHARTIARTL.NS", "ITC.NS", "KOTAKBANK.NS", "LT.NS",
-        "AXISBANK.NS", "BAJFINANCE.NS", "MARUTI.NS", "ASIANPAINT.NS", "TITAN.NS",
-        "SUNPHARMA.NS", "NESTLEIND.NS", "WIPRO.NS", "ONGC.NS", "NTPC.NS",
-        "POWERGRID.NS", "TATASTEEL.NS", "TECHM.NS", "HCLTECH.NS", "DRREDDY.NS",
-        "DIVISLAB.NS", "JSWSTEEL.NS", "ADANIENT.NS", "BAJAJFINSV.NS", "ULTRACEMCO.NS",
-        "GRASIM.NS", "INDUSINDBK.NS", "CIPLA.NS", "EICHERMOT.NS", "APOLLOHOSP.NS",
-        "BPCL.NS", "COALINDIA.NS", "BRITANNIA.NS", "TATACONSUM.NS", "HEROMOTOCO.NS",
-        "HINDALCO.NS", "SBILIFE.NS", "HDFCLIFE.NS", "BAJAJ-AUTO.NS", "M&M.NS"
+        "AARTIIND.NS", "ABB.NS", "ABBOTINDIA.NS", "ABCAPITAL.NS", "ABFRL.NS",
+        "ACC.NS", "ADANIENT.NS", "ADANIPORTS.NS", "ALKEM.NS", "AMBUJACEM.NS",
+        "ANGELONE.NS", "APLAPOLLO.NS", "APOLLOHOSP.NS", "APOLLOTYRE.NS",
+        "ASHOKLEY.NS", "ASIANPAINT.NS", "ASTRAL.NS", "AUROPHARMA.NS",
+        "AXISBANK.NS", "BAJAJ-AUTO.NS", "BAJAJFINSV.NS", "BAJFINANCE.NS",
+        "BALKRISIND.NS", "BANDHANBNK.NS", "BANKBARODA.NS", "BANKINDIA.NS",
+        "BATAINDIA.NS", "BEL.NS", "BERGEPAINT.NS", "BHARATFORG.NS",
+        "BHARTIARTL.NS", "BHEL.NS", "BIOCON.NS", "BLUESTARCO.NS",
+        "BOSCHLTD.NS", "BPCL.NS", "BRITANNIA.NS", "CAMS.NS",
+        "CANFINHOME.NS", "CANBK.NS", "CDSL.NS", "CEATLTD.NS",
+        "CGPOWER.NS", "CHAMBLFERT.NS", "CHOLAFIN.NS", "CIPLA.NS",
+        "COALINDIA.NS", "COCHINSHIP.NS", "COFORGE.NS", "COLPAL.NS",
+        "CONCOR.NS", "COROMANDEL.NS", "CROMPTON.NS", "CUMMINSIND.NS",
+        "CYIENT.NS", "DABUR.NS", "DALBHARAT.NS", "DEEPAKNTR.NS",
+        "DIVISLAB.NS", "DIXON.NS", "DLF.NS", "DRREDDY.NS",
+        "EICHERMOT.NS", "ESCORTS.NS", "FEDERALBNK.NS", "FORTIS.NS",
+        "GAIL.NS", "GLAND.NS", "GLENMARK.NS", "GMRAIRPORT.NS",
+        "GODREJCP.NS", "GODREJPROP.NS", "GRANULES.NS", "GRASIM.NS",
+        "HAL.NS", "HAVELLS.NS", "HCLTECH.NS", "HDFCAMC.NS",
+        "HDFCBANK.NS", "HDFCLIFE.NS", "HEROMOTOCO.NS", "HINDALCO.NS",
+        "HINDCOPPER.NS", "HINDPETRO.NS", "HINDUNILVR.NS", "HINDZINC.NS",
+        "HUDCO.NS", "HYUNDAI.NS", "ICICIGI.NS", "ICICIBANK.NS",
+        "ICICIPRULI.NS", "IDFCFIRSTB.NS", "IEX.NS",
+        "INDHOTEL.NS", "INDIGO.NS", "INDUSINDBK.NS",
+        "INDUSTOWER.NS", "INFY.NS", "IOC.NS", "IRCTC.NS",
+        "IRFC.NS", "ITC.NS", "JINDALSTEL.NS", "JSWSTEEL.NS",
+        "JUBLFOOD.NS", "KAJARIACER.NS", "KOTAKBANK.NS", "KPITTECH.NS",
+        "LTFH.NS", "LAURUSLABS.NS", "LICHSGFIN.NS", "LT.NS",
+        "LTTS.NS", "LUPIN.NS", "M&M.NS",
+        "M&MFIN.NS", "MANAPPURAM.NS", "MARICO.NS", "MARUTI.NS",
+        "MCX.NS", "MFSL.NS", "MPHASIS.NS", "MRF.NS",
+        "MUTHOOTFIN.NS", "NATIONALUM.NS", "NAUKRI.NS", "NAVINFLUOR.NS",
+        "NESTLEIND.NS", "NHPC.NS", "NMDC.NS", "NTPC.NS",
+        "NYKAA.NS", "OBEROIRLTY.NS", "OFSS.NS", "ONGC.NS",
+        "PAGEIND.NS", "PERSISTENT.NS", "PETRONET.NS",
+        "PFC.NS", "PIIND.NS", "PNB.NS", "PNBHOUSING.NS",
+        "POLYCAB.NS", "POWERGRID.NS", "PRESTIGE.NS", "PVRINOX.NS",
+        "RBLBANK.NS", "RECLTD.NS", "RELIANCE.NS", "RVNL.NS",
+        "SAIL.NS", "SBICARD.NS", "SBILIFE.NS", "SBIN.NS",
+        "SHREECEM.NS", "SHRIRAMFIN.NS", "SIEMENS.NS", "SJVN.NS",
+        "SONACOMS.NS", "SRF.NS", "STARHEALTH.NS", "SUNPHARMA.NS",
+        "SYNGENE.NS", "TATACHEM.NS", "TATACOMM.NS", "TATAELXSI.NS",
+        "TATAPOWER.NS", "TATASTEEL.NS", "TATATECH.NS",
+        "TCS.NS", "TECHM.NS", "TIINDIA.NS", "TITAN.NS",
+        "TORNTPHARM.NS", "TRENT.NS", "TVSMOTOR.NS", "ULTRACEMCO.NS",
+        "UNIONBANK.NS", "UPL.NS", "VEDL.NS", "VOLTAS.NS",
+        "WIPRO.NS", "YESBANK.NS", "ETERNAL.NS", "ZYDUSLIFE.NS",
     ],
     "Indices": [
-        "^NSEI",     # Nifty 50
-        "^NSEBANK",  # Bank Nifty
-        "^CNXIT"     # Nifty IT
+        "^NSEI",       # Nifty 50
+        "^NSEBANK",    # Bank Nifty
+        "^CNXIT",      # Nifty IT
+        "^CNXFMCG",    # Nifty FMCG
+        "^CNXPHARMA",  # Nifty Pharma
+        "^CNXAUTO",    # Nifty Auto
+        "^CNXMETAL",   # Nifty Metal
+        "^CNXINFRA",   # Nifty Infra
+        "NIFTY_FIN_SERVICE.NS",  # Nifty Financial Services
+        "^CNXMIDCAP",  # Nifty Midcap 100
     ],
     "Commodities": [
-        "CL=F",      # Crude Oil (NYMEX proxy for MCX Crude)
-        "GC=F",      # Gold (COMEX proxy for MCX Gold)
-        "SI=F",      # Silver (COMEX proxy for MCX Silver)
-        "NG=F"       # Natural Gas (NYMEX proxy for MCX NatGas)
+        "CL=F",   # Crude Oil
+        "GC=F",   # Gold
+        "SI=F",   # Silver
+        "NG=F",   # Natural Gas
     ]
 }
 
@@ -113,6 +158,13 @@ def main():
                 if name == "^NSEI": name = "NIFTY 50"
                 if name == "^NSEBANK": name = "BANK NIFTY"
                 if name == "^CNXIT": name = "NIFTY IT"
+                if name == "^CNXFMCG": name = "NIFTY FMCG"
+                if name == "^CNXPHARMA": name = "NIFTY PHARMA"
+                if name == "^CNXAUTO": name = "NIFTY AUTO"
+                if name == "^CNXMETAL": name = "NIFTY METAL"
+                if name == "^CNXINFRA": name = "NIFTY INFRA"
+                if name == "NIFTY_FIN_SERVICE": name = "NIFTY FIN SVC"
+                if name == "ETERNAL": name = "ZOMATO (ETERNAL)"
                 if name == "CL": name = "CRUDE OIL"
                 if name == "GC": name = "GOLD"
                 if name == "SI": name = "SILVER"
