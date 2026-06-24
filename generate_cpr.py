@@ -65,6 +65,19 @@ def main():
             if len(df) < 2:
                 print(f"Not enough data for {ticker}")
                 continue
+            
+            # Check if last row is today and market hasn't closed (assuming 16:00 IST for all to be safe)
+            ist = pytz.timezone('Asia/Kolkata')
+            now = datetime.now(ist)
+            
+            last_date = df.index[-1].date()
+            if last_date == now.date() and now.hour < 16:
+                # Drop the live/incomplete today's row
+                df = df.iloc[:-1]
+                
+            if len(df) < 2:
+                print(f"Not enough finalized data for {ticker}")
+                continue
                 
             # Get last 2 trading days
             yesterday = df.iloc[-2]
