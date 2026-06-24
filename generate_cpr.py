@@ -99,7 +99,20 @@ def main():
     targets = [{"symbol": k, "fyers": v, "cat": "Indices"} for k, v in indices.items()]
     targets += [{"symbol": s, "fyers": f"NSE:{s}-EQ", "cat": "FNO"} for s in fno_symbols]
 
-    print("Fetching live/historical data from Fyers...")
+    print("Fetching Live Quotes for today's data...")
+    fyers_symbols = [t["fyers"] for t in targets]
+    quotes_data = {}
+    for i in range(0, len(fyers_symbols), 50):
+        chunk = fyers_symbols[i:i+50]
+        try:
+            resp = fyers.quotes(data={"symbols": ",".join(chunk)})
+            if resp.get("s") == "ok":
+                for item in resp.get("d", []):
+                    quotes_data[item["n"]] = item["v"]
+        except Exception as e:
+            print(f"Quotes API error: {e}")
+
+    print("Fetching historical data for previous CPR...")
     
     for item in targets:
         candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)
@@ -107,25 +120,42 @@ def main():
         if len(candles) < 2:
             continue
             
-        # candles format: [epoch, open, high, low, close, volume]
-        today_candle = candles[-1]
-        prev_candle = candles[-2]
-        
-        # In Fyers, epoch is in seconds or milliseconds depending on version. Usually seconds for '1' format.
-        # But 'date_format=1' uses 'yyyy-mm-dd' strings usually. Let's assume standard response.
-        # Fyers API date_format=1 returns YYYY-MM-DD instead of epoch? 
-        # Actually standard history returns timestamp in epoch regardless. Let's safely extract EOD date:
+        last_history_candle = candles[-1]
         try:
-            today_date = datetime.fromtimestamp(today_candle[0], ist).strftime('%Y-%m-%d')
+            last_history_date = datetime.fromtimestamp(last_history_candle[0], ist).strftime('%Y-%m-%d')
         except:
-            today_date = range_to # fallback
-            
-        today_close = today_candle[4]
+            last_history_date = ""
+
+        today_date_str = now.strftime('%Y-%m-%d')
+
+        if last_history_date == today_date_str:
+            # Market closed: History has updated with today's EOD candle
+            today_high = last_history_candle[2]
+            today_low = last_history_candle[3]
+            today_close = last_history_candle[4]
+            prev_candle = candles[-2]
+            today_date = last_history_date
+        else:
+            # Live Market: History is lagging, use Quotes for today's live data
+            prev_candle = last_history_candle
+            quote = quotes_data.get(item["fyers"])
+            if quote:
+                today_high = quote.get("high_price")
+                today_low = quote.get("low_price")
+                today_close = quote.get("lp")
+                today_date = today_date_str
+            else:
+                # Fallback if no quote available
+                today_high = last_history_candle[2]
+                today_low = last_history_candle[3]
+                today_close = last_history_candle[4]
+                prev_candle = candles[-2]
+                today_date = last_history_date
         
         # Today's CPR uses Yesterday's OHLC
         today_cpr = calculate_cpr(prev_candle[2], prev_candle[3], prev_candle[4])
         # Tomorrow's CPR uses Today's OHLC
-        tom_cpr = calculate_cpr(today_candle[2], today_candle[3], today_candle[4])
+        tom_cpr = calculate_cpr(today_high, today_low, today_close)
         
         is_narrow = tom_cpr["width"] < (today_close * 0.001)
         
