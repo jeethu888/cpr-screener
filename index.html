@@ -9,75 +9,68 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #ffffff;
-            color: #111111;
+            background: #0d1117;
+            color: #e6edf3;
             font-size: 10px;
         }
 
         header {
-            padding: 5px 12px;
-            border-bottom: 1px solid #d0d0d0;
-            background: #f5f5f5;
+            padding: 6px 14px;
+            border-bottom: 1px solid #30363d;
+            background: #161b22;
             display: flex;
             align-items: center;
             gap: 10px;
+            justify-content: center;
         }
 
         h1 {
             font-size: 11px;
             font-weight: 700;
-            color: #111;
+            color: #e6edf3;
         }
 
-        .meta-info {
-            color: #666;
-            font-size: 9px;
-        }
+        .meta-info { color: #8b949e; font-size: 9px; }
+        .meta-info span { color: #58a6ff; font-weight: 600; }
 
-        main {
-            padding: 5px 10px;
-        }
+        main { padding: 6px 10px; }
 
         .controls-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             flex-wrap: wrap;
             gap: 4px;
         }
 
-        .filters {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
+        .filters { display: flex; gap: 3px; flex-wrap: wrap; }
 
         .filter-btn {
-            background: #f0f0f0;
-            border: 1px solid #ccc;
-            color: #444;
-            padding: 2px 8px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #8b949e;
+            padding: 2px 9px;
             border-radius: 3px;
             font-size: 9px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.15s;
         }
 
-        .filter-btn:hover { background: #e0e0e0; }
+        .filter-btn:hover { background: #30363d; color: #e6edf3; }
 
         .filter-btn.active {
-            background: #1a56db;
+            background: #388bfd;
             color: #fff;
-            border-color: #1a56db;
+            border-color: #388bfd;
         }
 
         .copy-btn {
-            background: #f0faf5;
-            border: 1px solid #34a853;
-            color: #1a7a40;
-            padding: 2px 8px;
+            background: #12261e;
+            border: 1px solid #238636;
+            color: #3fb950;
+            padding: 2px 9px;
             border-radius: 3px;
             font-size: 9px;
             font-weight: 600;
@@ -88,10 +81,10 @@
             transition: background 0.15s;
         }
 
-        .copy-btn:hover { background: #d6f5e3; }
+        .copy-btn:hover { background: #1a3a2a; }
 
         .table-container {
-            border: 1px solid #d0d0d0;
+            border: 1px solid #30363d;
             border-radius: 4px;
             overflow: hidden;
             overflow-x: auto;
@@ -105,46 +98,49 @@
         }
 
         th {
-            background: #f2f2f2;
-            padding: 3px 8px;
+            background: #161b22;
+            padding: 3px 10px;
             font-weight: 700;
-            color: #555;
+            color: #8b949e;
             font-size: 8.5px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            border-bottom: 1px solid #ccc;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #30363d;
+            border-right: 1px solid #21262d;
         }
+
+        th:last-child { border-right: none; }
 
         td {
-            padding: 0 8px;
-            line-height: 1.65;
-            border-bottom: 1px solid #ebebeb;
+            padding: 0 10px;
+            line-height: 1.7;
+            border-bottom: 1px solid #21262d;
+            border-right: 1px solid #21262d;
             font-size: 9.5px;
-            color: #111;
+            color: #e6edf3;
         }
 
+        td:last-child { border-right: none; }
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background: #f9f9f9; }
+        tr:hover td { background: #161b22; }
 
-        .symbol-name {
-            font-weight: 700;
-            color: #000;
-            font-size: 9.5px;
-        }
+        .sl-no { color: #8b949e; font-size: 8.5px; text-align: right; }
+
+        .symbol-name { font-weight: 700; color: #e6edf3; font-size: 9.5px; }
 
         .category-tag {
             font-size: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #777;
-            background: #ebebeb;
+            color: #8b949e;
+            background: #21262d;
             padding: 1px 4px;
             border-radius: 2px;
+            border: 1px solid #30363d;
         }
 
-        .price-value { font-weight: 600; color: #000; }
+        .price-value { font-weight: 600; color: #e6edf3; }
 
-        .date-value { color: #777; font-size: 8.5px; }
+        .date-value { color: #8b949e; font-size: 8.5px; }
 
         .badges { display: flex; gap: 3px; }
 
@@ -155,20 +151,29 @@
             border-radius: 2px;
         }
 
-        .badge-narrow { background: #e6f4ea; color: #1a7a40; border: 1px solid #b7dfbf; }
-        .badge-inside { background: #e8f0fe; color: #1a56db; border: 1px solid #b3c6f5; }
+        .badge-narrow {
+            background: rgba(63, 185, 80, 0.15);
+            color: #3fb950;
+            border: 1px solid rgba(63, 185, 80, 0.4);
+        }
 
-        .empty-state { text-align: center; padding: 2rem; color: #999; font-size: 10px; }
+        .badge-inside {
+            background: rgba(56, 139, 253, 0.15);
+            color: #58a6ff;
+            border: 1px solid rgba(56, 139, 253, 0.4);
+        }
 
-        .loading-spinner { text-align: center; padding: 1.5rem; color: #999; font-size: 10px; }
+        .empty-state { text-align: center; padding: 2rem; color: #8b949e; font-size: 10px; }
+
+        .loading-spinner { text-align: center; padding: 1.5rem; color: #8b949e; font-size: 10px; }
         .loading-spinner::after {
             content: '';
             display: block;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             margin: 0.5rem auto;
-            border: 2px solid #ddd;
-            border-top-color: #1a56db;
+            border: 2px solid #30363d;
+            border-top-color: #388bfd;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
@@ -177,8 +182,8 @@
         footer {
             text-align: center;
             padding: 5px;
-            border-top: 1px solid #e0e0e0;
-            color: #aaa;
+            border-top: 1px solid #21262d;
+            color: #484f58;
             font-size: 8px;
         }
     </style>
@@ -193,13 +198,13 @@
     <main>
         <div class="controls-row">
             <div class="filters">
-                <button class="filter-btn" data-filter="All">All</button>
-                <button class="filter-btn active" data-filter="FNO">F&O Stocks</button>
+                <button class="filter-btn active" data-filter="All">All Assets</button>
+                <button class="filter-btn" data-filter="FNO">F&O Stocks</button>
                 <button class="filter-btn" data-filter="Indices">Indices</button>
                 <button class="filter-btn" data-filter="Commodities">Commodities</button>
             </div>
             <button class="copy-btn" id="copy-btn" onclick="copyTickers()">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 Copy Tickers
             </button>
         </div>
@@ -209,12 +214,12 @@
         </div>
     </main>
 
-    <footer>CPR Screener &bull; Updated daily via GitHub Actions</footer>
+    <footer>CPR Screener &bull; Updated daily via GitHub Actions at 6:30 PM IST</footer>
 
     <script>
         let allData = [];
         let currentDisplayedTickers = [];
-        let currentFilter = 'FNO';
+        let currentFilter = 'All';
 
         async function fetchData() {
             try {
@@ -222,8 +227,8 @@
                 if (!response.ok) throw new Error("Not found");
                 const data = await response.json();
                 allData = data.results;
-                document.getElementById('update-time').innerText =
-                    `Updated: ${data.generated_at} | Scanned: ${data.total_scanned} symbols`;
+                document.getElementById('update-time').innerHTML =
+                    `Last Updated: ${data.generated_at} <span>(Scanned ${data.total_scanned} symbols)</span>`;
                 renderTable(currentFilter);
             } catch (e) {
                 document.getElementById('table-container').innerHTML =
@@ -251,21 +256,25 @@
             const table = document.createElement('table');
             const thead = document.createElement('thead');
             thead.innerHTML = `<tr>
+                <th>#</th>
                 <th>Symbol</th>
-                <th>Close</th>
+                <th>Category</th>
+                <th>CMP (Close)</th>
                 <th>EOD Date</th>
-                <th>Setup</th>
+                <th>CPR Setups</th>
             </tr>`;
             table.appendChild(thead);
 
             const tbody = document.createElement('tbody');
-            filteredData.forEach(item => {
+            filteredData.forEach((item, idx) => {
                 const tr = document.createElement('tr');
                 let badges = '';
                 if (item.is_narrow) badges += `<span class="badge badge-narrow">Narrow</span>`;
                 if (item.is_inside) badges += `<span class="badge badge-inside">Inside</span>`;
                 tr.innerHTML = `
+                    <td class="sl-no">${idx + 1}</td>
                     <td><span class="symbol-name">${item.symbol}</span></td>
+                    <td><span class="category-tag">${item.category}</span></td>
                     <td><span class="price-value">&#8377;${item.close.toLocaleString()}</span></td>
                     <td><span class="date-value">${item.eod_date || '-'}</span></td>
                     <td><div class="badges">${badges}</div></td>
