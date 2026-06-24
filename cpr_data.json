@@ -1,0 +1,126 @@
+{
+    "generated_at": "2026-06-24 12:20:13 IST",
+    "total_scanned": 52,
+    "results": [
+        {
+            "symbol": "KOTAKBANK",
+            "ticker": "KOTAKBANK.NS",
+            "category": "FNO",
+            "close": 405.6,
+            "today_cpr_width": 0.1,
+            "tom_cpr_width": 1.02,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "LT",
+            "ticker": "LT.NS",
+            "category": "FNO",
+            "close": 4200.0,
+            "today_cpr_width": 16.53,
+            "tom_cpr_width": 2.83,
+            "is_narrow": false,
+            "is_inside": true
+        },
+        {
+            "symbol": "AXISBANK",
+            "ticker": "AXISBANK.NS",
+            "category": "FNO",
+            "close": 1378.9,
+            "today_cpr_width": 0.33,
+            "tom_cpr_width": 6.47,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "ASIANPAINT",
+            "ticker": "ASIANPAINT.NS",
+            "category": "FNO",
+            "close": 2672.8,
+            "today_cpr_width": 7.7,
+            "tom_cpr_width": 0.53,
+            "is_narrow": false,
+            "is_inside": true
+        },
+        {
+            "symbol": "TECHM",
+            "ticker": "TECHM.NS",
+            "category": "FNO",
+            "close": 1446.7,
+            "today_cpr_width": 0.87,
+            "tom_cpr_width": 3.13,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "BAJAJFINSV",
+            "ticker": "BAJAJFINSV.NS",
+            "category": "FNO",
+            "close": 1777.9,
+            "today_cpr_width": 9.6,
+            "tom_cpr_width": 3.5,
+            "is_narrow": false,
+            "is_inside": true
+        },
+        {
+            "symbol": "CIPLA",
+            "ticker": "CIPLA.NS",
+            "category": "FNO",
+            "close": 1440.4,
+            "today_cpr_width": 4.53,
+            "tom_cpr_width": 2.13,
+            "is_narrow": false,
+            "is_inside": true
+        },
+        {
+            "symbol": "BRITANNIA",
+            "ticker": "BRITANNIA.NS",
+            "category": "FNO",
+            "close": 5256.0,
+            "today_cpr_width": 3.5,
+            "tom_cpr_width": 1.33,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "M&M",
+            "ticker": "M&M.NS",
+            "category": "FNO",
+            "close": 3060.0,
+            "today_cpr_width": 16.47,
+            "tom_cpr_width": 9.2,
+            "is_narrow": false,
+            "is_inside": true
+        },
+        {
+            "symbol": "GOLD",
+            "ticker": "GC=F",
+            "category": "Commodities",
+            "close": 4106.8,
+            "today_cpr_width": 2.03,
+            "tom_cpr_width": 4.73,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "SILVER",
+            "ticker": "SI=F",
+            "category": "Commodities",
+            "close": 62.03,
+            "today_cpr_width": 0.02,
+            "tom_cpr_width": 0.29,
+            "is_narrow": true,
+            "is_inside": false
+        },
+        {
+            "symbol": "NATURAL GAS",
+            "ticker": "NG=F",
+            "category": "Commodities",
+            "close": 3.19,
+            "today_cpr_width": 0.04,
+            "tom_cpr_width": 0.0,
+            "is_narrow": false,
+            "is_inside": true
+        }
+    ]
+}
