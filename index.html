@@ -3,145 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live CPR Screener</title>
+    <title>CPR Screener</title>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(20, 26, 41, 0.6);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #3b82f6;
-            --success: #10b981;
-            --warning: #f59e0b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 25%);
-            background-attachment: fixed;
-            font-size: 11px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            font-size: 10px;
         }
 
         header {
-            padding: 0.6rem 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(11, 15, 25, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            padding: 5px 12px;
+            border-bottom: 1px solid #d0d0d0;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         h1 {
-            font-size: 1.1rem;
+            font-size: 11px;
             font-weight: 700;
-            background: linear-gradient(to right, #60a5fa, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.2rem;
+            color: #111;
         }
 
         .meta-info {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 500;
+            color: #666;
+            font-size: 9px;
         }
 
         main {
-            flex: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0.7rem 1rem;
-            width: 100%;
+            padding: 5px 10px;
         }
 
         .controls-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 4px;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 4px;
         }
 
         .filters {
             display: flex;
-            gap: 0.75rem;
+            gap: 4px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
-            font-size: 0.65rem;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            color: #444;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(8px);
+            transition: all 0.15s ease;
         }
 
-        .filter-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-        }
+        .filter-btn:hover { background: #e0e0e0; }
 
         .filter-btn.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
+            background: #1a56db;
+            color: #fff;
+            border-color: #1a56db;
         }
 
         .copy-btn {
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: var(--success);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.65rem;
+            background: #f0faf5;
+            border: 1px solid #34a853;
+            color: #1a7a40;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 9px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 3px;
+            transition: background 0.15s;
         }
 
-        .copy-btn:hover {
-            background: rgba(16, 185, 129, 0.25);
-        }
-
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
+        .copy-btn:hover { background: #d6f5e3; }
 
         .table-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
             overflow: hidden;
             overflow-x: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         table {
@@ -152,233 +105,170 @@
         }
 
         th {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 0.3rem 0.7rem;
+            background: #f2f2f2;
+            padding: 3px 8px;
             font-weight: 700;
-            color: var(--text-muted);
-            font-size: 0.6rem;
+            color: #555;
+            font-size: 8.5px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid var(--border-color);
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid #ccc;
         }
 
         td {
-            padding: 0px 0.7rem;
-            line-height: 1.8;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.72rem;
+            padding: 0 8px;
+            line-height: 1.65;
+            border-bottom: 1px solid #ebebeb;
+            font-size: 9.5px;
+            color: #111;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f9f9f9; }
 
         .symbol-name {
             font-weight: 700;
-            color: #fff;
-            font-size: 0.75rem;
-            line-height: 1;
+            color: #000;
+            font-size: 9.5px;
         }
 
         .category-tag {
-            font-size: 0.55rem;
+            font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.1rem 0.35rem;
+            color: #777;
+            background: #ebebeb;
+            padding: 1px 4px;
             border-radius: 2px;
-            display: inline-block;
         }
 
-        .price-value {
-            font-weight: 600;
-            color: #fff;
-        }
-        
-        .date-value {
-            color: var(--text-muted);
-            font-size: 0.65rem;
-        }
+        .price-value { font-weight: 600; color: #000; }
 
-        .badges {
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-        }
+        .date-value { color: #777; font-size: 8.5px; }
+
+        .badges { display: flex; gap: 3px; }
 
         .badge {
-            font-size: 0.58rem;
-            font-weight: 600;
-            padding: 0.1rem 0.4rem;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 5px;
             border-radius: 2px;
-            display: inline-flex;
-            align-items: center;
         }
 
-        .badge-narrow {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
+        .badge-narrow { background: #e6f4ea; color: #1a7a40; border: 1px solid #b7dfbf; }
+        .badge-inside { background: #e8f0fe; color: #1a56db; border: 1px solid #b3c6f5; }
 
-        .badge-inside {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
+        .empty-state { text-align: center; padding: 2rem; color: #999; font-size: 10px; }
 
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
-        }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 2rem;
-            font-size: 1rem;
-            color: var(--text-muted);
-        }
-        
+        .loading-spinner { text-align: center; padding: 1.5rem; color: #999; font-size: 10px; }
         .loading-spinner::after {
             content: '';
             display: block;
-            width: 30px;
-            height: 30px;
-            margin: 1rem auto;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-top-color: var(--accent);
+            width: 20px;
+            height: 20px;
+            margin: 0.5rem auto;
+            border: 2px solid #ddd;
+            border-top-color: #1a56db;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         footer {
             text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.75rem;
+            padding: 5px;
+            border-top: 1px solid #e0e0e0;
+            color: #aaa;
+            font-size: 8px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Live CPR Screener</h1>
-        <div class="meta-info" id="update-time">Loading data...</div>
+        <h1>CPR Screener</h1>
+        <div class="meta-info" id="update-time">Loading...</div>
     </header>
 
     <main>
         <div class="controls-row">
             <div class="filters">
-                <button class="filter-btn active" data-filter="All">All Assets</button>
-                <button class="filter-btn" data-filter="FNO">F&O Stocks</button>
+                <button class="filter-btn" data-filter="All">All</button>
+                <button class="filter-btn active" data-filter="FNO">F&O Stocks</button>
                 <button class="filter-btn" data-filter="Indices">Indices</button>
                 <button class="filter-btn" data-filter="Commodities">Commodities</button>
             </div>
-            
             <button class="copy-btn" id="copy-btn" onclick="copyTickers()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 Copy Tickers
             </button>
         </div>
 
         <div class="table-container" id="table-container">
-            <div class="loading-spinner">Fetching latest data...</div>
+            <div class="loading-spinner">Fetching data...</div>
         </div>
     </main>
 
-    <footer>
-        <p>Automated CPR Setup Screener • Updates daily via GitHub Actions</p>
-    </footer>
+    <footer>CPR Screener &bull; Updated daily via GitHub Actions</footer>
 
     <script>
         let allData = [];
         let currentDisplayedTickers = [];
+        let currentFilter = 'FNO';
 
         async function fetchData() {
             try {
                 const response = await fetch('cpr_data.json?t=' + new Date().getTime());
-                if(!response.ok) throw new Error("Data file not found");
-                
+                if (!response.ok) throw new Error("Not found");
                 const data = await response.json();
                 allData = data.results;
-                
-                document.getElementById('update-time').innerText = `Last Updated: ${data.generated_at} (Scanned ${data.total_scanned} symbols)`;
-                
-                renderTable('All');
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                document.getElementById('table-container').innerHTML = `
-                    <div class="empty-state">
-                        <h3>No Data Available Yet</h3>
-                        <p style="margin-top:0.5rem; font-size:0.8rem;">If you just deployed this, please wait for the GitHub Action to run at 5:00 PM IST.</p>
-                    </div>
-                `;
-                document.getElementById('update-time').innerText = "Data pending generation";
+                document.getElementById('update-time').innerText =
+                    `Updated: ${data.generated_at} | Scanned: ${data.total_scanned} symbols`;
+                renderTable(currentFilter);
+            } catch (e) {
+                document.getElementById('table-container').innerHTML =
+                    `<div class="empty-state">No data yet. Wait for GitHub Action to run at 6:30 PM IST.</div>`;
+                document.getElementById('update-time').innerText = "Data not available";
             }
         }
 
         function renderTable(filter) {
+            currentFilter = filter;
             const container = document.getElementById('table-container');
             container.innerHTML = '';
 
-            const filteredData = filter === 'All' 
-                ? allData 
+            const filteredData = filter === 'All'
+                ? allData
                 : allData.filter(item => item.category === filter);
 
-            // Update state for copy button
             currentDisplayedTickers = filteredData.map(item => item.symbol);
 
             if (filteredData.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <h3>No Setups Found</h3>
-                        <p style="margin-top:0.5rem; font-size:0.8rem;">There are no ${filter === 'All' ? '' : filter} assets matching Narrow or Inside CPR today.</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state">No ${filter === 'All' ? '' : filter} setups found today.</div>`;
                 return;
             }
 
             const table = document.createElement('table');
-            
-            // Create Table Header
             const thead = document.createElement('thead');
-            thead.innerHTML = `
-                <tr>
-                    <th>Symbol</th>
-                    <th>Category</th>
-                    <th>CMP (Close)</th>
-                    <th>EOD Date</th>
-                    <th>CPR Setups</th>
-                </tr>
-            `;
+            thead.innerHTML = `<tr>
+                <th>Symbol</th>
+                <th>Close</th>
+                <th>EOD Date</th>
+                <th>Setup</th>
+            </tr>`;
             table.appendChild(thead);
 
-            // Create Table Body
             const tbody = document.createElement('tbody');
             filteredData.forEach(item => {
                 const tr = document.createElement('tr');
-                
-                let badgesHTML = '';
-                if(item.is_narrow) badgesHTML += `<span class="badge badge-narrow">Narrow</span>`;
-                if(item.is_inside) badgesHTML += `<span class="badge badge-inside">Inside</span>`;
-
+                let badges = '';
+                if (item.is_narrow) badges += `<span class="badge badge-narrow">Narrow</span>`;
+                if (item.is_inside) badges += `<span class="badge badge-inside">Inside</span>`;
                 tr.innerHTML = `
                     <td><span class="symbol-name">${item.symbol}</span></td>
-                    <td><span class="category-tag">${item.category}</span></td>
-                    <td><span class="price-value">₹${item.close.toLocaleString()}</span></td>
+                    <td><span class="price-value">&#8377;${item.close.toLocaleString()}</span></td>
                     <td><span class="date-value">${item.eod_date || '-'}</span></td>
-                    <td><div class="badges">${badgesHTML}</div></td>
+                    <td><div class="badges">${badges}</div></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -386,37 +276,24 @@
             container.appendChild(table);
         }
 
-        // Setup filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', e => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 renderTable(e.target.getAttribute('data-filter'));
             });
         });
 
-        // Copy Tickers functionality
         function copyTickers() {
-            if (currentDisplayedTickers.length === 0) return;
-            
-            const textToCopy = currentDisplayedTickers.join(', ');
-            navigator.clipboard.writeText(textToCopy).then(() => {
+            if (!currentDisplayedTickers.length) return;
+            navigator.clipboard.writeText(currentDisplayedTickers.join(', ')).then(() => {
                 const btn = document.getElementById('copy-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
-                btn.style.background = 'rgba(16, 185, 129, 0.4)';
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert("Failed to copy. Your browser might block clipboard access.");
-            });
+                const orig = btn.innerHTML;
+                btn.innerHTML = '&#10003; Copied!';
+                setTimeout(() => { btn.innerHTML = orig; }, 2000);
+            }).catch(() => alert("Copy failed."));
         }
 
-        // Initialize
         fetchData();
     </script>
 </body>
