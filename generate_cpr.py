@@ -96,7 +96,7 @@ def main():
             
             # Conditions
             # 1. Narrow CPR: Width < 0.1% of Close
-            is_narrow = today_cpr['width'] < (today_close * 0.001)
+            is_narrow = tom_cpr['width'] < (today_close * 0.001)
             
             # 2. Inside CPR: Tomorrow's CPR is strictly inside Today's CPR
             today_upper = max(today_cpr['tc'], today_cpr['bc'])
