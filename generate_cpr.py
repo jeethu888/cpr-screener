@@ -1,202 +1,227 @@
-import yfinance as yf
+import requests
 import pandas as pd
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
+import io
+import zipfile
 
-# Group symbols by category
-SYMBOLS = {
-    "FNO": [
-        "AARTIIND.NS", "ABB.NS", "ABBOTINDIA.NS", "ABCAPITAL.NS", "ABFRL.NS",
-        "ACC.NS", "ADANIENT.NS", "ADANIPORTS.NS", "ALKEM.NS", "AMBUJACEM.NS",
-        "ANGELONE.NS", "APLAPOLLO.NS", "APOLLOHOSP.NS", "APOLLOTYRE.NS",
-        "ASHOKLEY.NS", "ASIANPAINT.NS", "ASTRAL.NS", "AUROPHARMA.NS",
-        "AXISBANK.NS", "BAJAJ-AUTO.NS", "BAJAJFINSV.NS", "BAJFINANCE.NS",
-        "BALKRISIND.NS", "BANDHANBNK.NS", "BANKBARODA.NS", "BANKINDIA.NS",
-        "BATAINDIA.NS", "BEL.NS", "BERGEPAINT.NS", "BHARATFORG.NS",
-        "BHARTIARTL.NS", "BHEL.NS", "BIOCON.NS", "BLUESTARCO.NS",
-        "BOSCHLTD.NS", "BPCL.NS", "BRITANNIA.NS", "CAMS.NS",
-        "CANFINHOME.NS", "CANBK.NS", "CDSL.NS", "CEATLTD.NS",
-        "CGPOWER.NS", "CHAMBLFERT.NS", "CHOLAFIN.NS", "CIPLA.NS",
-        "COALINDIA.NS", "COCHINSHIP.NS", "COFORGE.NS", "COLPAL.NS",
-        "CONCOR.NS", "COROMANDEL.NS", "CROMPTON.NS", "CUMMINSIND.NS",
-        "CYIENT.NS", "DABUR.NS", "DALBHARAT.NS", "DEEPAKNTR.NS",
-        "DIVISLAB.NS", "DIXON.NS", "DLF.NS", "DRREDDY.NS",
-        "EICHERMOT.NS", "ESCORTS.NS", "FEDERALBNK.NS", "FORTIS.NS",
-        "GAIL.NS", "GLAND.NS", "GLENMARK.NS", "GMRAIRPORT.NS",
-        "GODREJCP.NS", "GODREJPROP.NS", "GRANULES.NS", "GRASIM.NS",
-        "HAL.NS", "HAVELLS.NS", "HCLTECH.NS", "HDFCAMC.NS",
-        "HDFCBANK.NS", "HDFCLIFE.NS", "HEROMOTOCO.NS", "HINDALCO.NS",
-        "HINDCOPPER.NS", "HINDPETRO.NS", "HINDUNILVR.NS", "HINDZINC.NS",
-        "HUDCO.NS", "HYUNDAI.NS", "ICICIGI.NS", "ICICIBANK.NS",
-        "ICICIPRULI.NS", "IDFCFIRSTB.NS", "IEX.NS",
-        "INDHOTEL.NS", "INDIGO.NS", "INDUSINDBK.NS",
-        "INDUSTOWER.NS", "INFY.NS", "IOC.NS", "IRCTC.NS",
-        "IRFC.NS", "ITC.NS", "JINDALSTEL.NS", "JSWSTEEL.NS",
-        "JUBLFOOD.NS", "KAJARIACER.NS", "KOTAKBANK.NS", "KPITTECH.NS",
-        "LTF.NS", "LAURUSLABS.NS", "LICHSGFIN.NS", "LT.NS",
-        "LTTS.NS", "LUPIN.NS", "M&M.NS",
-        "M&MFIN.NS", "MANAPPURAM.NS", "MARICO.NS", "MARUTI.NS",
-        "MCX.NS", "MFSL.NS", "MPHASIS.NS", "MRF.NS",
-        "MUTHOOTFIN.NS", "NATIONALUM.NS", "NAUKRI.NS", "NAVINFLUOR.NS",
-        "NESTLEIND.NS", "NHPC.NS", "NMDC.NS", "NTPC.NS",
-        "NYKAA.NS", "OBEROIRLTY.NS", "OFSS.NS", "ONGC.NS",
-        "PAGEIND.NS", "PERSISTENT.NS", "PETRONET.NS",
-        "PFC.NS", "PIIND.NS", "PNB.NS", "PNBHOUSING.NS",
-        "POLYCAB.NS", "POWERGRID.NS", "PRESTIGE.NS", "PVRINOX.NS",
-        "RBLBANK.NS", "RECLTD.NS", "RELIANCE.NS", "RVNL.NS",
-        "SAIL.NS", "SBICARD.NS", "SBILIFE.NS", "SBIN.NS",
-        "SHREECEM.NS", "SHRIRAMFIN.NS", "SIEMENS.NS", "SJVN.NS",
-        "SONACOMS.NS", "SRF.NS", "STARHEALTH.NS", "SUNPHARMA.NS",
-        "SYNGENE.NS", "TATACHEM.NS", "TATACOMM.NS", "TATAELXSI.NS",
-        "TATAPOWER.NS", "TATASTEEL.NS", "TATATECH.NS",
-        "TCS.NS", "TECHM.NS", "TIINDIA.NS", "TITAN.NS",
-        "TORNTPHARM.NS", "TRENT.NS", "TVSMOTOR.NS", "ULTRACEMCO.NS",
-        "UNIONBANK.NS", "UPL.NS", "VEDL.NS", "VOLTAS.NS",
-        "WIPRO.NS", "YESBANK.NS", "ETERNAL.NS", "ZYDUSLIFE.NS",
-    ],
-    "Indices": [
-        "^NSEI",       # Nifty 50
-        "^NSEBANK",    # Bank Nifty
-        "^CNXIT",      # Nifty IT
-        "^CNXFMCG",    # Nifty FMCG
-        "^CNXPHARMA",  # Nifty Pharma
-        "^CNXAUTO",    # Nifty Auto
-        "^CNXMETAL",   # Nifty Metal
-        "^CNXINFRA",   # Nifty Infra
-        "NIFTY_FIN_SERVICE.NS",  # Nifty Financial Services
-    ],
-    "Commodities": [
-        "CL=F",   # Crude Oil
-        "GC=F",   # Gold
-        "SI=F",   # Silver
-        "NG=F",   # Natural Gas
-    ]
+# ─── NSE Headers (required to avoid 403) ─────────────────────────────────────
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://www.nseindia.com/",
 }
 
+def get_nse_session():
+    """Create a requests session with NSE cookies."""
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    try:
+        # Hit the main page first to get cookies (NSE requires this)
+        session.get("https://www.nseindia.com", timeout=15)
+        # Also hit the API base to warm up
+        session.get("https://www.nseindia.com/market-data/live-equity-market", timeout=15)
+    except Exception as e:
+        print(f"Warning: Could not warm up NSE session: {e}")
+    return session
+
+# ─── Step 1: Fetch Dynamic FNO List from NSE ─────────────────────────────────
+def get_fno_symbols(session):
+    print("Fetching FNO stock list from NSE...")
+    url = "https://www.nseindia.com/api/master-quote"
+    resp = session.get(url, timeout=15)
+    resp.raise_for_status()
+    symbols = resp.json()  # Returns a plain list of symbol strings
+    print(f"  Found {len(symbols)} F&O stocks")
+    return symbols
+
+# ─── Step 2: Download NSE Bhav Copy (EOD OHLC for all stocks) ─────────────────
+def get_bhav_copy(session, date):
+    """Download NSE equity Bhav Copy for a given date."""
+    dd = date.strftime("%d")
+    mm = date.strftime("%m")
+    yyyy = date.strftime("%Y")
+    mon = date.strftime("%b").upper()
+    
+    # New-format URL (NSE switched to this after 2022)
+    url = f"https://nsearchives.nseindia.com/content/cm/BhavCopy_NSE_CM_0_0_0_{yyyy}{mm}{dd}_F_0000.csv.zip"
+    
+    print(f"  Downloading Bhav Copy for {date.strftime('%Y-%m-%d')} from: {url}")
+    resp = session.get(url, timeout=30)
+    
+    if resp.status_code != 200:
+        # Try old format
+        url_old = f"https://archives.nseindia.com/content/historical/EQUITIES/{yyyy}/{mon}/cm{dd}{mon}{yyyy}bhav.csv.zip"
+        print(f"  New format failed, trying old format: {url_old}")
+        resp = session.get(url_old, timeout=30)
+        resp.raise_for_status()
+    
+    # Unzip and parse
+    with zipfile.ZipFile(io.BytesIO(resp.content)) as z:
+        fname = z.namelist()[0]
+        with z.open(fname) as f:
+            df = pd.read_csv(f)
+    
+    return df
+
+def find_last_two_trading_days(session):
+    """Find last 2 trading days by trying to download Bhav Copies."""
+    ist = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(ist)
+    
+    found_dates = []
+    attempts = 0
+    check_date = now.date()
+    
+    # If today's market hasn't closed (before 6 PM), skip today
+    if now.hour < 18:
+        check_date -= timedelta(days=1)
+    
+    while len(found_dates) < 2 and attempts < 10:
+        # Skip weekends
+        if check_date.weekday() < 5:  # Mon-Fri
+            try:
+                df = get_bhav_copy(session, check_date)
+                found_dates.append((check_date, df))
+                print(f"  [OK] Got Bhav Copy for {check_date}")
+            except Exception as e:
+                print(f"  [SKIP] No Bhav Copy for {check_date}: {e}")
+        check_date -= timedelta(days=1)
+        attempts += 1
+    
+    return found_dates
+
+def parse_bhav(df, symbol):
+    """Extract OHLC for a symbol from bhav copy dataframe."""
+    # New NSE format columns
+    if "TckrSymb" in df.columns:
+        symbol_col = "TckrSymb"
+        series_col = "SctySrs"
+        open_col   = "OpnPric"
+        high_col   = "HghPric"
+        low_col    = "LwPric"
+        close_col  = "ClsPric"
+    else:
+        # Old format
+        symbol_col = "SYMBOL"
+        series_col = "SERIES"
+        open_col   = "OPEN"
+        high_col   = "HIGH"
+        low_col    = "LOW"
+        close_col  = "CLOSE"
+
+    row = df[(df[symbol_col] == symbol) & (df[series_col] == "EQ")]
+    if row.empty:
+        return None
+    row = row.iloc[0]
+    return {
+        "open":  float(row[open_col]),
+        "high":  float(row[high_col]),
+        "low":   float(row[low_col]),
+        "close": float(row[close_col]),
+    }
+
+# ─── Step 3: CPR Calculation ──────────────────────────────────────────────────
 def calculate_cpr(high, low, close):
-    p = (high + low + close) / 3
+    p  = (high + low + close) / 3
     bc = (high + low) / 2
     tc = (p - bc) + p
     return {"pivot": p, "bc": bc, "tc": tc, "width": abs(tc - bc)}
 
+# ─── Main ─────────────────────────────────────────────────────────────────────
 def main():
-    all_tickers = []
-    category_map = {}
-    
-    for cat, syms in SYMBOLS.items():
-        all_tickers.extend(syms)
-        for s in syms:
-            category_map[s] = cat
-
-    print(f"Fetching data for {len(all_tickers)} symbols...")
-    
-    # Download last 5 days to ensure we have at least 2 valid trading days
-    data = yf.download(all_tickers, period="5d", group_by="ticker", threads=True, progress=False)
-    
-    results = []
-    
-    for ticker in all_tickers:
-        try:
-            if len(all_tickers) == 1:
-                df = data
-            else:
-                df = data[ticker]
-            
-            # Drop NaN rows (holidays, etc)
-            df = df.dropna()
-            
-            if len(df) < 2:
-                print(f"Not enough data for {ticker}")
-                continue
-            
-            # Check if last row is today and market hasn't closed (assuming 16:00 IST for all to be safe)
-            ist = pytz.timezone('Asia/Kolkata')
-            now = datetime.now(ist)
-            
-            last_date = df.index[-1].date()
-            if last_date == now.date() and now.hour < 16:
-                # Drop the live/incomplete today's row
-                df = df.iloc[:-1]
-                
-            if len(df) < 2:
-                print(f"Not enough finalized data for {ticker}")
-                continue
-                
-            # Get last 2 trading days
-            yesterday = df.iloc[-2]
-            today = df.iloc[-1]
-            
-            today_close = today['Close']
-            
-            # Extract EOD Date
-            eod_date = today.name.strftime('%Y-%m-%d')
-            
-            # Calculate Today's CPR (using yesterday's data)
-            today_cpr = calculate_cpr(yesterday['High'], yesterday['Low'], yesterday['Close'])
-            
-            # Calculate Tomorrow's CPR (using today's data)
-            tom_cpr = calculate_cpr(today['High'], today['Low'], today['Close'])
-            
-            # Conditions
-            # 1. Narrow CPR: Width < 0.1% of Close
-            is_narrow = tom_cpr['width'] < (today_close * 0.001)
-            
-            # 2. Inside CPR: Tomorrow's CPR is strictly inside Today's CPR
-            today_upper = max(today_cpr['tc'], today_cpr['bc'])
-            today_lower = min(today_cpr['tc'], today_cpr['bc'])
-            
-            tom_upper = max(tom_cpr['tc'], tom_cpr['bc'])
-            tom_lower = min(tom_cpr['tc'], tom_cpr['bc'])
-            
-            is_inside = (tom_upper < today_upper) and (tom_lower > today_lower)
-            
-            if is_narrow or is_inside:
-                # Format name nicely
-                name = ticker.replace(".NS", "").replace("=F", "")
-                if name == "^NSEI": name = "NIFTY 50"
-                if name == "^NSEBANK": name = "BANK NIFTY"
-                if name == "^CNXIT": name = "NIFTY IT"
-                if name == "^CNXFMCG": name = "NIFTY FMCG"
-                if name == "^CNXPHARMA": name = "NIFTY PHARMA"
-                if name == "^CNXAUTO": name = "NIFTY AUTO"
-                if name == "^CNXMETAL": name = "NIFTY METAL"
-                if name == "^CNXINFRA": name = "NIFTY INFRA"
-                if name == "NIFTY_FIN_SERVICE": name = "NIFTY FIN SVC"
-                if name == "ETERNAL": name = "ZOMATO (ETERNAL)"
-                if name == "CL": name = "CRUDE OIL"
-                if name == "GC": name = "GOLD"
-                if name == "SI": name = "SILVER"
-                if name == "NG": name = "NATURAL GAS"
-                
-                results.append({
-                    "symbol": name,
-                    "ticker": ticker,
-                    "category": category_map[ticker],
-                    "close": round(today_close, 2),
-                    "eod_date": eod_date,
-                    "today_cpr_width": round(today_cpr['width'], 2),
-                    "tom_cpr_width": round(tom_cpr['width'], 2),
-                    "is_narrow": bool(is_narrow),
-                    "is_inside": bool(is_inside)
-                })
-        except Exception as e:
-            print(f"Error processing {ticker}: {e}")
-
-    # Generate output
     ist = pytz.timezone('Asia/Kolkata')
     now = datetime.now(ist)
     
-    output = {
-        "generated_at": now.strftime("%Y-%m-%d %H:%M:%S IST"),
-        "total_scanned": len(all_tickers),
-        "results": results
-    }
+    session = get_nse_session()
     
+    # Step 1: Get live FNO list from NSE
+    try:
+        fno_symbols = get_fno_symbols(session)
+    except Exception as e:
+        print(f"Failed to fetch FNO list: {e}. Using fallback hardcoded list.")
+        fno_symbols = [
+            "RELIANCE","TCS","HDFCBANK","ICICIBANK","INFY","SBIN","BHARTIARTL",
+            "ITC","KOTAKBANK","LT","AXISBANK","BAJFINANCE","MARUTI","ASIANPAINT",
+            "TITAN","SUNPHARMA","WIPRO","ONGC","NTPC","POWERGRID","TATASTEEL",
+            "TECHM","HCLTECH","DRREDDY","DIVISLAB","JSWSTEEL","ADANIENT",
+            "BAJAJFINSV","ULTRACEMCO","GRASIM","INDUSINDBK","CIPLA","EICHERMOT",
+            "APOLLOHOSP","BPCL","COALINDIA","BRITANNIA","TATACONSUM","HEROMOTOCO",
+            "HINDALCO","SBILIFE","HDFCLIFE","BAJAJ-AUTO","M&M","HINDPETRO",
+            "KOTAKBANK","AXISBANK","BLUESTARCO","TORNTPHARM","INDHOTEL","CHOLAFIN",
+            "COFORGE","TECHM","PNBHOUSING","HYUNDAI",
+        ]
+    
+    # Step 2: Get last 2 trading days' Bhav Copies
+    print("Finding last 2 trading days with available Bhav Copies...")
+    trading_days = find_last_two_trading_days(session)
+    
+    if len(trading_days) < 2:
+        print("ERROR: Could not get 2 trading days of data. Exiting.")
+        return
+    
+    # trading_days[0] = most recent (today's closed day => Tomorrow's CPR)
+    # trading_days[1] = previous day          => Today's CPR
+    today_date, today_bhav   = trading_days[0]
+    prev_date,  prev_bhav    = trading_days[1]
+    
+    print(f"\nUsing:")
+    print(f"  Today's CPR  <- {prev_date} OHLC")
+    print(f"  Tomorrow's CPR <- {today_date} OHLC")
+    
+    results = []
+    total_scanned = len(fno_symbols)
+    
+    for symbol in fno_symbols:
+        try:
+            today_ohlc = parse_bhav(today_bhav, symbol)
+            prev_ohlc  = parse_bhav(prev_bhav, symbol)
+            
+            if today_ohlc is None or prev_ohlc is None:
+                continue
+            
+            close = today_ohlc["close"]
+            
+            # Today's CPR = built from prev day's OHLC
+            today_cpr = calculate_cpr(prev_ohlc["high"], prev_ohlc["low"], prev_ohlc["close"])
+            # Tomorrow's CPR = built from today's OHLC
+            tom_cpr   = calculate_cpr(today_ohlc["high"], today_ohlc["low"], today_ohlc["close"])
+            
+            # --- Narrow CPR: Tomorrow's CPR width < 0.1% of close
+            is_narrow = tom_cpr["width"] < (close * 0.001)
+            
+            # --- Inside CPR: Tomorrow's CPR is strictly inside Today's CPR
+            today_upper = max(today_cpr["tc"], today_cpr["bc"])
+            today_lower = min(today_cpr["tc"], today_cpr["bc"])
+            tom_upper   = max(tom_cpr["tc"],   tom_cpr["bc"])
+            tom_lower   = min(tom_cpr["tc"],   tom_cpr["bc"])
+            is_inside = (tom_upper < today_upper) and (tom_lower > today_lower)
+            
+            if is_narrow or is_inside:
+                results.append({
+                    "symbol":         symbol,
+                    "category":       "FNO",
+                    "close":          round(close, 2),
+                    "eod_date":       str(today_date),
+                    "tom_cpr_width":  round(tom_cpr["width"], 2),
+                    "is_narrow":      bool(is_narrow),
+                    "is_inside":      bool(is_inside),
+                })
+        except Exception as e:
+            print(f"  Error processing {symbol}: {e}")
+    
+    # ── Output ────────────────────────────────────────────────────────────────
+    output = {
+        "generated_at":  now.strftime("%Y-%m-%d %H:%M:%S IST"),
+        "total_scanned": total_scanned,
+        "results":       results,
+    }
     with open("cpr_data.json", "w") as f:
         json.dump(output, f, indent=4)
-        
-    print(f"Successfully generated cpr_data.json with {len(results)} matches.")
+    
+    print(f"\n[DONE] {len(results)} matches from {total_scanned} F&O stocks -> cpr_data.json")
 
 if __name__ == "__main__":
     main()
