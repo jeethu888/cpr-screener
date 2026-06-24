@@ -34,7 +34,7 @@ SYMBOLS = {
         "INDUSTOWER.NS", "INFY.NS", "IOC.NS", "IRCTC.NS",
         "IRFC.NS", "ITC.NS", "JINDALSTEL.NS", "JSWSTEEL.NS",
         "JUBLFOOD.NS", "KAJARIACER.NS", "KOTAKBANK.NS", "KPITTECH.NS",
-        "LTFH.NS", "LAURUSLABS.NS", "LICHSGFIN.NS", "LT.NS",
+        "LTF.NS", "LAURUSLABS.NS", "LICHSGFIN.NS", "LT.NS",
         "LTTS.NS", "LUPIN.NS", "M&M.NS",
         "M&MFIN.NS", "MANAPPURAM.NS", "MARICO.NS", "MARUTI.NS",
         "MCX.NS", "MFSL.NS", "MPHASIS.NS", "MRF.NS",
@@ -65,7 +65,6 @@ SYMBOLS = {
         "^CNXMETAL",   # Nifty Metal
         "^CNXINFRA",   # Nifty Infra
         "NIFTY_FIN_SERVICE.NS",  # Nifty Financial Services
-        "^CNXMIDCAP",  # Nifty Midcap 100
     ],
     "Commodities": [
         "CL=F",   # Crude Oil
