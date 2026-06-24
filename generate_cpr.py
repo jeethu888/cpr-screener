@@ -42,17 +42,20 @@ def get_fyers_client():
 
 def fetch_history_for_symbol(fyers, symbol_fyers, range_from, range_to):
     data = {"symbol": symbol_fyers, "resolution": "1D", "date_format": "1", "range_from": range_from, "range_to": range_to, "cont_flag": "1"}
-    for _ in range(3):
+    for attempt in range(3):
         response = fyers.history(data=data)
         if response.get("s") == "ok":
             return response.get("candles", [])
         elif response.get("code") == -300:
-            return []
+            return []  # Invalid symbol
         elif response.get("code") == 429:
-            time.sleep(1)
+            time.sleep(2)
             continue
         else:
-            time.sleep(0.5)
+            # Log the first few failures for debugging
+            if attempt == 0:
+                print(f"  API response for {symbol_fyers}: code={response.get('code')} msg={response.get('message','')[:80]}")
+            time.sleep(1)
     return []
 
 def get_zone_label(c, pivot, tc, bc, r1, r2, s1, s2):
@@ -185,6 +188,17 @@ def main():
 
     results = []
     print("Fetching historical data and analyzing...")
+    
+    # Test first symbol to verify API is working
+    test_sym = targets[0]["fyers"]
+    test_candles = fetch_history_for_symbol(fyers, test_sym, range_from, range_to)
+    print(f"  API test ({test_sym}): {len(test_candles)} candles returned")
+    if len(test_candles) == 0:
+        print("  WARNING: API returned 0 candles for test symbol. Token may be expired or API is down.")
+        print("  Trying with profile check...")
+        profile = fyers.get_profile()
+        print(f"  Profile response: {profile}")
+        return
     
     for item in targets:
         candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)
