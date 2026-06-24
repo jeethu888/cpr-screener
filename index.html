@@ -9,85 +9,102 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #0d1117;
-            color: #e6edf3;
-            font-size: 10px;
+            background: #eef1f8;
+            color: #1a1a2e;
+            font-size: 13px;
+            min-height: 100vh;
         }
 
         header {
-            padding: 6px 14px;
-            border-bottom: 1px solid #30363d;
-            background: #161b22;
+            background: #fff;
+            border-bottom: 1px solid #d8dde8;
+            padding: 8px 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            justify-content: center;
+            justify-content: space-between;
+            gap: 12px;
         }
 
         h1 {
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 700;
-            color: #e6edf3;
+            color: #1a1a2e;
         }
 
-        .meta-info { color: #8b949e; font-size: 9px; }
-        .meta-info span { color: #58a6ff; font-weight: 600; }
+        .meta-info {
+            color: #6b7a99;
+            font-size: 11px;
+        }
 
-        main { padding: 6px 10px; }
+        .meta-info span {
+            color: #4a7fd4;
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 860px;
+            margin: 16px auto;
+            padding: 0 16px;
+        }
 
         .controls-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
 
-        .filters { display: flex; gap: 3px; flex-wrap: wrap; }
+        .filters { display: flex; gap: 5px; flex-wrap: wrap; }
 
         .filter-btn {
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: #8b949e;
-            padding: 2px 9px;
-            border-radius: 3px;
-            font-size: 9px;
+            background: #fff;
+            border: 1px solid #c8d0e0;
+            color: #6b7a99;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s;
         }
 
-        .filter-btn:hover { background: #30363d; color: #e6edf3; }
+        .filter-btn:hover {
+            background: #e8edf8;
+            color: #4a7fd4;
+        }
 
         .filter-btn.active {
-            background: #388bfd;
+            background: #4a7fd4;
             color: #fff;
-            border-color: #388bfd;
+            border-color: #4a7fd4;
         }
 
         .copy-btn {
-            background: #12261e;
-            border: 1px solid #238636;
-            color: #3fb950;
-            padding: 2px 9px;
-            border-radius: 3px;
-            font-size: 9px;
+            background: #fff;
+            border: 1px solid #34a853;
+            color: #34a853;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             transition: background 0.15s;
         }
 
-        .copy-btn:hover { background: #1a3a2a; }
+        .copy-btn:hover { background: #f0faf5; }
 
         .table-container {
-            border: 1px solid #30363d;
-            border-radius: 4px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #d0d7e8;
             overflow: hidden;
             overflow-x: auto;
+            box-shadow: 0 2px 12px rgba(74, 127, 212, 0.07);
         }
 
         table {
@@ -98,93 +115,123 @@
         }
 
         th {
-            background: #161b22;
-            padding: 3px 10px;
+            background: #eef1f8;
+            padding: 10px 16px;
             font-weight: 700;
-            color: #8b949e;
-            font-size: 8.5px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid #30363d;
-            border-right: 1px solid #21262d;
+            color: #3a4a6b;
+            font-size: 12px;
+            border-bottom: 2px solid #d0d7e8;
         }
-
-        th:last-child { border-right: none; }
 
         td {
-            padding: 0 10px;
-            line-height: 1.7;
-            border-bottom: 1px solid #21262d;
-            border-right: 1px solid #21262d;
-            font-size: 9.5px;
-            color: #e6edf3;
+            padding: 10px 16px;
+            border-bottom: 1px solid #eef1f8;
+            font-size: 12.5px;
+            color: #3a4a6b;
+            vertical-align: middle;
         }
 
-        td:last-child { border-right: none; }
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background: #161b22; }
 
-        .sl-no { color: #8b949e; font-size: 8.5px; text-align: right; }
+        tr:hover td { background: #f5f8ff; }
 
-        .symbol-name { font-weight: 700; color: #e6edf3; font-size: 9.5px; }
+        .sl-no {
+            color: #b0b8cc;
+            font-size: 11px;
+            text-align: center;
+            width: 32px;
+        }
+
+        .symbol-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .symbol-icon {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .symbol-name {
+            font-weight: 700;
+            color: #4a7fd4;
+            font-size: 13px;
+            letter-spacing: 0.02em;
+        }
 
         .category-tag {
-            font-size: 8px;
-            text-transform: uppercase;
-            color: #8b949e;
-            background: #21262d;
-            padding: 1px 4px;
-            border-radius: 2px;
-            border: 1px solid #30363d;
+            font-size: 11.5px;
+            color: #3a4a6b;
         }
 
-        .price-value { font-weight: 600; color: #e6edf3; }
+        .price-value {
+            font-weight: 600;
+            color: #1a1a2e;
+            font-size: 12.5px;
+        }
 
-        .date-value { color: #8b949e; font-size: 8.5px; }
+        .date-value {
+            color: #3a4a6b;
+            font-size: 12px;
+        }
 
-        .badges { display: flex; gap: 3px; }
+        .badges { display: flex; gap: 5px; }
 
         .badge {
-            font-size: 8px;
+            font-size: 10px;
             font-weight: 700;
-            padding: 1px 5px;
-            border-radius: 2px;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
         .badge-narrow {
-            background: rgba(63, 185, 80, 0.15);
-            color: #3fb950;
-            border: 1px solid rgba(63, 185, 80, 0.4);
+            background: #e6f4ea;
+            color: #1e8a3c;
+            border: 1px solid #b7dfbf;
         }
 
         .badge-inside {
-            background: rgba(56, 139, 253, 0.15);
-            color: #58a6ff;
-            border: 1px solid rgba(56, 139, 253, 0.4);
+            background: #e8f0fe;
+            color: #4a7fd4;
+            border: 1px solid #b3c6f5;
         }
 
-        .empty-state { text-align: center; padding: 2rem; color: #8b949e; font-size: 10px; }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #9aa3ba;
+            font-size: 12px;
+        }
 
-        .loading-spinner { text-align: center; padding: 1.5rem; color: #8b949e; font-size: 10px; }
+        .loading-spinner {
+            text-align: center;
+            padding: 2rem;
+            color: #9aa3ba;
+            font-size: 12px;
+        }
+
         .loading-spinner::after {
             content: '';
             display: block;
-            width: 18px;
-            height: 18px;
-            margin: 0.5rem auto;
-            border: 2px solid #30363d;
-            border-top-color: #388bfd;
+            width: 22px;
+            height: 22px;
+            margin: 0.6rem auto;
+            border: 2px solid #d0d7e8;
+            border-top-color: #4a7fd4;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         @keyframes spin { to { transform: rotate(360deg); } }
 
         footer {
             text-align: center;
-            padding: 5px;
-            border-top: 1px solid #21262d;
-            color: #484f58;
-            font-size: 8px;
+            padding: 10px;
+            color: #b0b8cc;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -204,7 +251,7 @@
                 <button class="filter-btn" data-filter="Commodities">Commodities</button>
             </div>
             <button class="copy-btn" id="copy-btn" onclick="copyTickers()">
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 Copy Tickers
             </button>
         </div>
@@ -214,9 +261,18 @@
         </div>
     </main>
 
-    <footer>CPR Screener &bull; Updated daily via GitHub Actions at 6:30 PM IST</footer>
+    <footer>CPR Screener &bull; NSE Bhav Copy &bull; Updated daily at 6:30 PM IST</footer>
 
     <script>
+        // CPR icon SVG (inline, like Chartink)
+        const CPR_ICON = `<svg class="symbol-icon" viewBox="0 0 24 24" fill="none" stroke="#4a7fd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+            <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+            <circle cx="12" cy="12" r="4"/>
+            <line x1="7" y1="7" x2="9.5" y2="9.5"/><line x1="14.5" y1="14.5" x2="17" y2="17"/>
+            <line x1="17" y1="7" x2="14.5" y2="9.5"/><line x1="9.5" y1="14.5" x2="7" y2="17"/>
+        </svg>`;
+
         let allData = [];
         let currentDisplayedTickers = [];
         let currentFilter = 'All';
@@ -228,7 +284,7 @@
                 const data = await response.json();
                 allData = data.results;
                 document.getElementById('update-time').innerHTML =
-                    `Last Updated: ${data.generated_at} <span>(Scanned ${data.total_scanned} symbols)</span>`;
+                    `Last Updated: ${data.generated_at} &nbsp;|&nbsp; <span>Scanned ${data.total_scanned} symbols</span>`;
                 renderTable(currentFilter);
             } catch (e) {
                 document.getElementById('table-container').innerHTML =
@@ -254,14 +310,15 @@
             }
 
             const table = document.createElement('table');
+
             const thead = document.createElement('thead');
             thead.innerHTML = `<tr>
                 <th>#</th>
                 <th>Symbol</th>
                 <th>Category</th>
-                <th>CMP (Close)</th>
-                <th>EOD Date</th>
-                <th>CPR Setups</th>
+                <th>Close</th>
+                <th>Date</th>
+                <th>Setup</th>
             </tr>`;
             table.appendChild(thead);
 
@@ -269,14 +326,26 @@
             filteredData.forEach((item, idx) => {
                 const tr = document.createElement('tr');
                 let badges = '';
-                if (item.is_narrow) badges += `<span class="badge badge-narrow">Narrow</span>`;
-                if (item.is_inside) badges += `<span class="badge badge-inside">Inside</span>`;
+                if (item.is_narrow) badges += `<span class="badge badge-narrow">Narrow CPR</span>`;
+                if (item.is_inside) badges += `<span class="badge badge-inside">Inside CPR</span>`;
+
+                // Format date as DD-MM-YYYY like Chartink
+                const dateParts = (item.eod_date || '').split('-');
+                const formattedDate = dateParts.length === 3
+                    ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
+                    : (item.eod_date || '-');
+
                 tr.innerHTML = `
                     <td class="sl-no">${idx + 1}</td>
-                    <td><span class="symbol-name">${item.symbol}</span></td>
+                    <td>
+                        <div class="symbol-cell">
+                            ${CPR_ICON}
+                            <span class="symbol-name">${item.symbol}</span>
+                        </div>
+                    </td>
                     <td><span class="category-tag">${item.category}</span></td>
                     <td><span class="price-value">&#8377;${item.close.toLocaleString()}</span></td>
-                    <td><span class="date-value">${item.eod_date || '-'}</span></td>
+                    <td><span class="date-value">${formattedDate}</span></td>
                     <td><div class="badges">${badges}</div></td>
                 `;
                 tbody.appendChild(tr);
