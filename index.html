@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPR Screener</title>
+    <title>CPR Screener Pro</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #eef1f8;
-            color: #1a1a2e;
-            font-size: 9px;
+            background: #0f172a; /* Dark theme to match TradingView Pro */
+            color: #f8fafc;
+            font-size: 11px;
             min-height: 100vh;
         }
 
         header {
-            background: #fff;
-            border-bottom: 1px solid #d8dde8;
-            padding: 8px 20px;
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -26,39 +26,42 @@
         }
 
         h1 {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
-            color: #1a1a2e;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .meta-info {
-            color: #6b7a99;
+            color: #94a3b8;
             font-size: 11px;
         }
 
         .meta-info span {
-            color: #4a7fd4;
+            color: #38bdf8;
             font-weight: 600;
         }
 
         .data-banner {
-            background: #f0f5ff;
-            border-bottom: 1px solid #c8d5ef;
-            padding: 4px 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            padding: 6px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 16px;
             font-size: 11px;
-            color: #4a5a7a;
+            color: #94a3b8;
         }
 
-        .data-banner .label { font-weight: 600; color: #3a4a6b; }
-        .data-banner .value { color: #4a7fd4; font-weight: 700; }
-        .data-banner .dot { color: #c0c8d8; }
+        .data-banner .label { font-weight: 600; color: #cbd5e1; }
+        .data-banner .value { color: #38bdf8; font-weight: 700; }
+        .data-banner .dot { color: #475569; }
 
         main {
-            max-width: 860px;
+            max-width: 1200px;
             margin: 16px auto;
             padding: 0 16px;
         }
@@ -67,17 +70,33 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 12px;
+        }
+
+        .tabs { display: flex; gap: 8px; background: #1e293b; padding: 4px; border-radius: 8px; }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
         }
 
         .filters { display: flex; gap: 5px; flex-wrap: wrap; }
-
         .filter-btn {
-            background: #fff;
-            border: 1px solid #c8d0e0;
-            color: #6b7a99;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 11px;
@@ -85,199 +104,107 @@
             cursor: pointer;
             transition: all 0.15s;
         }
+        .filter-btn:hover { background: #334155; }
+        .filter-btn.active { background: #38bdf8; color: #0f172a; border-color: #38bdf8; }
 
-        .filter-btn:hover {
-            background: #e8edf8;
-            color: #4a7fd4;
-        }
-
-        .filter-btn.active {
-            background: #4a7fd4;
-            color: #fff;
-            border-color: #4a7fd4;
-        }
-
-        .copy-btn {
-            background: #fff;
-            border: 1px solid #34a853;
-            color: #34a853;
-            padding: 4px 12px;
-            border-radius: 20px;
+        .action-btns { display: flex; gap: 8px; }
+        
+        .btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
-            transition: background 0.15s;
+            gap: 6px;
+            transition: all 0.2s;
         }
+        .btn:hover { background: #334155; }
+        .btn-refresh { border-color: #f59e0b; color: #f59e0b; }
+        .btn-refresh:hover { background: #451a03; }
+        .btn-refresh .spin { display: inline-block; animation: spin 0.8s linear infinite; }
 
-        .copy-btn:hover { background: #f0faf5; }
-
-        .refresh-btn {
-            background: #fff;
-            border: 1px solid #e67e22;
-            color: #e67e22;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: background 0.15s;
-        }
-
-        .refresh-btn:hover { background: #fff8f0; }
-        .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .refresh-btn .spin {
-            display: inline-block;
-            animation: spin 0.8s linear infinite;
-        }
-
+        /* Classic View */
         .table-container {
-            background: #fff;
+            background: #1e293b;
             border-radius: 10px;
-            border: 1px solid #d0d7e8;
+            border: 1px solid #334155;
             overflow: hidden;
             overflow-x: auto;
-            box-shadow: 0 2px 12px rgba(74, 127, 212, 0.07);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            white-space: nowrap;
-        }
-
+        table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
         th {
-            background: #eef1f8;
+            background: #0f172a;
             padding: 10px 16px;
             font-weight: 700;
-            color: #3a4a6b;
-            font-size: 12px;
-            border-bottom: 2px solid #d0d7e8;
+            color: #94a3b8;
+            font-size: 11px;
+            border-bottom: 1px solid #334155;
         }
-
         td {
             padding: 10px 16px;
-            border-bottom: 1px solid #eef1f8;
-            font-size: 12.5px;
-            color: #3a4a6b;
+            border-bottom: 1px solid #1e293b;
+            font-size: 12px;
+            color: #cbd5e1;
             vertical-align: middle;
         }
+        tr:hover td { background: #334155; }
 
-        tr:last-child td { border-bottom: none; }
-
-        tr:hover td { background: #f5f8ff; }
-
-        .sl-no {
-            color: #b0b8cc;
-            font-size: 11px;
-            text-align: center;
-            width: 32px;
+        /* Pro View */
+        .pro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 16px;
         }
-
-        .symbol-cell {
+        
+        .pro-panel {
+            background: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            overflow: hidden;
+        }
+        .pro-panel-header {
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 12px;
+            border-bottom: 1px solid #334155;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
         }
+        .hdr-bull { background: #064e3b; color: #34d399; }
+        .hdr-bear { background: #7f1d1d; color: #f87171; }
+        .hdr-rev { background: #78350f; color: #fbbf24; }
+        
+        .pro-table th { padding: 6px 8px; font-size: 10px; }
+        .pro-table td { padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #334155; }
+        
+        /* Cell Colors based on PineScript */
+        .bg-green { background: rgba(34, 197, 94, 0.2) !important; color: #4ade80 !important; }
+        .bg-red { background: rgba(239, 68, 68, 0.2) !important; color: #f87171 !important; }
+        .bg-yellow { background: rgba(234, 179, 8, 0.2) !important; color: #fde047 !important; }
+        .bg-orange { background: rgba(249, 115, 22, 0.2) !important; color: #fdba74 !important; }
+        .bg-dark { background: #1e293b !important; color: #94a3b8 !important; }
+        
+        .txt-green { color: #4ade80 !important; }
+        .txt-red { color: #f87171 !important; }
 
-        .symbol-icon {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
-            opacity: 0.7;
-        }
-
-        .symbol-name {
-            font-weight: 700;
-            color: #4a7fd4;
-            font-size: 13px;
-            letter-spacing: 0.02em;
-        }
-
-        .category-tag {
-            font-size: 11.5px;
-            color: #3a4a6b;
-        }
-
-        .price-value {
-            font-weight: 600;
-            color: #1a1a2e;
-            font-size: 12.5px;
-        }
-
-        .date-value {
-            color: #3a4a6b;
-            font-size: 12px;
-        }
-
-        .badges { display: flex; gap: 5px; }
-
-        .badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .badge-narrow {
-            background: #e6f4ea;
-            color: #1e8a3c;
-            border: 1px solid #b7dfbf;
-        }
-
-        .badge-inside {
-            background: #e8f0fe;
-            color: #4a7fd4;
-            border: 1px solid #b3c6f5;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #9aa3ba;
-            font-size: 12px;
-        }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 2rem;
-            color: #9aa3ba;
-            font-size: 12px;
-        }
-
-        .loading-spinner::after {
-            content: '';
-            display: block;
-            width: 22px;
-            height: 22px;
-            margin: 0.6rem auto;
-            border: 2px solid #d0d7e8;
-            border-top-color: #4a7fd4;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
+        .symbol-cell { font-weight: 700; }
+        
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            color: #b0b8cc;
-            font-size: 10px;
-        }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>&#9685; CPR Screener</h1>
+        <h1>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
+            CPR Scanner Pro V6.1
+        </h1>
         <div class="meta-info" id="update-time">Loading...</div>
     </header>
     <div class="data-banner" id="data-banner" style="display:none">
@@ -290,196 +217,241 @@
 
     <main>
         <div class="controls-row">
-            <div class="filters">
+            <div class="tabs">
+                <button class="tab-btn active" id="tab-pro" onclick="switchTab('pro')">Pro Scanner</button>
+                <button class="tab-btn" id="tab-classic" onclick="switchTab('classic')">Classic View</button>
+            </div>
+            
+            <div class="filters" id="classic-filters" style="display:none;">
                 <button class="filter-btn" data-filter="All">All Assets</button>
                 <button class="filter-btn active" data-filter="FNO">F&O Stocks</button>
                 <button class="filter-btn" data-filter="Indices">Indices</button>
-                <button class="filter-btn" data-filter="Commodities">Commodities</button>
             </div>
-            <button class="copy-btn" id="copy-btn" onclick="copyTickers()">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                Copy Tickers
-            </button>
-            <button class="refresh-btn" id="refresh-btn" onclick="refreshData()">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                Refresh Data
-            </button>
+
+            <div class="action-btns">
+                <button class="btn btn-refresh" id="refresh-btn" onclick="refreshData()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                    Refresh Live
+                </button>
+            </div>
         </div>
 
-        <div class="table-container" id="table-container">
-            <div class="loading-spinner">Fetching data...</div>
+        <!-- Classic View -->
+        <div class="table-container" id="classic-container" style="display:none;"></div>
+
+        <!-- Pro View Grid -->
+        <div class="pro-grid" id="pro-container">
+            <div class="pro-panel">
+                <div class="pro-panel-header hdr-bull">
+                    <span>🟢 BULL WATCHLIST</span>
+                    <span id="bull-count">0</span>
+                </div>
+                <div class="table-container" style="border:none; border-radius:0;">
+                    <table class="pro-table" id="bull-table"></table>
+                </div>
+            </div>
+
+            <div class="pro-panel">
+                <div class="pro-panel-header hdr-bear">
+                    <span>🔴 BEAR WATCHLIST</span>
+                    <span id="bear-count">0</span>
+                </div>
+                <div class="table-container" style="border:none; border-radius:0;">
+                    <table class="pro-table" id="bear-table"></table>
+                </div>
+            </div>
+
+            <div class="pro-panel">
+                <div class="pro-panel-header hdr-rev">
+                    <span>🔥 REVERSALS</span>
+                    <span id="rev-count">0</span>
+                </div>
+                <div class="table-container" style="border:none; border-radius:0;">
+                    <table class="pro-table" id="rev-table"></table>
+                </div>
+            </div>
         </div>
     </main>
 
-    <footer>CPR Screener &bull; NSE Bhav Copy &bull; Updated daily at 6:30 PM IST</footer>
-
     <script>
-        // CPR icon SVG (inline, like Chartink)
-        const CPR_ICON = `<svg class="symbol-icon" viewBox="0 0 24 24" fill="none" stroke="#4a7fd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
-            <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="7" y1="7" x2="9.5" y2="9.5"/><line x1="14.5" y1="14.5" x2="17" y2="17"/>
-            <line x1="17" y1="7" x2="14.5" y2="9.5"/><line x1="9.5" y1="14.5" x2="7" y2="17"/>
-        </svg>`;
-
         let allData = [];
-        let currentDisplayedTickers = [];
+        let currentTab = 'pro';
         let currentFilter = 'FNO';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-pro').classList.toggle('active', tab === 'pro');
+            document.getElementById('tab-classic').classList.toggle('active', tab === 'classic');
+            document.getElementById('pro-container').style.display = tab === 'pro' ? 'grid' : 'none';
+            document.getElementById('classic-container').style.display = tab === 'classic' ? 'block' : 'none';
+            document.getElementById('classic-filters').style.display = tab === 'classic' ? 'flex' : 'none';
+            render();
+        }
 
         async function fetchData() {
             try {
                 const response = await fetch('cpr_data.json?t=' + new Date().getTime());
                 if (!response.ok) throw new Error("Not found");
                 const data = await response.json();
-                allData = data.results;
-                const genAt = data.generated_at || '';
-                // Show banner
+                allData = data.results || [];
+                
                 document.getElementById('data-banner').style.display = 'flex';
-                // EOD date is the eod_date of first result
-                const eodDate = allData.length > 0 ? allData[0].eod_date : 'N/A';
-                // Format eod_date as DD-MM-YYYY
-                const dp = (eodDate || '').split('-');
-                const fmtEod = dp.length === 3 ? `${dp[2]}-${dp[1]}-${dp[0]}` : eodDate;
-                document.getElementById('banner-date').innerText = fmtEod;
-                document.getElementById('banner-time').innerText = genAt;
+                document.getElementById('banner-date').innerText = allData.length > 0 ? allData[0].eod_date : 'N/A';
+                document.getElementById('banner-time').innerText = data.generated_at;
                 document.getElementById('banner-count').innerText = data.total_scanned;
-                document.getElementById('update-time').innerHTML =
-                    `Last Updated: <span>${genAt}</span>`;
-                renderTable(currentFilter);
+                document.getElementById('update-time').innerHTML = `Live Updated: <span>${data.generated_at}</span>`;
+                
+                render();
             } catch (e) {
-                document.getElementById('table-container').innerHTML =
-                    `<div class="empty-state">No data yet. Wait for GitHub Action to run at 6:30 PM IST.</div>`;
-                document.getElementById('update-time').innerText = "Data not available";
+                document.getElementById('pro-container').innerHTML = `<div style="padding:2rem;text-align:center;color:#94a3b8;">No data available. Trigger a refresh.</div>`;
             }
         }
 
-        function renderTable(filter) {
-            currentFilter = filter;
-            const container = document.getElementById('table-container');
-            container.innerHTML = '';
+        function getZoneClass(z) {
+            if (!z) return 'bg-dark';
+            if (z.includes('▲R')) return 'bg-green';
+            if (z === '▲Pvt') return 'bg-green';
+            if (z === 'InCPR') return 'bg-yellow';
+            if (z === '▼TC' || z === '▼Pvt') return 'bg-orange';
+            if (z.includes('▼S')) return 'bg-red';
+            return 'bg-dark';
+        }
 
-            const filteredData = filter === 'All'
-                ? allData
-                : allData.filter(item => item.category === filter);
-
-            currentDisplayedTickers = filteredData.map(item => item.symbol);
-
-            if (filteredData.length === 0) {
-                container.innerHTML = `<div class="empty-state">No ${filter === 'All' ? '' : filter} setups found today.</div>`;
+        function renderProTable(tableId, dataList, type) {
+            const tbl = document.getElementById(tableId);
+            document.getElementById(tableId.replace('-table', '-count')).innerText = dataList.length;
+            
+            if (dataList.length === 0) {
+                tbl.innerHTML = `<tr><td style="text-align:center; color:#64748b; padding:2rem;">No ${type} signals</td></tr>`;
                 return;
             }
 
-            const table = document.createElement('table');
-
-            const thead = document.createElement('thead');
-            thead.innerHTML = `<tr>
+            let html = `<thead><tr>
                 <th>#</th>
                 <th>Symbol</th>
-                <th>Category</th>
-                <th>Close</th>
-                <th>Date</th>
+                <th>Daily</th>
+                <th>Weekly</th>
+                <th>ICPR</th>
                 <th>Setup</th>
-            </tr>`;
-            table.appendChild(thead);
+                <th>NLvl%</th>
+                <th>Vol x</th>
+            </tr></thead><tbody>`;
 
-            const tbody = document.createElement('tbody');
-            filteredData.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                let badges = '';
-                if (item.is_narrow) badges += `<span class="badge badge-narrow">Narrow CPR</span>`;
-                if (item.is_inside) badges += `<span class="badge badge-inside">Inside CPR</span>`;
-
-                // Format date as DD-MM-YYYY like Chartink
-                const dateParts = (item.eod_date || '').split('-');
-                const formattedDate = dateParts.length === 3
-                    ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
-                    : (item.eod_date || '-');
-
-                tr.innerHTML = `
-                    <td class="sl-no">${idx + 1}</td>
-                    <td>
-                        <div class="symbol-cell">
-                            ${CPR_ICON}
-                            <span class="symbol-name">${item.symbol}</span>
-                        </div>
-                    </td>
-                    <td><span class="category-tag">${item.category}</span></td>
-                    <td><span class="price-value">&#8377;${item.close.toLocaleString()}</span></td>
-                    <td><span class="date-value">${formattedDate}</span></td>
-                    <td><div class="badges">${badges}</div></td>
-                `;
-                tbody.appendChild(tr);
+            // Sort by Setup Signal, then NLvl%
+            dataList.sort((a, b) => {
+                let aSig = a.setup && a.setup.startsWith("1") ? 1 : 0;
+                let bSig = b.setup && b.setup.startsWith("1") ? 1 : 0;
+                if (aSig !== bSig) return bSig - aSig;
+                let aN = a.nl_pct || 0;
+                let bN = b.nl_pct || 0;
+                return bN - aN;
             });
-            table.appendChild(tbody);
-            container.appendChild(table);
+
+            dataList.forEach((r, idx) => {
+                let symPrefix = "";
+                let symColor = "";
+                if (r.revStr === "BearRev") { symPrefix = "▼ "; symColor = "txt-red"; }
+                else if (r.revStr === "BullRev") { symPrefix = "▲ "; symColor = "txt-green"; }
+                else if (r.apB) { symPrefix = "↑ "; symColor = "txt-green"; }
+                else if (r.apBr) { symPrefix = "↓ "; symColor = "txt-red"; }
+
+                let setupTxt = "-";
+                let setupCls = "bg-dark";
+                if (r.setup) {
+                    let parts = r.setup.split("|");
+                    if (parts[0] === "1" || parts[0] === "-1") {
+                        setupTxt = "✔ " + (parseFloat(parts[1])*100).toFixed(2) + "%";
+                        setupCls = parts[0] === "1" ? "bg-green" : "bg-red";
+                    }
+                }
+
+                html += `<tr>
+                    <td style="color:#64748b">${idx + 1}</td>
+                    <td class="symbol-cell ${symColor}">${symPrefix}${r.symbol}</td>
+                    <td class="${getZoneClass(r.dZone)}">${r.dZone || '-'}</td>
+                    <td class="${getZoneClass(r.wZone)}">${r.wZone || '-'}</td>
+                    <td class="${r.icpr ? 'bg-yellow' : 'bg-dark'}" style="text-align:center">${r.icpr ? '✓' : '-'}</td>
+                    <td class="${setupCls}">${setupTxt}</td>
+                    <td class="${r.dZone && r.dZone.includes('▲') ? 'bg-green' : r.dZone && r.dZone.includes('▼') ? 'bg-red' : 'bg-yellow'}">${r.nl_pct ? r.nl_pct + '%' : '-'}</td>
+                    <td class="${r.vRatio >= 2 ? 'bg-green' : r.vRatio >= 1 ? 'bg-yellow' : 'bg-red'}">${r.vRatio ? r.vRatio + 'x' : '-'}</td>
+                </tr>`;
+            });
+            html += `</tbody>`;
+            tbl.innerHTML = html;
+        }
+
+        function render() {
+            if (currentTab === 'pro') {
+                const bulls = allData.filter(r => r.bias === 'BULL' || r.bias === 'Both' || r.apB);
+                const bears = allData.filter(r => r.bias === 'BEAR' || r.bias === 'Both' || r.apBr);
+                const revs = allData.filter(r => r.revStr);
+                
+                renderProTable('bull-table', bulls, 'Bull');
+                renderProTable('bear-table', bears, 'Bear');
+                renderProTable('rev-table', revs, 'Reversals');
+            } else {
+                const container = document.getElementById('classic-container');
+                const fData = currentFilter === 'All' ? allData : allData.filter(i => i.category === currentFilter);
+                
+                if (!fData.length) {
+                    container.innerHTML = `<div style="padding:2rem;text-align:center;color:#94a3b8;">No data for ${currentFilter}</div>`;
+                    return;
+                }
+
+                let html = `<table><thead><tr>
+                    <th>Symbol</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th>
+                </tr></thead><tbody>`;
+                
+                fData.forEach(r => {
+                    html += `<tr>
+                        <td style="color:#38bdf8; font-weight:700;">${r.symbol}</td>
+                        <td>${r.close}</td>
+                        <td class="${r.bias === 'BULL' ? 'txt-green' : r.bias === 'BEAR' ? 'txt-red' : ''}">${r.bias}</td>
+                        <td class="${getZoneClass(r.dZone)}">${r.dZone || '-'}</td>
+                        <td class="${getZoneClass(r.wZone)}">${r.wZone || '-'}</td>
+                        <td>${r.setup && r.setup.startsWith('1') ? 'Bull Setup' : r.setup && r.setup.startsWith('-1') ? 'Bear Setup' : '-'}</td>
+                    </tr>`;
+                });
+                html += `</tbody></table>`;
+                container.innerHTML = html;
+            }
         }
 
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', e => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                renderTable(e.target.getAttribute('data-filter'));
+                currentFilter = e.target.getAttribute('data-filter');
+                render();
             });
         });
-
-        function copyTickers() {
-            if (!currentDisplayedTickers.length) return;
-            navigator.clipboard.writeText(currentDisplayedTickers.join(', ')).then(() => {
-                const btn = document.getElementById('copy-btn');
-                const orig = btn.innerHTML;
-                btn.innerHTML = '&#10003; Copied!';
-                setTimeout(() => { btn.innerHTML = orig; }, 2000);
-            }).catch(() => alert("Copy failed."));
-        }
 
         async function refreshData() {
             let token = localStorage.getItem('github_pat');
             if (!token) {
-                token = prompt("Please enter your GitHub Personal Access Token (PAT) to trigger the refresh.\\n\\nIt will be saved in your browser for future use. Ensure it has 'workflow' scope.");
+                token = prompt("Enter GitHub PAT to trigger live refresh:");
                 if (!token) return;
                 localStorage.setItem('github_pat', token);
             }
-
             const btn = document.getElementById('refresh-btn');
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<span class="spin">&#8635;</span> Starting...';
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<span class="spin">&#8635;</span> Running...';
             btn.disabled = true;
 
             try {
                 const response = await fetch('https://api.github.com/repos/jeethu888/cpr-screener/actions/workflows/update_cpr.yml/dispatches', {
                     method: 'POST',
-                    headers: {
-                        'Accept': 'application/vnd.github+json',
-                        'Authorization': `Bearer ${token}`,
-                        'X-GitHub-Api-Version': '2022-11-28',
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Accept': 'application/vnd.github+json', 'Authorization': `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ref: 'main' })
                 });
-
-                if (response.status === 204) {
-                    btn.innerHTML = '&#10003; Triggered!';
-                    btn.style.color = '#34a853';
-                    btn.style.borderColor = '#34a853';
-                    alert("Data refresh successfully triggered!\\n\\nThe GitHub Action is now running. It takes about 1-2 minutes to complete.\\nPlease manually refresh the page after a couple of minutes to see the new data.");
-                } else if (response.status === 401 || response.status === 404) {
-                    localStorage.removeItem('github_pat');
-                    alert("Authentication failed.\\nYour token might be invalid, expired, or missing the 'workflow' scope.\\nPlease click Refresh Data to enter a new token.");
-                } else {
-                    const errText = await response.text();
-                    throw new Error(`Status ${response.status}: ${errText}`);
-                }
+                if (response.status === 204) alert("Live scan triggered successfully! Give it 30-60 seconds, then manually refresh the page.");
+                else if (response.status === 401 || response.status === 404) { localStorage.removeItem('github_pat'); alert("Auth failed. Token invalid."); }
+                else throw new Error(`Status ${response.status}`);
             } catch (error) {
-                console.error("Error triggering workflow:", error);
-                alert("Failed to trigger refresh: " + error.message);
+                alert("Failed to trigger: " + error.message);
             } finally {
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.disabled = false;
-                    btn.style.color = '';
-                    btn.style.borderColor = '';
-                }, 3000);
+                btn.innerHTML = orig;
+                btn.disabled = false;
             }
         }
 
