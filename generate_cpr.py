@@ -35,8 +35,11 @@ def get_fyers_client():
     access_token = os.environ.get("FYERS_ACCESS_TOKEN")
     
     if not access_token:
-        print("ERROR: FYERS_ACCESS_TOKEN not set in environment.")
-        return None
+        print("FYERS_ACCESS_TOKEN not set in environment.")
+        access_token = input("Enter your Fyers Access Token: ").strip()
+        if not access_token:
+            print("ERROR: No token provided.")
+            return None
         
     return fyersModel.FyersModel(client_id=client_id, is_async=False, token=access_token, log_path="")
 
