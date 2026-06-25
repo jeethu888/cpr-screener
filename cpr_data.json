@@ -18,7 +18,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "BANK NIFTY",
@@ -54,7 +54,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "360ONE",
@@ -108,7 +108,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": true,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ADANIENSOL",
@@ -180,7 +180,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ALKEM",
@@ -216,7 +216,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ANGELONE",
@@ -234,7 +234,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "APLAPOLLO",
@@ -306,7 +306,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "AUBANK",
@@ -324,7 +324,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "AUROPHARMA",
@@ -396,7 +396,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "BAJAJHLDNG",
@@ -612,7 +612,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "BPCL",
@@ -630,7 +630,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "BRITANNIA",
@@ -666,7 +666,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "CAMS",
@@ -684,7 +684,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "CANBK",
@@ -720,7 +720,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "CGPOWER",
@@ -738,7 +738,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "CHOLAFIN",
@@ -774,7 +774,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "COALINDIA",
@@ -828,7 +828,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "COLPAL",
@@ -918,7 +918,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "DELHIVERY",
@@ -936,7 +936,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "DIXON",
@@ -954,7 +954,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "DLF",
@@ -972,7 +972,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "DMART",
@@ -1008,7 +1008,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "EICHERMOT",
@@ -1026,7 +1026,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ETERNAL",
@@ -1044,7 +1044,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "EXIDEIND",
@@ -1062,7 +1062,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "FEDERALBNK",
@@ -1152,7 +1152,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "GODFRYPHLP",
@@ -1206,7 +1206,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "GRASIM",
@@ -1224,7 +1224,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "GVT&D",
@@ -1260,7 +1260,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "HCLTECH",
@@ -1278,7 +1278,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "HDFCAMC",
@@ -1296,7 +1296,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "HDFCBANK",
@@ -1314,7 +1314,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "HEROMOTOCO",
@@ -1350,7 +1350,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "HINDPETRO",
@@ -1368,7 +1368,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "HINDUNILVR",
@@ -1386,7 +1386,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "HINDZINC",
@@ -1440,7 +1440,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ICICIGI",
@@ -1458,7 +1458,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ICICIPRULI",
@@ -1476,7 +1476,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "IDEA",
@@ -1512,7 +1512,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "INDHOTEL",
@@ -1548,7 +1548,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "INDIGO",
@@ -1566,7 +1566,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "INDUSINDBK",
@@ -1584,7 +1584,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "INDUSTOWER",
@@ -1620,7 +1620,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "IOC",
@@ -1638,7 +1638,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "IRFC",
@@ -1656,7 +1656,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ITC",
@@ -1674,7 +1674,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "JINDALSTEL",
@@ -1746,7 +1746,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "KALYANKJIL",
@@ -1818,7 +1818,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "KOTAKBANK",
@@ -1854,7 +1854,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "LAURUSLABS",
@@ -1962,7 +1962,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "M&M",
@@ -1998,7 +1998,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "MARUTI",
@@ -2070,7 +2070,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "MPHASIS",
@@ -2142,7 +2142,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "NAUKRI",
@@ -2160,7 +2160,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "NBCC",
@@ -2214,7 +2214,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "NMDC",
@@ -2268,7 +2268,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "NYKAA",
@@ -2286,7 +2286,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "OBEROIRLTY",
@@ -2322,7 +2322,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "OIL",
@@ -2358,7 +2358,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "PAGEIND",
@@ -2574,7 +2574,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "POLYCAB",
@@ -2646,7 +2646,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "RADICO",
@@ -2736,7 +2736,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "SAIL",
@@ -2880,7 +2880,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "SONACOMS",
@@ -2898,7 +2898,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "SRF",
@@ -2916,7 +2916,7 @@
             "apB": true,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "SUNPHARMA",
@@ -2934,7 +2934,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "SUPREMEIND",
@@ -2970,7 +2970,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "TATACONSUM",
@@ -3006,7 +3006,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "TATAPOWER",
@@ -3042,7 +3042,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "TECHM",
@@ -3114,7 +3114,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": false
+            "narrow_cpr": true
         },
         {
             "symbol": "TRENT",
@@ -3312,7 +3312,7 @@
             "apB": false,
             "apBr": true,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "YESBANK",
@@ -3330,7 +3330,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         },
         {
             "symbol": "ZYDUSLIFE",
@@ -3348,7 +3348,7 @@
             "apB": false,
             "apBr": false,
             "inside_cpr": false,
-            "narrow_cpr": true
+            "narrow_cpr": false
         }
     ]
 }

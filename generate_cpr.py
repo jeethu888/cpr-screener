@@ -292,8 +292,8 @@ def main():
         
         # Calculate Narrow CPR and Inside CPR
         _cpr_width = abs(_dtc - _dbc)
-        _yesterday_range = _dh2 - _dl2
-        _narrow_cpr = _cpr_width < (_yesterday_range * 0.5) if _yesterday_range > 0 else False
+        # Narrow CPR: CPR width is less than 0.1% of close price
+        _narrow_cpr = _cpr_width < (_lc * 0.001) if _lc > 0 else False
         # Inside CPR: Today's CPR is inside Yesterday's CPR (same as icpr)
         _inside_cpr = _icpr
 
