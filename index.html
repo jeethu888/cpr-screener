@@ -382,9 +382,9 @@
 
         function render() {
             if (currentTab === 'pro') {
-                const bulls = allData.filter(r => r.bias === 'BULL' || r.bias === 'Both' || r.apB);
-                const bears = allData.filter(r => r.bias === 'BEAR' || r.bias === 'Both' || r.apBr);
-                const revs = allData.filter(r => r.revStr);
+                const bulls = allData.filter(r => (r.bias === 'BULL' || r.bias === 'Both' || r.apB) && (r.narrow_cpr || r.inside_cpr));
+                const bears = allData.filter(r => (r.bias === 'BEAR' || r.bias === 'Both' || r.apBr) && (r.narrow_cpr || r.inside_cpr));
+                const revs = allData.filter(r => r.revStr && (r.narrow_cpr || r.inside_cpr));
                 
                 renderProTable('bull-table', bulls, 'Bull');
                 renderProTable('bear-table', bears, 'Bear');
