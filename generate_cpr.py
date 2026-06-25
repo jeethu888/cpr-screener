@@ -289,6 +289,12 @@ def main():
         _yytc = max((_ypiv - _yybc) + _ypiv, _yybc)
         _yybc = min((_ypiv - _yybc) + _ypiv, _yybc)
         _icpr = _dtc <= max(_yytc, _yybc) and _dbc >= min(_yytc, _yybc)
+        
+        # Calculate Narrow CPR and Inside CPR
+        _cpr_width = abs(_dtc - _dbc)
+        _yesterday_range = _dh2 - _dl2
+        _narrow_cpr = _cpr_width < (_yesterday_range * 0.5) if _yesterday_range > 0 else False
+        _inside_cpr = _currH <= _dtc and _currL >= _dbc
 
         dCode = get_daily_code(_lc, _dtc, _dbc, _dr1, _ds1, _pdh, _pdl)
         wCode = get_weekly_code(_lc, _wpiv)
@@ -349,7 +355,9 @@ def main():
                 "vRatio": round(_vRatio, 2),
                 "revStr": _revStr,
                 "apB": bool(_apB2),
-                "apBr": bool(_apBr2)
+                "apBr": bool(_apBr2),
+                "narrow_cpr": bool(_narrow_cpr),
+                "inside_cpr": bool(_inside_cpr)
             })
 
         time.sleep(0.05)

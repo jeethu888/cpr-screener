@@ -399,17 +399,20 @@
                 }
 
                 let html = `<table><thead><tr>
-                    <th>Symbol</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th>
+                    <th>#</th><th>Symbol</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th><th>Narrow CPR</th><th>Inside CPR</th>
                 </tr></thead><tbody>`;
                 
-                fData.forEach(r => {
+                fData.forEach((r, idx) => {
                     html += `<tr>
+                        <td style="color:#64748b;">${idx + 1}</td>
                         <td style="color:#38bdf8; font-weight:700;">${r.symbol}</td>
                         <td>${r.close}</td>
                         <td class="${r.bias === 'BULL' ? 'txt-green' : r.bias === 'BEAR' ? 'txt-red' : ''}">${r.bias}</td>
                         <td class="${getZoneClass(r.dZone)}">${r.dZone || '-'}</td>
                         <td class="${getZoneClass(r.wZone)}">${r.wZone || '-'}</td>
                         <td>${r.setup && r.setup.startsWith('1') ? 'Bull Setup' : r.setup && r.setup.startsWith('-1') ? 'Bear Setup' : '-'}</td>
+                        <td class="${r.narrow_cpr ? 'bg-green' : 'bg-dark'}" style="text-align:center">${r.narrow_cpr ? '✓' : '-'}</td>
+                        <td class="${r.inside_cpr ? 'bg-yellow' : 'bg-dark'}" style="text-align:center">${r.inside_cpr ? '✓' : '-'}</td>
                     </tr>`;
                 });
                 html += `</tbody></table>`;
