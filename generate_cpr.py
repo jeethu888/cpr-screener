@@ -96,13 +96,12 @@ def get_weekly_code(c, wpiv):
     return "WBull" if c >= wpiv else "WBear"
 
 def get_bias(dCode, wCode):
-    def is_bear(c): return c in ["Neutral", "WBear", "VBear"]
-    def is_bull(c): return c in ["Neutral", "WBull", "VBull"]
-    bear = is_bear(dCode) and is_bear(wCode)
-    bull = is_bull(dCode) and is_bull(wCode)
-    if bear and bull: return "Both"
-    if bear: return "BEAR"
-    if bull: return "BULL"
+    bull_codes = {"WBull", "VBull", "Neutral"}
+    bear_codes = {"WBear", "VBear", "Neutral"}
+    if wCode == "WBull" and dCode in bull_codes:
+        return "BULL"
+    if wCode == "WBear" and dCode in bear_codes:
+        return "BEAR"
     return "NONE"
 
 def near_level(val, lvl, thresh):
@@ -220,6 +219,16 @@ def main():
             today_candle = last_history_candle
             yest_candle = candles[-2]
             yest2_candle = candles[-3] if len(candles) > 2 else yest_candle
+
+            if quote:
+                today_candle = [
+                    today_candle[0],
+                    quote.get("open_price", today_candle[1]),
+                    max(today_candle[2], quote.get("high_price", today_candle[2])),
+                    min(today_candle[3], quote.get("low_price", today_candle[3])),
+                    quote.get("lp", today_candle[4]),
+                    quote.get("volume", today_candle[5])
+                ]
         else:
             yest_candle = last_history_candle
             yest2_candle = candles[-2]
@@ -344,7 +353,7 @@ def main():
 
         nlPct = get_next_level_dist(dZone, _dtc, _dbc, _dpiv, _dr1, _dr2, _dr3, _dr4, _ds1, _ds2, _ds3, _ds4)
 
-        if bias in ["BEAR", "BULL", "Both"] or _apB2 or _apBr2 or _revStr:
+        if _icpr or _narrow_cpr or _apB2 or _apBr2 or _revStr:
             results.append({
                 "symbol": item["symbol"],
                 "category": item["cat"],
