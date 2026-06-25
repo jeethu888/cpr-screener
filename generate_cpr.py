@@ -294,7 +294,8 @@ def main():
         _cpr_width = abs(_dtc - _dbc)
         _yesterday_range = _dh2 - _dl2
         _narrow_cpr = _cpr_width < (_yesterday_range * 0.5) if _yesterday_range > 0 else False
-        _inside_cpr = _currH <= _dtc and _currL >= _dbc
+        # Inside CPR: Today's CPR is inside Yesterday's CPR (same as icpr)
+        _inside_cpr = _icpr
 
         dCode = get_daily_code(_lc, _dtc, _dbc, _dr1, _ds1, _pdh, _pdl)
         wCode = get_weekly_code(_lc, _wpiv)

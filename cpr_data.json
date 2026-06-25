@@ -107,7 +107,7 @@
             "revStr": "BullRev",
             "apB": false,
             "apBr": false,
-            "inside_cpr": false,
+            "inside_cpr": true,
             "narrow_cpr": true
         },
         {
@@ -197,7 +197,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -287,7 +287,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -305,7 +305,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -467,7 +467,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -575,7 +575,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -773,7 +773,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -953,7 +953,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -971,7 +971,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -1115,7 +1115,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1133,7 +1133,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1151,7 +1151,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1277,7 +1277,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -1511,7 +1511,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -1709,7 +1709,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1727,7 +1727,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1763,7 +1763,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -1835,7 +1835,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": false,
+            "inside_cpr": true,
             "narrow_cpr": false
         },
         {
@@ -1997,7 +1997,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -2051,7 +2051,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2105,7 +2105,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2159,7 +2159,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -2231,7 +2231,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2339,7 +2339,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2501,7 +2501,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2573,7 +2573,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -2627,7 +2627,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2717,7 +2717,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -2933,7 +2933,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": true
         },
         {
@@ -2951,7 +2951,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -3095,7 +3095,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -3221,7 +3221,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
@@ -3257,7 +3257,7 @@
             "revStr": "",
             "apB": false,
             "apBr": false,
-            "inside_cpr": true,
+            "inside_cpr": false,
             "narrow_cpr": false
         },
         {
