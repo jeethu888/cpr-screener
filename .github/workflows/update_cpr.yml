@@ -2,9 +2,14 @@ name: Update CPR Data
 
 on:
   schedule:
-    # Runs at 13:00 UTC every weekday = 6:30 PM IST (after NSE Bhav Copy is available)
-    - cron: '0 13 * * 1-5'
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+    # Auto-run at 4:30 PM IST (11:00 UTC) every weekday
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      fyers_token:
+        description: 'Fyers Access Token (paste your daily token here)'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -33,7 +38,8 @@ jobs:
       - name: Run CPR script
         env:
           FYERS_CLIENT_ID: ${{ secrets.FYERS_CLIENT_ID }}
-          FYERS_ACCESS_TOKEN: ${{ secrets.FYERS_ACCESS_TOKEN }}
+          # Use manually entered token if provided, otherwise fall back to stored secret
+          FYERS_ACCESS_TOKEN: ${{ github.event.inputs.fyers_token || secrets.FYERS_ACCESS_TOKEN }}
         run: python generate_cpr.py
 
       - name: Commit and push updated data
@@ -41,4 +47,4 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add *.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated CPR update $(date +'%Y-%m-%d')" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "EOD CPR update $(date +'%Y-%m-%d %H:%M IST')" && git push)
