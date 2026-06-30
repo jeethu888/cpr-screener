@@ -1,3 +1,4 @@
+import argparse
 import os
 import requests
 import json
@@ -26,6 +27,19 @@ def get_nse_fno_symbols():
     except Exception as e:
         print(f"  Failed to fetch live FNO list: {e}")
         return ["RELIANCE", "HDFCBANK", "ICICIBANK", "INFY", "TCS"]
+
+def fetch_live_quotes(fyers, symbols):
+    quotes_data = {}
+    for i in range(0, len(symbols), 50):
+        chunk = symbols[i:i+50]
+        try:
+            resp = fyers.quotes(data={"symbols": ",".join(chunk)})
+            if resp.get("s") == "ok":
+                for item in resp.get("d", []):
+                    quotes_data[item["n"]] = item["v"]
+        except Exception:
+            pass
+    return quotes_data
 
 def get_fyers_client():
     client_id = os.environ.get("FYERS_CLIENT_ID")
@@ -147,74 +161,31 @@ def get_next_level_dist(z, dt, db, dp, dr1, dr2, dr3, dr4, ds1, ds2, ds3, ds4):
         return abs(lvlTo - lvlFrom) / lvlFrom * 100.0
     return None
 
-def main():
-    ist = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist)
-    
-    range_to = now.strftime("%Y-%m-%d")
-    range_from = (now - timedelta(days=25)).strftime("%Y-%m-%d")
-    
-    fyers = get_fyers_client()
-    if not fyers: return
-
-    fno_symbols = get_nse_fno_symbols()
-    indices = {
-        "NIFTY 50": "NSE:NIFTY50-INDEX",
-        "BANK NIFTY": "NSE:NIFTYBANK-INDEX",
-        "NIFTY IT": "NSE:NIFTYIT-INDEX",
-        "NIFTY FIN SVC": "NSE:FINNIFTY-INDEX"
-    }
-
-    targets = [{"symbol": k, "fyers": v, "cat": "Indices"} for k, v in indices.items()]
-    targets += [{"symbol": s, "fyers": f"NSE:{s}-EQ", "cat": "FNO"} for s in fno_symbols]
-
-    print("Fetching Live Quotes for today's data...")
-    fyers_symbols = [t["fyers"] for t in targets]
-    quotes_data = {}
-    for i in range(0, len(fyers_symbols), 50):
-        chunk = fyers_symbols[i:i+50]
-        try:
-            resp = fyers.quotes(data={"symbols": ",".join(chunk)})
-            if resp.get("s") == "ok":
-                for item in resp.get("d", []):
-                    quotes_data[item["n"]] = item["v"]
-        except Exception as e:
-            pass
-
-    # Session minutes elapsed
-    startOfDay = now.replace(hour=9, minute=15, second=0, microsecond=0)
-    current_time = now
-    elapsed_mins = max(1, int((current_time - startOfDay).total_seconds() / 60))
-    elapsed_mins = min(elapsed_mins, 375)
-    pct_elapsed = max(0.01, elapsed_mins / 375.0)
-
-    results = []
-    print("Fetching historical data and analyzing...")
-    
-    # Test first symbol to verify API is working
-    test_sym = targets[0]["fyers"]
-    test_candles = fetch_history_for_symbol(fyers, test_sym, range_from, range_to)
-    print(f"  API test ({test_sym}): {len(test_candles)} candles returned")
-    if len(test_candles) == 0:
-        print("  WARNING: API returned 0 candles for test symbol. Token may be expired or API is down.")
-        print("  Trying with profile check...")
-        profile = fyers.get_profile()
-        print(f"  Profile response: {profile}")
-        return
-    
+def load_history_data(fyers, targets, range_from, range_to):
+    history_map = {}
     for item in targets:
         candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)
-        if len(candles) < 3: continue
-            
+        if candles:
+            history_map[item["fyers"]] = candles
+        time.sleep(0.05)
+    return history_map
+
+
+def build_results(now, targets, history_map, quotes_data, pct_elapsed):
+    results = []
+    for item in targets:
+        candles = history_map.get(item["fyers"], [])
+        if len(candles) < 3:
+            continue
+
         last_history_candle = candles[-1]
         try:
-            last_history_date = datetime.fromtimestamp(last_history_candle[0], ist).date()
+            last_history_date = datetime.fromtimestamp(last_history_candle[0], pytz.timezone('Asia/Kolkata')).date()
         except:
             last_history_date = now.date()
 
         quote = quotes_data.get(item["fyers"])
 
-        # Determine daily candles
         if last_history_date == now.date():
             today_candle = last_history_candle
             yest_candle = candles[-2]
@@ -237,14 +208,13 @@ def main():
             else:
                 today_candle = last_history_candle
 
-        # Weekly aggregation
         current_week = now.date().isocalendar()[1]
         prev_week_candles = []
         for c in candles:
-            dt = datetime.fromtimestamp(c[0], ist).date()
+            dt = datetime.fromtimestamp(c[0], pytz.timezone('Asia/Kolkata')).date()
             if dt.isocalendar()[1] == current_week - 1:
                 prev_week_candles.append(c)
-                
+
         if prev_week_candles:
             _wh2 = max([c[2] for c in prev_week_candles])
             _wl2 = min([c[3] for c in prev_week_candles])
@@ -258,7 +228,7 @@ def main():
         _dl = yest_candle[3]
         _dc = yest_candle[4]
         _pdvol = yest_candle[5]
-        
+
         _dh2 = yest2_candle[2]
         _dl2 = yest2_candle[3]
         _dc2 = yest2_candle[4]
@@ -269,7 +239,6 @@ def main():
         _dopen = today_candle[1]
         _dvol = today_candle[5]
 
-        # Calculate CPRs
         _dpiv = (_dh + _dl + _dc) / 3
         _dbc = (_dh + _dl) / 2
         _dtc = max((_dpiv - _dbc) + _dpiv, _dbc)
@@ -301,12 +270,9 @@ def main():
         _yytc = max((_ypiv - _yybc) + _ypiv, _yybc)
         _yybc = min((_ypiv - _yybc) + _ypiv, _yybc)
         _icpr = _dtc <= max(_yytc, _yybc) and _dbc >= min(_yytc, _yybc)
-        
-        # Calculate Narrow CPR and Inside CPR
+
         _cpr_width = abs(_dtc - _dbc)
-        # Narrow CPR: CPR width is less than 0.1% of close price
         _narrow_cpr = _cpr_width < (_lc * 0.001) if _lc > 0 else False
-        # Inside CPR: Today's CPR is inside Yesterday's CPR (same as icpr)
         _inside_cpr = _icpr
 
         dCode = get_daily_code(_lc, _dtc, _dbc, _dr1, _ds1, _pdh, _pdl)
@@ -331,7 +297,6 @@ def main():
         _apB2 = (_nl in ["R1", "PDH"]) and (dCode in ["Neutral", "WBull", "VBull"]) and (wCode in ["Neutral", "WBull", "VBull"])
         _apBr2 = (_nl in ["S1", "PDL"]) and (dCode in ["Neutral", "WBear", "VBear"]) and (wCode in ["Neutral", "WBear", "VBear"])
 
-        # Setup
         def opened_near(op, tc, bc, piv, klvl, phl, t):
             return near_level(op, tc, t) or near_level(op, bc, t) or near_level(op, piv, t) or near_level(op, klvl, t) or near_level(op, phl, t)
         nearDBear = opened_near(_dopen, _dtc, _dbc, _dpiv, _ds1, _wl2, 0.006)
@@ -353,36 +318,136 @@ def main():
 
         nlPct = get_next_level_dist(dZone, _dtc, _dbc, _dpiv, _dr1, _dr2, _dr3, _dr4, _ds1, _ds2, _ds3, _ds4)
 
-        if _icpr or _narrow_cpr or _apB2 or _apBr2 or _revStr:
-            results.append({
-                "symbol": item["symbol"],
-                "category": item["cat"],
-                "close": round(_lc, 2),
-                "eod_date": now.strftime("%Y-%m-%d"),
-                "bias": bias,
-                "dZone": dZone,
-                "wZone": wZone,
-                "icpr": bool(_icpr),
-                "setup": setupStr,
-                "nl_pct": round(nlPct, 2) if nlPct else None,
-                "vRatio": round(_vRatio, 2),
-                "revStr": _revStr,
-                "apB": bool(_apB2),
-                "apBr": bool(_apBr2),
-                "narrow_cpr": bool(_narrow_cpr),
-                "inside_cpr": bool(_inside_cpr)
-            })
+        results.append({
+            "symbol": item["symbol"],
+            "fyers_symbol": item["fyers"],
+            "category": item["cat"],
+            "close": round(_lc, 2),
+            "live_price": round(_lc, 2),
+            "eod_date": now.strftime("%Y-%m-%d"),
+            "bias": bias,
+            "dZone": dZone,
+            "wZone": wZone,
+            "icpr": bool(_icpr),
+            "setup": setupStr,
+            "nl_pct": round(nlPct, 2) if nlPct else None,
+            "vRatio": round(_vRatio, 2),
+            "revStr": _revStr,
+            "apB": bool(_apB2),
+            "apBr": bool(_apBr2),
+            "narrow_cpr": bool(_narrow_cpr),
+            "inside_cpr": bool(_inside_cpr),
+            # Full pivot levels for frontend tick-by-tick calc
+            "tc": round(_dtc, 2),
+            "bc": round(_dbc, 2),
+            "pivot": round(_dpiv, 2),
+            "r1": round(_dr1, 2),
+            "r2": round(_dr2, 2),
+            "s1": round(_ds1, 2),
+            "s2": round(_ds2, 2),
+            "dr3": round(_dr3, 2),
+            "dr4": round(_dr4, 2),
+            "ds3": round(_ds3, 2),
+            "ds4": round(_ds4, 2),
+            "pdh": round(_pdh, 2),
+            "pdl": round(_pdl, 2),
+            "weekly_pivot": round(_wpiv, 2),
+            "weekly_tc": round(_wtc, 2),
+            "weekly_bc": round(_wbc, 2),
+            "weekly_r1": round(_wr1, 2),
+            "weekly_s1": round(_ws1, 2),
+            "wh2": round(_wh2, 2),
+            "wl2": round(_wl2, 2),
+            "d_open": round(_dopen, 2)
+        })
 
-        time.sleep(0.05)
+    return results
 
-    output = {
-        "generated_at": now.strftime("%Y-%m-%d %H:%M:%S IST"),
-        "total_scanned": len(targets),
-        "results": results,
+
+def main(args):
+    ist = pytz.timezone('Asia/Kolkata')
+
+    fyers = get_fyers_client()
+    if not fyers:
+        return
+
+    fno_symbols = get_nse_fno_symbols()
+    indices = {
+        "NIFTY 50": "NSE:NIFTY50-INDEX",
+        "BANK NIFTY": "NSE:NIFTYBANK-INDEX",
+        "NIFTY IT": "NSE:NIFTYIT-INDEX",
+        "NIFTY FIN SVC": "NSE:FINNIFTY-INDEX"
     }
-    with open("cpr_data.json", "w") as f:
-        json.dump(output, f, indent=4)
-    print(f"\n[DONE] {len(results)} matches saved to cpr_data.json")
+
+    targets = [{"symbol": k, "fyers": v, "cat": "Indices"} for k, v in indices.items()]
+    targets += [{"symbol": s, "fyers": f"NSE:{s}-EQ", "cat": "FNO"} for s in fno_symbols]
+    fyers_symbols = [t["fyers"] for t in targets]
+
+    now = datetime.now(ist)
+    range_to = now.strftime("%Y-%m-%d")
+    range_from = (now - timedelta(days=25)).strftime("%Y-%m-%d")
+    history_map = load_history_data(fyers, targets, range_from, range_to)
+
+    while True:
+        now = datetime.now(ist)
+        print("Fetching Live Quotes for today's data...")
+        quotes_data = fetch_live_quotes(fyers, fyers_symbols)
+
+        startOfDay = now.replace(hour=9, minute=15, second=0, microsecond=0)
+        current_time = now
+        elapsed_mins = max(1, int((current_time - startOfDay).total_seconds() / 60))
+        elapsed_mins = min(elapsed_mins, 375)
+        pct_elapsed = max(0.01, elapsed_mins / 375.0)
+
+        print("Analyzing live data and generating output...")
+        results = build_results(now, targets, history_map, quotes_data, pct_elapsed)
+
+        output = {
+            "generated_at": now.strftime("%Y-%m-%d %H:%M:%S IST"),
+            "total_scanned": len(targets),
+            "results": results,
+        }
+
+        # If it's >= 4 PM IST, this data is for tomorrow's session, else today's
+        is_after_4pm = now.hour >= 16
+        session_date = (now + timedelta(days=1)).strftime("%Y-%m-%d") if is_after_4pm else now.strftime("%Y-%m-%d")
+        
+        filename = f"cpr_data_{session_date}.json"
+        
+        # Save historical/dated file
+        with open(filename, "w") as f:
+            json.dump(output, f, indent=4)
+            
+        # Also update the main cpr_data.json for backwards compatibility or default loading
+        with open("cpr_data.json", "w") as f:
+            json.dump(output, f, indent=4)
+            
+        print(f"\n[DONE] {len(results)} matches saved to {filename} and cpr_data.json")
+
+        # Update available_dates.json
+        available_dates = []
+        if os.path.exists("available_dates.json"):
+            try:
+                with open("available_dates.json", "r") as f:
+                    available_dates = json.load(f)
+            except:
+                pass
+        
+        if session_date not in available_dates:
+            available_dates.append(session_date)
+            # Sort dates descending
+            available_dates.sort(reverse=True)
+            with open("available_dates.json", "w") as f:
+                json.dump(available_dates, f, indent=4)
+
+        if args.interval <= 0:
+            break
+        print(f"Sleeping {args.interval} seconds before next update...\n")
+        time.sleep(args.interval)
+
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Generate CPR screener data with optional live polling")
+    parser.add_argument("--interval", type=float, default=0.0, help="Poll interval in seconds for live updates. 0 means run once.")
+    args = parser.parse_args()
+    main(args)

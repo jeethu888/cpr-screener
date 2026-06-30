@@ -197,13 +197,13 @@
         .symbol-cell { font-weight: 700; }
         
         @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+    <script src="cpr_logic.js"></script>
 </head>
 <body>
     <header>
         <h1>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
-            CPR Scanner Pro V6.1
+            CPR Scanner Pro V6.2
         </h1>
         <div class="meta-info" id="update-time">Loading...</div>
     </header>
@@ -222,6 +222,15 @@
                 <button class="tab-btn" id="tab-classic" onclick="switchTab('classic')">Classic View</button>
             </div>
             
+            <div style="display:flex; gap: 8px; align-items:center;">
+                <select id="date-select" class="filter-btn" onchange="onDateChange()" style="background:#1e293b; color:#cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 4px 8px; display:none;"></select>
+                
+                <div id="fyers-auth-container" style="display:flex; gap: 4px;">
+                    <input type="password" id="fyers-token" placeholder="Fyers AppId:Token" style="background:#1e293b; color:#cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 4px 8px; width: 160px; font-size:11px;">
+                    <button class="btn" onclick="saveToken()">Save</button>
+                </div>
+            </div>
+
             <div class="filters" id="classic-filters" style="display:none;">
                 <button class="filter-btn" data-filter="All">All Assets</button>
                 <button class="filter-btn active" data-filter="FNO">F&O Stocks</button>
@@ -277,6 +286,16 @@
         let allData = [];
         let currentTab = 'pro';
         let currentFilter = 'FNO';
+        let fyersToken = localStorage.getItem('fyers_token') || "";
+        
+        if(fyersToken) document.getElementById('fyers-token').value = fyersToken;
+
+        function saveToken() {
+            fyersToken = document.getElementById('fyers-token').value.trim();
+            localStorage.setItem('fyers_token', fyersToken);
+            alert("Fyers token saved locally!");
+            if(currentTab === 'pro') startProPolling();
+        }
 
         function switchTab(tab) {
             currentTab = tab;
@@ -285,12 +304,37 @@
             document.getElementById('pro-container').style.display = tab === 'pro' ? 'grid' : 'none';
             document.getElementById('classic-container').style.display = tab === 'classic' ? 'block' : 'none';
             document.getElementById('classic-filters').style.display = tab === 'classic' ? 'flex' : 'none';
+            document.getElementById('fyers-auth-container').style.display = tab === 'pro' ? 'flex' : 'none';
             render();
         }
 
-        async function fetchData() {
+        async function initApp() {
             try {
-                const response = await fetch('cpr_data.json?t=' + new Date().getTime());
+                const res = await fetch('available_dates.json?t=' + new Date().getTime());
+                if (res.ok) {
+                    const dates = await res.json();
+                    if (dates && dates.length > 0) {
+                        const select = document.getElementById('date-select');
+                        select.innerHTML = dates.map(d => `<option value="${d}">${d}</option>`).join('');
+                        select.style.display = 'block';
+                        await fetchData(dates[0]);
+                        return;
+                    }
+                }
+            } catch (e) {}
+            // Fallback
+            await fetchData(null);
+        }
+
+        async function onDateChange() {
+            const date = document.getElementById('date-select').value;
+            await fetchData(date);
+        }
+
+        async function fetchData(dateStr = null) {
+            try {
+                const url = dateStr ? `cpr_data_${dateStr}.json?t=${new Date().getTime()}` : `cpr_data.json?t=${new Date().getTime()}`;
+                const response = await fetch(url);
                 if (!response.ok) throw new Error("Not found");
                 const data = await response.json();
                 allData = data.results || [];
@@ -302,10 +346,99 @@
                 document.getElementById('update-time').innerHTML = `Live Updated: <span>${data.generated_at}</span>`;
                 
                 render();
+
             } catch (e) {
                 document.getElementById('pro-container').innerHTML = `<div style="padding:2rem;text-align:center;color:#94a3b8;">No data available. Trigger a refresh.</div>`;
             }
         }
+
+        let refreshInterval = null;
+        let proRefreshInterval = null;
+
+        function startAutoRefresh() {
+            if (refreshInterval) return;
+            refreshInterval = setInterval(() => {
+                const date = document.getElementById('date-select').value;
+                fetchData(date);
+            }, 5000);
+        }
+
+        function stopAutoRefresh() {
+            if (!refreshInterval) return;
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+
+        async function pollFyersLiveQuotes() {
+            if (!fyersToken || currentTab !== 'pro') return;
+            
+            // Get locked rows (narrow or inside CPR)
+            const lockedRows = allData.filter(r => r.narrow_cpr || r.inside_cpr);
+            if (lockedRows.length === 0) return;
+            
+            const symbolsList = lockedRows.map(r => r.fyers_symbol || "NSE:"+r.symbol+"-EQ");
+            const chunks = [];
+            for (let i = 0; i < symbolsList.length; i += 50) {
+                chunks.push(symbolsList.slice(i, i + 50));
+            }
+            
+            let didUpdate = false;
+            try {
+                for (let chunk of chunks) {
+                    const res = await fetch(`https://api-t1.fyers.in/data/quotes?symbols=${chunk.join(',')}`, {
+                        headers: { "Authorization": fyersToken }
+                    });
+                    if (res.ok) {
+                        const json = await res.json();
+                        if (json.s === "ok" && json.d) {
+                            json.d.forEach(item => {
+                                const sym = item.n;
+                                const v = item.v;
+                                const row = lockedRows.find(r => (r.fyers_symbol || "NSE:"+r.symbol+"-EQ") === sym);
+                                if (row && typeof updateSymbolLogic === 'function') {
+                                    // Pct Elapsed roughly for intraday
+                                    const now = new Date();
+                                    const start = new Date(); start.setHours(9, 15, 0, 0);
+                                    let mins = (now - start) / 60000;
+                                    const pct = Math.max(0.01, Math.min(mins / 375.0, 1.0));
+                                    
+                                    updateSymbolLogic(row, v.lp, v.high_price, v.low_price, v.open_price, v.v, 0, pct);
+                                    didUpdate = true;
+                                }
+                            });
+                        }
+                    }
+                }
+                if (didUpdate) render();
+            } catch (e) {
+                console.error("Fyers polling error", e);
+            }
+        }
+
+        function startProPolling() {
+            if (proRefreshInterval) return;
+            proRefreshInterval = setInterval(pollFyersLiveQuotes, 1500); // 1.5s refresh
+        }
+
+        function stopProPolling() {
+            if (!proRefreshInterval) return;
+            clearInterval(proRefreshInterval);
+            proRefreshInterval = null;
+        }
+
+        function onTabChange(tab) {
+            switchTab(tab);
+            if (tab === 'classic') {
+                stopProPolling();
+                startAutoRefresh();
+            } else {
+                stopAutoRefresh();
+                startProPolling();
+            }
+        }
+
+        document.getElementById('tab-pro').onclick = () => onTabChange('pro');
+        document.getElementById('tab-classic').onclick = () => onTabChange('classic');
 
         function getZoneClass(z) {
             if (!z) return 'bg-dark';
@@ -398,21 +531,31 @@
                     return;
                 }
 
+                // Sort: Narrow first, then Inside, then by symbol
+                fData.sort((a, b) => {
+                    const aPrio = a.narrow_cpr ? 2 : (a.inside_cpr ? 1 : 0);
+                    const bPrio = b.narrow_cpr ? 2 : (b.inside_cpr ? 1 : 0);
+                    if (aPrio !== bPrio) return bPrio - aPrio;
+                    return a.symbol.localeCompare(b.symbol);
+                });
+
                 let html = `<table><thead><tr>
-                    <th>#</th><th>Symbol</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th><th>Narrow CPR</th><th>Inside CPR</th>
+                    <th>#</th><th>Symbol</th><th>Live</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th><th>Narrow CPR</th><th>Inside CPR</th>
                 </tr></thead><tbody>`;
                 
                 fData.forEach((r, idx) => {
+                    const livePrice = r.live_price != null ? r.live_price.toFixed(2) : '-';
                     html += `<tr>
                         <td style="color:#64748b;">${idx + 1}</td>
                         <td style="color:#38bdf8; font-weight:700;">${r.symbol}</td>
+                        <td style="font-weight:700;">${livePrice}</td>
                         <td>${r.close}</td>
                         <td class="${r.bias === 'BULL' ? 'txt-green' : r.bias === 'BEAR' ? 'txt-red' : ''}">${r.bias}</td>
                         <td class="${getZoneClass(r.dZone)}">${r.dZone || '-'}</td>
                         <td class="${getZoneClass(r.wZone)}">${r.wZone || '-'}</td>
                         <td>${r.setup && r.setup.startsWith('1') ? 'Bull Setup' : r.setup && r.setup.startsWith('-1') ? 'Bear Setup' : '-'}</td>
-                        <td class="${r.narrow_cpr ? 'bg-green' : 'bg-dark'}" style="text-align:center">${r.narrow_cpr ? '✓' : '-'}</td>
-                        <td class="${r.inside_cpr ? 'bg-yellow' : 'bg-dark'}" style="text-align:center">${r.inside_cpr ? '✓' : '-'}</td>
+                        <td class="${r.narrow_cpr ? 'bg-green' : 'bg-dark'}" style="text-align:center">${r.narrow_cpr ? '⭐' : '-'}</td>
+                        <td class="${r.inside_cpr ? 'bg-yellow' : 'bg-dark'}" style="text-align:center">${r.inside_cpr ? '✅' : '-'}</td>
                     </tr>`;
                 });
                 html += `</tbody></table>`;
@@ -458,7 +601,9 @@
             }
         }
 
-        fetchData();
+        initApp();
+        if (currentTab === 'pro') startProPolling();
+        else startAutoRefresh();
     </script>
 </body>
 </html>
