@@ -230,6 +230,10 @@
                     <input type="password" id="fyers-token" placeholder="Fyers AppId:Token" style="background:#1e293b; color:#cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 4px 8px; width: 160px; font-size:11px;">
                     <button class="btn" onclick="saveToken()">Save</button>
                 </div>
+                
+                <button class="btn" id="settings-btn" onclick="toggleSettings()" style="background:#334155; padding: 6px; display:none;" title="Pro Settings">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
             </div>
 
             <div class="filters" id="classic-filters" style="display:none;">
@@ -248,6 +252,19 @@
 
         <!-- Classic View -->
         <div class="table-container" id="classic-container" style="display:none;"></div>
+
+        <!-- Pro Settings Panel -->
+        <div id="pro-settings" style="display:none; background:#1e293b; border:1px solid #334155; border-radius:8px; padding:16px; margin-bottom:16px; font-size:12px; color:#cbd5e1;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+                <label><input type="checkbox" id="set-icpr"> Show Only ICPR Symbols</label>
+                <label><input type="checkbox" id="set-approach" checked> Show Approaching Symbols (Near Level)</label>
+                <label><input type="checkbox" id="set-all"> Show All Tickers (ignore BULL/BEAR filter)</label>
+                <label><input type="checkbox" id="set-ranked" checked> Show Only Ranked Tickers (has Score &gt; 0)</label>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:12px; align-items:center;">
+                <button class="btn" onclick="applySettings()" style="background:#3b82f6;">Apply Settings</button>
+            </div>
+        </div>
 
         <!-- Pro View Grid -->
         <div class="pro-grid" id="pro-container">
@@ -289,6 +306,12 @@
         let currentFilter = 'FNO';
         let fyersToken = localStorage.getItem('fyers_token') || "";
         
+        // Settings State
+        let st_onlyICPR = false;
+        let st_showApproach = true;
+        let st_showAll = false;
+        let st_onlyRanked = true;
+        
         if(fyersToken) document.getElementById('fyers-token').value = fyersToken;
 
         function saveToken() {
@@ -305,8 +328,22 @@
             document.getElementById('pro-container').style.display = tab === 'pro' ? 'grid' : 'none';
             document.getElementById('classic-container').style.display = tab === 'classic' ? 'block' : 'none';
             document.getElementById('classic-filters').style.display = tab === 'classic' ? 'flex' : 'none';
-            // Always show the fyers auth container so users aren't confused
+            document.getElementById('settings-btn').style.display = tab === 'pro' ? 'block' : 'none';
             document.getElementById('fyers-auth-container').style.display = 'flex';
+            if (tab !== 'pro') document.getElementById('pro-settings').style.display = 'none';
+            render();
+        }
+
+        function toggleSettings() {
+            const el = document.getElementById('pro-settings');
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function applySettings() {
+            st_onlyICPR = document.getElementById('set-icpr').checked;
+            st_showApproach = document.getElementById('set-approach').checked;
+            st_showAll = document.getElementById('set-all').checked;
+            st_onlyRanked = document.getElementById('set-ranked').checked;
             render();
         }
 
@@ -317,7 +354,19 @@
                     const dates = await res.json();
                     if (dates && dates.length > 0) {
                         const select = document.getElementById('date-select');
-                        select.innerHTML = dates.map(d => `<option value="${d}">${d}</option>`).join('');
+                        
+                        // Format dates nicely with Today/Yesterday
+                        const todayStr = new Date().toISOString().split('T')[0];
+                        let ydt = new Date(); ydt.setDate(ydt.getDate()-1);
+                        const yesterdayStr = ydt.toISOString().split('T')[0];
+                        
+                        select.innerHTML = dates.map(d => {
+                            let label = d;
+                            if (d === todayStr) label = d + " (Today)";
+                            else if (d === yesterdayStr) label = d + " (Yesterday)";
+                            return `<option value="${d}">${label}</option>`;
+                        }).join('');
+                        
                         select.style.display = 'block';
                         await fetchData(dates[0]);
                         return;
@@ -374,8 +423,8 @@
         async function pollFyersLiveQuotes() {
             if (!fyersToken || currentTab !== 'pro') return;
             
-            // Get locked rows (narrow or inside CPR)
-            const lockedRows = allData.filter(r => r.narrow_cpr || r.inside_cpr);
+            // Fetch for all symbols to properly calculate Approach and Reversals
+            const lockedRows = allData;
             if (lockedRows.length === 0) return;
             
             const symbolsList = lockedRows.map(r => r.fyers_symbol || "NSE:"+r.symbol+"-EQ");
@@ -386,29 +435,30 @@
             
             let didUpdate = false;
             try {
-                for (let chunk of chunks) {
-                    const res = await fetch(`https://api-t1.fyers.in/data/quotes?symbols=${chunk.join(',')}`, {
+                const fetchPromises = chunks.map(chunk => 
+                    fetch(`https://api-t1.fyers.in/data/quotes?symbols=${chunk.join(',')}`, {
                         headers: { "Authorization": fyersToken }
-                    });
-                    if (res.ok) {
-                        const json = await res.json();
-                        if (json.s === "ok" && json.d) {
-                            json.d.forEach(item => {
-                                const sym = item.n;
-                                const v = item.v;
-                                const row = lockedRows.find(r => (r.fyers_symbol || "NSE:"+r.symbol+"-EQ") === sym);
-                                if (row && typeof updateSymbolLogic === 'function') {
-                                    // Pct Elapsed roughly for intraday
-                                    const now = new Date();
-                                    const start = new Date(); start.setHours(9, 15, 0, 0);
-                                    let mins = (now - start) / 60000;
-                                    const pct = Math.max(0.01, Math.min(mins / 375.0, 1.0));
-                                    
-                                    updateSymbolLogic(row, v.lp, v.high_price, v.low_price, v.open_price, v.v, 0, pct);
-                                    didUpdate = true;
-                                }
-                            });
-                        }
+                    }).then(res => res.ok ? res.json() : null)
+                );
+                
+                const results = await Promise.all(fetchPromises);
+                
+                for (let json of results) {
+                    if (json && json.s === "ok" && json.d) {
+                        json.d.forEach(item => {
+                            const sym = item.n;
+                            const v = item.v;
+                            const row = lockedRows.find(r => (r.fyers_symbol || "NSE:"+r.symbol+"-EQ") === sym);
+                            if (row && typeof updateSymbolLogic === 'function') {
+                                const now = new Date();
+                                const start = new Date(); start.setHours(9, 15, 0, 0);
+                                let mins = (now - start) / 60000;
+                                const pct = Math.max(0.01, Math.min(mins / 375.0, 1.0));
+                                
+                                updateSymbolLogic(row, v.lp, v.high_price, v.low_price, v.open_price, v.v, 0, pct);
+                                didUpdate = true;
+                            }
+                        });
                     }
                 }
                 if (didUpdate) render();
@@ -501,7 +551,7 @@
                 }
 
                 html += `<tr>
-                    <td style="color:#64748b">${idx + 1}</td>
+                    <td style="color:#64748b">${r.rank && r.rank > 0 ? r.rank : '-'}</td>
                     <td class="symbol-cell ${symColor}">${symPrefix}${r.symbol}</td>
                     <td class="${getZoneClass(r.dZone)}">${r.dZone || '-'}</td>
                     <td class="${getZoneClass(r.wZone)}">${r.wZone || '-'}</td>
@@ -517,9 +567,27 @@
 
         function render() {
             if (currentTab === 'pro') {
-                const bulls = allData.filter(r => (r.bias === 'BULL' || r.bias === 'Both' || r.apB) && (r.narrow_cpr || r.inside_cpr));
-                const bears = allData.filter(r => (r.bias === 'BEAR' || r.bias === 'Both' || r.apBr) && (r.narrow_cpr || r.inside_cpr));
-                const revs = allData.filter(r => r.revStr && (r.narrow_cpr || r.inside_cpr));
+                if (typeof assignRanks === 'function') assignRanks(allData);
+                
+                const filterRow = (r, isBullView) => {
+                    if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
+                    if (st_onlyRanked && (!r.rank || r.rank <= 0)) return false;
+                    
+                    const isAp = st_showApproach ? (isBullView ? r.apB : r.apBr) : false;
+                    const matchesBias = isBullView ? (r.bias === 'BULL' || r.bias === 'Both') : (r.bias === 'BEAR' || r.bias === 'Both');
+                    
+                    if (st_showAll) return true; // Show all (that passed ICPR/Rank filters)
+                    return matchesBias || isAp;
+                };
+
+                const bulls = allData.filter(r => filterRow(r, true));
+                const bears = allData.filter(r => filterRow(r, false));
+                
+                const revs = allData.filter(r => {
+                    if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
+                    if (st_onlyRanked && (!r.rank || r.rank <= 0)) return false;
+                    return r.revStr;
+                });
                 
                 renderProTable('bull-table', bulls, 'Bull');
                 renderProTable('bear-table', bears, 'Bear');

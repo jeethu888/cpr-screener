@@ -190,4 +190,26 @@ function updateSymbolLogic(row, ltp, highPrice, lowPrice, openPrice, volume, pdv
     
     const nlPct = getNextLevelDist(row.dZone, _dtc, _dbc, _dpiv, _dr1, _dr2, _dr3, _dr4, _ds1, _ds2, _ds3, _ds4);
     row.nl_pct = nlPct ? Number(nlPct.toFixed(2)) : null;
+    
+    // Score Calculation
+    let score = -1.0;
+    if (sig !== 0 && row.nl_pct !== null && row.nl_pct > 0) {
+        let volMult = row.vRatio > 0 ? row.vRatio : 1.0;
+        score = row.nl_pct * volMult;
+    }
+    row.score = score;
+    row.rank = 0; // Will be assigned globally
+}
+
+function assignRanks(allData) {
+    // Sort descending by score
+    allData.sort((a, b) => (b.score || -1) - (a.score || -1));
+    let currentRank = 1;
+    for (let i = 0; i < allData.length; i++) {
+        if (allData[i].score !== undefined && allData[i].score > 0) {
+            allData[i].rank = currentRank++;
+        } else {
+            allData[i].rank = 0;
+        }
+    }
 }
