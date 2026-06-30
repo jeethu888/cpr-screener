@@ -55,7 +55,10 @@ def main():
             print(access_token)
             print("=========================")
             print("\nCopy the above token. It is valid until the end of the day.")
-            print("Set this as your FYERS_ACCESS_TOKEN GitHub Secret or Environment Variable.")
+            # Save token to file for bat script to read
+            with open("fyers_token.txt", "w") as f:
+                f.write(access_token)
+            print("Token also saved to fyers_token.txt for automation.")
         else:
             print(f"\n❌ Error generating token: {response}")
             
