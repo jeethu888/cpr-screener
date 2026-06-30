@@ -165,11 +165,14 @@ def get_next_level_dist(z, dt, db, dp, dr1, dr2, dr3, dr4, ds1, ds2, ds3, ds4):
 
 def load_history_data(fyers, targets, range_from, range_to):
     history_map = {}
-    for item in targets:
+    total = len(targets)
+    for idx, item in enumerate(targets):
         candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)
         if candles:
             history_map[item["fyers"]] = candles
-        time.sleep(0.15) # Fyers allows ~10 req/s, 0.15s delay helps prevent 429
+        if (idx + 1) % 10 == 0 or (idx + 1) == total:
+            print(f"  History: {idx+1}/{total} symbols fetched ({len(history_map)} with data)")
+        time.sleep(0.3)  # 0.3s gap = ~3 req/s, safely under Fyers rate limit
     return history_map
 
 
