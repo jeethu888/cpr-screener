@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Fyers credentials - NEVER commit these
+fyers_token.txt
+fyers_config.json
+
+# Logs
+*.log
+
+# IDE
+.vscode/
