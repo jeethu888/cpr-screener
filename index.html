@@ -305,7 +305,8 @@
             document.getElementById('pro-container').style.display = tab === 'pro' ? 'grid' : 'none';
             document.getElementById('classic-container').style.display = tab === 'classic' ? 'block' : 'none';
             document.getElementById('classic-filters').style.display = tab === 'classic' ? 'flex' : 'none';
-            document.getElementById('fyers-auth-container').style.display = tab === 'pro' ? 'flex' : 'none';
+            // Always show the fyers auth container so users aren't confused
+            document.getElementById('fyers-auth-container').style.display = 'flex';
             render();
         }
 
