@@ -294,7 +294,7 @@ def build_results(now, targets, history_map, quotes_data, pct_elapsed):
         _icpr = _dtc <= max(_yytc, _yybc) and _dbc >= min(_yytc, _yybc)
 
         _cpr_width = abs(_dtc - _dbc)
-        _narrow_cpr = _cpr_width < (_lc * 0.001) if _lc > 0 else False
+        _narrow_cpr = abs(_dpiv - _dbc) < (_lc * 0.001) if _lc > 0 else False  # Chartink formula: |Pivot - BC| < Close * 0.001
         _inside_cpr = _icpr
 
         dCode = get_daily_code(_lc, _dtc, _dbc, _dr1, _ds1, _pdh, _pdl)
