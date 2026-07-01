@@ -175,6 +175,23 @@ def load_history_data(fyers, targets, range_from, range_to):
         time.sleep(0.3)  # 0.3s gap = ~3 req/s, safely under Fyers rate limit
     return history_map
 
+def filter_history_for_date(history_map, target_date_str):
+    filtered = {}
+    target_dt = datetime.strptime(target_date_str, "%Y-%m-%d").date()
+    for sym, candles in history_map.items():
+        valid_candles = []
+        for c in candles:
+            try:
+                c_date = datetime.fromtimestamp(c[0], pytz.timezone('Asia/Kolkata')).date()
+            except:
+                continue
+            if c_date <= target_dt:
+                valid_candles.append(c)
+        if valid_candles:
+            filtered[sym] = valid_candles
+    return filtered
+
+
 
 def build_results(now, targets, history_map, quotes_data, pct_elapsed):
     results = []
@@ -395,6 +412,47 @@ def main(args):
 
     while True:
         now = datetime.now(ist)
+        
+        # --- Backfill previous 2 days ---
+        print("Ensuring last 2 working days are backfilled...")
+        past_dates = []
+        curr = now
+        while len(past_dates) < 2:
+            curr -= timedelta(days=1)
+            if curr.weekday() < 5:
+                past_dates.append(curr)
+                
+        available_dates = []
+        if os.path.exists("available_dates.json"):
+            try:
+                with open("available_dates.json", "r") as f:
+                    available_dates = json.load(f)
+            except:
+                pass
+                
+        for p_dt in past_dates:
+            p_str = p_dt.strftime("%Y-%m-%d")
+            filtered_history = filter_history_for_date(history_map, p_str)
+            p_results = build_results(p_dt, targets, filtered_history, {}, 1.0)
+            
+            p_output = {
+                "generated_at": p_dt.strftime("%Y-%m-%d %H:%M:%S IST") + " (Backfilled)",
+                "total_scanned": len(targets),
+                "results": p_results,
+            }
+            
+            next_dt = p_dt + timedelta(days=1)
+            if next_dt.weekday() == 5: next_dt += timedelta(days=2)
+            elif next_dt.weekday() == 6: next_dt += timedelta(days=1)
+            
+            p_session = next_dt.strftime("%Y-%m-%d")
+            with open(f"cpr_data_{p_session}.json", "w") as f:
+                json.dump(p_output, f, indent=4)
+            if p_session not in available_dates:
+                available_dates.append(p_session)
+                
+        # --- End Backfill ---
+        
         print("Fetching Live Quotes for today's data...")
         quotes_data = fetch_live_quotes(fyers, fyers_symbols)
 
@@ -429,21 +487,13 @@ def main(args):
             
         print(f"\n[DONE] {len(results)} matches saved to {filename} and cpr_data.json")
 
-        # Update available_dates.json
-        available_dates = []
-        if os.path.exists("available_dates.json"):
-            try:
-                with open("available_dates.json", "r") as f:
-                    available_dates = json.load(f)
-            except:
-                pass
-        
         if session_date not in available_dates:
             available_dates.append(session_date)
-            # Sort dates descending
-            available_dates.sort(reverse=True)
-            with open("available_dates.json", "w") as f:
-                json.dump(available_dates, f, indent=4)
+            
+        # Sort dates descending
+        available_dates.sort(reverse=True)
+        with open("available_dates.json", "w") as f:
+            json.dump(available_dates, f, indent=4)
 
         if args.interval <= 0:
             break
