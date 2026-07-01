@@ -69,11 +69,16 @@ def fetch_history_for_symbol(fyers, symbol_fyers, range_from, range_to):
             elif response.get("code") == 429:
                 time.sleep(2)
                 continue
+            elif "token" in str(response.get("message", "")).lower() or response.get("code") in [-1200, -107]:
+                print(f"FATAL AUTH ERROR: {response.get('message')}")
+                raise Exception("Invalid or expired Fyers Access Token.")
             else:
                 if attempt == 0:
                     print(f"  API response for {symbol_fyers}: code={response.get('code')} msg={response.get('message','')[:80]}")
                 time.sleep(1)
         except Exception as e:
+            if "Invalid or expired Fyers Access Token" in str(e):
+                raise e
             time.sleep(2)
     return []
 
