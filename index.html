@@ -269,23 +269,13 @@
 
         <!-- Pro View Grid -->
         <div class="pro-grid" id="pro-container">
-            <div class="pro-panel">
+            <div class="pro-panel" style="grid-column: span 2;">
                 <div class="pro-panel-header hdr-bull">
-                    <span>🟢 BULL WATCHLIST</span>
-                    <span id="bull-count">0</span>
+                    <span>🎯 SCANNED WATCHLIST (BULL, BEAR & NEUTRAL)</span>
+                    <span id="scan-count">0</span>
                 </div>
                 <div class="table-container" style="border:none; border-radius:0;">
-                    <table class="pro-table" id="bull-table"></table>
-                </div>
-            </div>
-
-            <div class="pro-panel">
-                <div class="pro-panel-header hdr-bear">
-                    <span>🔴 BEAR WATCHLIST</span>
-                    <span id="bear-count">0</span>
-                </div>
-                <div class="table-container" style="border:none; border-radius:0;">
-                    <table class="pro-table" id="bear-table"></table>
+                    <table class="pro-table" id="scan-table"></table>
                 </div>
             </div>
 
@@ -299,15 +289,6 @@
                 </div>
             </div>
 
-            <div class="pro-panel" id="neutral-panel" style="display:none;">
-                <div class="pro-panel-header hdr-neutral">
-                    <span>⚪ NEUTRAL / OTHERS</span>
-                    <span id="neutral-count">0</span>
-                </div>
-                <div class="table-container" style="border:none; border-radius:0;">
-                    <table class="pro-table" id="neutral-table"></table>
-                </div>
-            </div>
         </div>
     </main>
 
@@ -529,7 +510,7 @@
             }
 
             let html = `<thead><tr>
-                <th>#</th>
+                <th>Rank</th>
                 <th>Symbol</th>
                 <th>Daily</th>
                 <th>Weekly</th>
@@ -586,25 +567,20 @@
             if (currentTab === 'pro') {
                 if (typeof assignRanks === 'function') assignRanks(allData);
                 
-                const filterRow = (r, viewType) => {
+                const filterRow = (r) => {
                     if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
                     if (st_onlyRanked && (!r.rank || r.rank <= 0)) return false;
                     
-                    if (viewType === 'bull') {
-                        const isAp = st_showApproach ? r.apB : false;
-                        return st_showAll || r.bias === 'BULL' || r.bias === 'Both' || isAp;
-                    } else if (viewType === 'bear') {
-                        const isAp = st_showApproach ? r.apBr : false;
-                        return st_showAll || r.bias === 'BEAR' || r.bias === 'Both' || isAp;
-                    } else if (viewType === 'neutral') {
-                        return st_showAll || r.bias === 'NONE';
-                    }
-                    return false;
+                    if (st_showAll) return true;
+                    
+                    const isBull = r.bias === 'BULL' || r.bias === 'Both';
+                    const isBear = r.bias === 'BEAR' || r.bias === 'Both';
+                    const isAp = st_showApproach ? (r.apB || r.apBr) : false;
+                    
+                    return isBull || isBear || r.bias === 'NONE' || isAp;
                 };
 
-                const bulls = allData.filter(r => filterRow(r, 'bull'));
-                const bears = allData.filter(r => filterRow(r, 'bear'));
-                const neutrals = allData.filter(r => filterRow(r, 'neutral'));
+                const scanned = allData.filter(r => filterRow(r));
                 
                 const revs = allData.filter(r => {
                     if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
@@ -612,12 +588,8 @@
                     return r.revStr;
                 });
                 
-                renderProTable('bull-table', bulls, 'Bull');
-                renderProTable('bear-table', bears, 'Bear');
+                renderProTable('scan-table', scanned, 'Scanned');
                 renderProTable('rev-table', revs, 'Reversals');
-                renderProTable('neutral-table', neutrals, 'Neutral');
-                
-                document.getElementById('neutral-panel').style.display = (neutrals.length > 0 || st_showAll) ? 'block' : 'none';
             } else {
                 const container = document.getElementById('classic-container');
                 const fData = currentFilter === 'All' ? allData : allData.filter(i => i.category === currentFilter);
@@ -636,7 +608,7 @@
                 });
 
                 let html = `<table><thead><tr>
-                    <th>#</th><th>Symbol</th><th>Live</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th><th>Narrow CPR</th><th>Inside CPR</th>
+                    <th>Rank</th><th>Symbol</th><th>Live</th><th>Close</th><th>Bias</th><th>Daily Zone</th><th>Weekly Zone</th><th>Setup</th><th>Narrow CPR</th><th>Inside CPR</th>
                 </tr></thead><tbody>`;
                 
                 fData.forEach((r, idx) => {
