@@ -346,7 +346,7 @@ def build_results(now, targets, history_map, quotes_data, pct_elapsed):
             "category": item["cat"],
             "close": round(_lc, 2),
             "live_price": round(_lc, 2),
-            "eod_date": now.strftime("%Y-%m-%d"),
+            "eod_date": last_history_date.strftime("%Y-%m-%d"),
             "bias": bias,
             "dZone": dZone,
             "wZone": wZone,
@@ -441,11 +441,8 @@ def main(args):
                 "results": p_results,
             }
             
-            next_dt = p_dt + timedelta(days=1)
-            if next_dt.weekday() == 5: next_dt += timedelta(days=2)
-            elif next_dt.weekday() == 6: next_dt += timedelta(days=1)
-            
-            p_session = next_dt.strftime("%Y-%m-%d")
+            # Use the actual historical date for the filename
+            p_session = p_dt.strftime("%Y-%m-%d")
             with open(f"cpr_data_{p_session}.json", "w") as f:
                 json.dump(p_output, f, indent=4)
             if p_session not in available_dates:
@@ -471,9 +468,8 @@ def main(args):
             "results": results,
         }
 
-        # If it's >= 4 PM IST, this data is for tomorrow's session, else today's
-        is_after_4pm = now.hour >= 16
-        session_date = (now + timedelta(days=1)).strftime("%Y-%m-%d") if is_after_4pm else now.strftime("%Y-%m-%d")
+        # Use the date of the actual OHLC data for the filename, as requested by user
+        session_date = last_history_date.strftime("%Y-%m-%d")
         
         filename = f"cpr_data_{session_date}.json"
         

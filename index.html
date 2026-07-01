@@ -180,6 +180,7 @@
         .hdr-bull { background: #064e3b; color: #34d399; }
         .hdr-bear { background: #7f1d1d; color: #f87171; }
         .hdr-rev { background: #78350f; color: #fbbf24; }
+        .hdr-neutral { background: #334155; color: #cbd5e1; }
         
         .pro-table th { padding: 6px 8px; font-size: 10px; }
         .pro-table td { padding: 6px 8px; font-size: 11px; border-bottom: 1px solid #334155; }
@@ -295,6 +296,16 @@
                 </div>
                 <div class="table-container" style="border:none; border-radius:0;">
                     <table class="pro-table" id="rev-table"></table>
+                </div>
+            </div>
+
+            <div class="pro-panel" id="neutral-panel" style="display:none;">
+                <div class="pro-panel-header hdr-neutral">
+                    <span>⚪ NEUTRAL / OTHERS</span>
+                    <span id="neutral-count">0</span>
+                </div>
+                <div class="table-container" style="border:none; border-radius:0;">
+                    <table class="pro-table" id="neutral-table"></table>
                 </div>
             </div>
         </div>
@@ -575,19 +586,25 @@
             if (currentTab === 'pro') {
                 if (typeof assignRanks === 'function') assignRanks(allData);
                 
-                const filterRow = (r, isBullView) => {
+                const filterRow = (r, viewType) => {
                     if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
                     if (st_onlyRanked && (!r.rank || r.rank <= 0)) return false;
                     
-                    const isAp = st_showApproach ? (isBullView ? r.apB : r.apBr) : false;
-                    const matchesBias = isBullView ? (r.bias === 'BULL' || r.bias === 'Both') : (r.bias === 'BEAR' || r.bias === 'Both');
-                    
-                    if (st_showAll) return true; // Show all (that passed ICPR/Rank filters)
-                    return matchesBias || isAp;
+                    if (viewType === 'bull') {
+                        const isAp = st_showApproach ? r.apB : false;
+                        return st_showAll || r.bias === 'BULL' || r.bias === 'Both' || isAp;
+                    } else if (viewType === 'bear') {
+                        const isAp = st_showApproach ? r.apBr : false;
+                        return st_showAll || r.bias === 'BEAR' || r.bias === 'Both' || isAp;
+                    } else if (viewType === 'neutral') {
+                        return st_showAll || r.bias === 'NONE';
+                    }
+                    return false;
                 };
 
-                const bulls = allData.filter(r => filterRow(r, true));
-                const bears = allData.filter(r => filterRow(r, false));
+                const bulls = allData.filter(r => filterRow(r, 'bull'));
+                const bears = allData.filter(r => filterRow(r, 'bear'));
+                const neutrals = allData.filter(r => filterRow(r, 'neutral'));
                 
                 const revs = allData.filter(r => {
                     if (st_onlyICPR && !r.narrow_cpr && !r.inside_cpr) return false;
@@ -598,6 +615,9 @@
                 renderProTable('bull-table', bulls, 'Bull');
                 renderProTable('bear-table', bears, 'Bear');
                 renderProTable('rev-table', revs, 'Reversals');
+                renderProTable('neutral-table', neutrals, 'Neutral');
+                
+                document.getElementById('neutral-panel').style.display = (neutrals.length > 0 || st_showAll) ? 'block' : 'none';
             } else {
                 const container = document.getElementById('classic-container');
                 const fData = currentFilter === 'All' ? allData : allData.filter(i => i.category === currentFilter);

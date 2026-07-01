@@ -1,0 +1,2 @@
+=== Fyers API Token Generator ===
+Enter Fyers App ID (Client ID): ^C
