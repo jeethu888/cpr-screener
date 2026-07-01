@@ -271,7 +271,7 @@
         <div class="pro-grid" id="pro-container">
             <div class="pro-panel" style="grid-column: span 2;">
                 <div class="pro-panel-header hdr-bull">
-                    <span>🎯 SCANNED WATCHLIST (BULL, BEAR & NEUTRAL)</span>
+                    <span>🎯 SCANNED WATCHLIST (BULL & BEAR)</span>
                     <span id="scan-count">0</span>
                 </div>
                 <div class="table-container" style="border:none; border-radius:0;">
@@ -577,7 +577,7 @@
                     const isBear = r.bias === 'BEAR' || r.bias === 'Both';
                     const isAp = st_showApproach ? (r.apB || r.apBr) : false;
                     
-                    return isBull || isBear || r.bias === 'NONE' || isAp;
+                    return isBull || isBear || isAp;
                 };
 
                 const scanned = allData.filter(r => filterRow(r));
