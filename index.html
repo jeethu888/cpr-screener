@@ -357,11 +357,7 @@
                         let defaultDate = dates.find(d => d <= todayStr) || dates[0];
                         
                         select.innerHTML = dates.map(d => {
-                            let label = d;
-                            if (d === todayStr) label = "Today (" + d + ")";
-                            else if (d === yesterdayStr) label = "Yesterday (" + d + ")";
-                            else if (d > todayStr) label = "Tomorrow (" + d + ")";
-                            return `<option value="${d}"${d === defaultDate ? ' selected' : ''}>${label}</option>`;
+                            return `<option value="${d}"${d === defaultDate ? ' selected' : ''}>${d}</option>`;
                         }).join('');
                         
                         select.style.display = 'block';

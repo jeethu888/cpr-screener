@@ -499,6 +499,53 @@ def main(args):
 
         if session_date not in available_dates:
             available_dates.append(session_date)
+        
+        # --- Generate tomorrow's CPR using today's OHLC ---
+        print("Generating tomorrow's CPR data using today's OHLC...")
+        tomorrow_dt = now + timedelta(days=1)
+        # Skip to Monday if tomorrow is Saturday or Sunday
+        if tomorrow_dt.weekday() == 5:  # Saturday
+            tomorrow_dt += timedelta(days=2)
+        elif tomorrow_dt.weekday() == 6:  # Sunday
+            tomorrow_dt += timedelta(days=1)
+        tomorrow_date = tomorrow_dt.strftime("%Y-%m-%d")
+        
+        # Build a shifted history map where today's candle becomes "yesterday"
+        # so that tomorrow's CPR is calculated from today's OHLC
+        tomorrow_history_map = {}
+        for sym, candles in history_map.items():
+            if len(candles) >= 1:
+                # Append live quote candle as today's candle to the history
+                quote = quotes_data.get(sym)
+                if quote and len(candles) >= 1:
+                    live_candle = [
+                        candles[-1][0] + 86400,  # fake timestamp (next day)
+                        quote.get("open_price", candles[-1][1]),
+                        max(candles[-1][2], quote.get("high_price", candles[-1][2])),
+                        min(candles[-1][3], quote.get("low_price", candles[-1][3])),
+                        quote.get("lp", candles[-1][4]),
+                        quote.get("volume", candles[-1][5])
+                    ]
+                    tomorrow_history_map[sym] = candles + [live_candle]
+                else:
+                    tomorrow_history_map[sym] = candles
+        
+        tmr_results = build_results(tomorrow_dt, targets, tomorrow_history_map, {}, 1.0)
+        
+        tmr_output = {
+            "generated_at": now.strftime("%Y-%m-%d %H:%M:%S IST") + " (Tomorrow Preview)",
+            "total_scanned": len(targets),
+            "results": tmr_results,
+        }
+        
+        tmr_filename = f"cpr_data_{tomorrow_date}.json"
+        with open(tmr_filename, "w") as f:
+            json.dump(tmr_output, f, indent=4)
+        print(f"Tomorrow's CPR saved to {tmr_filename}")
+        
+        if tomorrow_date not in available_dates:
+            available_dates.append(tomorrow_date)
+        # --- End Tomorrow ---
             
         # Sort dates descending
         available_dates.sort(reverse=True)

@@ -2,8 +2,8 @@ name: Update CPR Data
 
 on:
   schedule:
-    # Auto-run at 4:30 PM IST (11:00 UTC) every weekday
-    - cron: '0 11 * * 1-5'
+    # Auto-run at 5:00 PM IST (11:30 UTC) every weekday
+    - cron: '30 11 * * 1-5'
   workflow_dispatch:
     inputs:
       fyers_token:
