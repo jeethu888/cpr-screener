@@ -1,6 +1,6 @@
 {
-    "generated_at": "2026-06-30 20:56:41 IST",
-    "total_scanned": 215,
+    "generated_at": "2026-06-30 19:23:16 IST (Backfilled)",
+    "total_scanned": 214,
     "results": [
         {
             "symbol": "NIFTY 50",
@@ -15,7 +15,7 @@
             "icpr": false,
             "setup": "-1|8.876246401833351e-05",
             "nl_pct": 0.3,
-            "vRatio": 0.0,
+            "vRatio": 0.76,
             "revStr": "",
             "apB": false,
             "apBr": false,
@@ -56,7 +56,7 @@
             "icpr": false,
             "setup": "-1|0.00044752181561061446",
             "nl_pct": 0.74,
-            "vRatio": 0.0,
+            "vRatio": 0.75,
             "revStr": "",
             "apB": false,
             "apBr": true,
@@ -138,7 +138,7 @@
             "icpr": false,
             "setup": "-1|0.0003678118499004386",
             "nl_pct": 0.77,
-            "vRatio": 0.0,
+            "vRatio": 0.76,
             "revStr": "",
             "apB": false,
             "apBr": true,
@@ -211,8 +211,8 @@
             "symbol": "ABB",
             "fyers_symbol": "NSE:ABB-EQ",
             "category": "FNO",
-            "close": 7031,
-            "live_price": 7031,
+            "close": 7031.0,
+            "live_price": 7031.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -246,7 +246,7 @@
             "weekly_s1": 6855.17,
             "wh2": 7290.5,
             "wl2": 6935.0,
-            "d_open": 7070
+            "d_open": 7070.0
         },
         {
             "symbol": "ABCAPITAL",
@@ -328,14 +328,14 @@
             "weekly_s1": 1474.87,
             "wh2": 1551.0,
             "wl2": 1480.0,
-            "d_open": 1494
+            "d_open": 1494.0
         },
         {
             "symbol": "ADANIENT",
             "fyers_symbol": "NSE:ADANIENT-EQ",
             "category": "FNO",
-            "close": 3036,
-            "live_price": 3036,
+            "close": 3036.0,
+            "live_price": 3036.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R1",
@@ -369,7 +369,7 @@
             "weekly_s1": 2952.67,
             "wh2": 3105.0,
             "wl2": 2943.5,
-            "d_open": 2980
+            "d_open": 2980.0
         },
         {
             "symbol": "ADANIGREEN",
@@ -410,7 +410,7 @@
             "weekly_s1": 1489.73,
             "wh2": 1557.0,
             "wl2": 1487.0,
-            "d_open": 1504
+            "d_open": 1504.0
         },
         {
             "symbol": "ADANIPORTS",
@@ -492,14 +492,14 @@
             "weekly_s1": 225.11,
             "wh2": 235.5,
             "wl2": 226.14,
-            "d_open": 228
+            "d_open": 228.0
         },
         {
             "symbol": "ALKEM",
             "fyers_symbol": "NSE:ALKEM-EQ",
             "category": "FNO",
-            "close": 5570,
-            "live_price": 5570,
+            "close": 5570.0,
+            "live_price": 5570.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R1",
@@ -539,8 +539,8 @@
             "symbol": "AMBER",
             "fyers_symbol": "NSE:AMBER-EQ",
             "category": "FNO",
-            "close": 7530,
-            "live_price": 7530,
+            "close": 7530.0,
+            "live_price": 7530.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "InCPR",
@@ -615,7 +615,7 @@
             "weekly_s1": 413.73,
             "wh2": 434.3,
             "wl2": 414.0,
-            "d_open": 425
+            "d_open": 425.0
         },
         {
             "symbol": "ANGELONE",
@@ -703,8 +703,8 @@
             "symbol": "APOLLOHOSP",
             "fyers_symbol": "NSE:APOLLOHOSP-EQ",
             "category": "FNO",
-            "close": 8682,
-            "live_price": 8682,
+            "close": 8682.0,
+            "live_price": 8682.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2Pvt",
@@ -820,7 +820,7 @@
             "weekly_s1": 2602.7,
             "wh2": 2756.5,
             "wl2": 2637.1,
-            "d_open": 2658
+            "d_open": 2658.0
         },
         {
             "symbol": "ASTRAL",
@@ -902,7 +902,7 @@
             "weekly_s1": 1010.17,
             "wh2": 1079.2,
             "wl2": 1021.0,
-            "d_open": 1035
+            "d_open": 1035.0
         },
         {
             "symbol": "AUROPHARMA",
@@ -943,7 +943,7 @@
             "weekly_s1": 1499.47,
             "wh2": 1565.0,
             "wl2": 1476.5,
-            "d_open": 1551
+            "d_open": 1551.0
         },
         {
             "symbol": "AXISBANK",
@@ -990,8 +990,8 @@
             "symbol": "BAJAJ-AUTO",
             "fyers_symbol": "NSE:BAJAJ-AUTO-EQ",
             "category": "FNO",
-            "close": 9716,
-            "live_price": 9716,
+            "close": 9716.0,
+            "live_price": 9716.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "InCPR",
@@ -1025,7 +1025,7 @@
             "weekly_s1": 9627.33,
             "wh2": 10268.0,
             "wl2": 9732.0,
-            "d_open": 9665
+            "d_open": 9665.0
         },
         {
             "symbol": "BAJAJFINSV",
@@ -1066,14 +1066,14 @@
             "weekly_s1": 1745.5,
             "wh2": 1798.9,
             "wl2": 1753.1,
-            "d_open": 1760
+            "d_open": 1760.0
         },
         {
             "symbol": "BAJAJHLDNG",
             "fyers_symbol": "NSE:BAJAJHLDNG-EQ",
             "category": "FNO",
-            "close": 10603,
-            "live_price": 10603,
+            "close": 10603.0,
+            "live_price": 10603.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "InCPR",
@@ -1107,7 +1107,7 @@
             "weekly_s1": 10416.33,
             "wh2": 10995.0,
             "wl2": 10523.0,
-            "d_open": 10545
+            "d_open": 10545.0
         },
         {
             "symbol": "BAJFINANCE",
@@ -1271,7 +1271,7 @@
             "weekly_s1": 142.95,
             "wh2": 147.26,
             "wl2": 143.33,
-            "d_open": 143
+            "d_open": 143.0
         },
         {
             "symbol": "BDL",
@@ -1400,8 +1400,8 @@
             "symbol": "BHARTIARTL",
             "fyers_symbol": "NSE:BHARTIARTL-EQ",
             "category": "FNO",
-            "close": 1852,
-            "live_price": 1852,
+            "close": 1852.0,
+            "live_price": 1852.0,
             "eod_date": "2026-06-30",
             "bias": "NONE",
             "dZone": "\u25b2R1",
@@ -1435,7 +1435,7 @@
             "weekly_s1": 1823.23,
             "wh2": 1927.7,
             "wl2": 1848.0,
-            "d_open": 1853
+            "d_open": 1853.0
         },
         {
             "symbol": "BHEL",
@@ -1564,8 +1564,8 @@
             "symbol": "BOSCHLTD",
             "fyers_symbol": "NSE:BOSCHLTD-EQ",
             "category": "FNO",
-            "close": 39900,
-            "live_price": 39900,
+            "close": 39900.0,
+            "live_price": 39900.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -1599,7 +1599,7 @@
             "weekly_s1": 39878.33,
             "wh2": 41385.0,
             "wl2": 40070.0,
-            "d_open": 40200
+            "d_open": 40200.0
         },
         {
             "symbol": "BPCL",
@@ -1681,7 +1681,7 @@
             "weekly_s1": 5182.83,
             "wh2": 5298.5,
             "wl2": 5186.5,
-            "d_open": 5112
+            "d_open": 5112.0
         },
         {
             "symbol": "BSE",
@@ -1722,7 +1722,7 @@
             "weekly_s1": 3798.73,
             "wh2": 4062.0,
             "wl2": 3857.0,
-            "d_open": 3900
+            "d_open": 3900.0
         },
         {
             "symbol": "CAMS",
@@ -2050,7 +2050,7 @@
             "weekly_s1": 1418.93,
             "wh2": 1496.0,
             "wl2": 1418.0,
-            "d_open": 1434
+            "d_open": 1434.0
         },
         {
             "symbol": "COFORGE",
@@ -2132,7 +2132,7 @@
             "weekly_s1": 1960.57,
             "wh2": 2019.9,
             "wl2": 1957.8,
-            "d_open": 2000
+            "d_open": 2000.0
         },
         {
             "symbol": "CONCOR",
@@ -2173,7 +2173,7 @@
             "weekly_s1": 463.95,
             "wh2": 484.65,
             "wl2": 468.45,
-            "d_open": 473
+            "d_open": 473.0
         },
         {
             "symbol": "CROMPTON",
@@ -2337,7 +2337,7 @@
             "weekly_s1": 1672.57,
             "wh2": 1765.3,
             "wl2": 1671.1,
-            "d_open": 1714
+            "d_open": 1714.0
         },
         {
             "symbol": "DELHIVERY",
@@ -2384,8 +2384,8 @@
             "symbol": "DIVISLAB",
             "fyers_symbol": "NSE:DIVISLAB-EQ",
             "category": "FNO",
-            "close": 6579,
-            "live_price": 6579,
+            "close": 6579.0,
+            "live_price": 6579.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -2425,8 +2425,8 @@
             "symbol": "DIXON",
             "fyers_symbol": "NSE:DIXON-EQ",
             "category": "FNO",
-            "close": 11920,
-            "live_price": 11920,
+            "close": 11920.0,
+            "live_price": 11920.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "InCPR",
@@ -2460,7 +2460,7 @@
             "weekly_s1": 11602.67,
             "wh2": 12650.0,
             "wl2": 11716.0,
-            "d_open": 11894
+            "d_open": 11894.0
         },
         {
             "symbol": "DLF",
@@ -2583,7 +2583,7 @@
             "weekly_s1": 1293.47,
             "wh2": 1363.0,
             "wl2": 1271.2,
-            "d_open": 1375
+            "d_open": 1375.0
         },
         {
             "symbol": "EICHERMOT",
@@ -2624,7 +2624,7 @@
             "weekly_s1": 7472.67,
             "wh2": 7754.0,
             "wl2": 7488.0,
-            "d_open": 7392
+            "d_open": 7392.0
         },
         {
             "symbol": "ETERNAL",
@@ -2706,7 +2706,7 @@
             "weekly_s1": 374.83,
             "wh2": 410.5,
             "wl2": 377.7,
-            "d_open": 387
+            "d_open": 387.0
         },
         {
             "symbol": "FEDERALBNK",
@@ -2753,8 +2753,8 @@
             "symbol": "FORCEMOT",
             "fyers_symbol": "NSE:FORCEMOT-EQ",
             "category": "FNO",
-            "close": 18580,
-            "live_price": 18580,
+            "close": 18580.0,
+            "live_price": 18580.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R1",
@@ -2788,7 +2788,7 @@
             "weekly_s1": 17749.0,
             "wh2": 18971.0,
             "wl2": 17718.0,
-            "d_open": 17945
+            "d_open": 17945.0
         },
         {
             "symbol": "FORTIS",
@@ -2952,7 +2952,7 @@
             "weekly_s1": 106.51,
             "wh2": 110.1,
             "wl2": 106.37,
-            "d_open": 110
+            "d_open": 110.0
         },
         {
             "symbol": "GODFRYPHLP",
@@ -2993,14 +2993,14 @@
             "weekly_s1": 2205.93,
             "wh2": 2319.0,
             "wl2": 2221.1,
-            "d_open": 2210
+            "d_open": 2210.0
         },
         {
             "symbol": "GODREJCP",
             "fyers_symbol": "NSE:GODREJCP-EQ",
             "category": "FNO",
-            "close": 1010,
-            "live_price": 1010,
+            "close": 1010.0,
+            "live_price": 1010.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcS1",
@@ -3034,7 +3034,7 @@
             "weekly_s1": 1011.6,
             "wh2": 1038.0,
             "wl2": 1001.8,
-            "d_open": 1022
+            "d_open": 1022.0
         },
         {
             "symbol": "GODREJPROP",
@@ -3075,14 +3075,14 @@
             "weekly_s1": 1791.4,
             "wh2": 1885.0,
             "wl2": 1779.0,
-            "d_open": 1845
+            "d_open": 1845.0
         },
         {
             "symbol": "GRASIM",
             "fyers_symbol": "NSE:GRASIM-EQ",
             "category": "FNO",
-            "close": 3100,
-            "live_price": 3100,
+            "close": 3100.0,
+            "live_price": 3100.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "InCPR",
@@ -3116,14 +3116,14 @@
             "weekly_s1": 3087.07,
             "wh2": 3186.0,
             "wl2": 3097.0,
-            "d_open": 3085
+            "d_open": 3085.0
         },
         {
             "symbol": "GVT&D",
             "fyers_symbol": "NSE:GVT&D-EQ",
             "category": "FNO",
-            "close": 4944,
-            "live_price": 4944,
+            "close": 4944.0,
+            "live_price": 4944.0,
             "eod_date": "2026-06-30",
             "bias": "NONE",
             "dZone": "\u25b2Pvt",
@@ -3485,7 +3485,7 @@
             "weekly_s1": 929.57,
             "wh2": 1018.1,
             "wl2": 950.2,
-            "d_open": 957
+            "d_open": 957.0
         },
         {
             "symbol": "HINDPETRO",
@@ -3567,7 +3567,7 @@
             "weekly_s1": 2140.07,
             "wh2": 2208.2,
             "wl2": 2140.0,
-            "d_open": 2151
+            "d_open": 2151.0
         },
         {
             "symbol": "HINDZINC",
@@ -3649,7 +3649,7 @@
             "weekly_s1": 1927.87,
             "wh2": 2006.6,
             "wl2": 1925.7,
-            "d_open": 1901
+            "d_open": 1901.0
         },
         {
             "symbol": "ICICIBANK",
@@ -3690,7 +3690,7 @@
             "weekly_s1": 1344.67,
             "wh2": 1404.0,
             "wl2": 1331.5,
-            "d_open": 1402
+            "d_open": 1402.0
         },
         {
             "symbol": "ICICIGI",
@@ -3731,7 +3731,7 @@
             "weekly_s1": 1783.9,
             "wh2": 1893.5,
             "wl2": 1809.0,
-            "d_open": 1775
+            "d_open": 1775.0
         },
         {
             "symbol": "ICICIPRULI",
@@ -3977,7 +3977,7 @@
             "weekly_s1": 817.4,
             "wh2": 875.0,
             "wl2": 831.0,
-            "d_open": 820
+            "d_open": 820.0
         },
         {
             "symbol": "INDIGO",
@@ -4018,7 +4018,7 @@
             "weekly_s1": 5108.97,
             "wh2": 5464.9,
             "wl2": 4945.9,
-            "d_open": 5320
+            "d_open": 5320.0
         },
         {
             "symbol": "INDUSINDBK",
@@ -4141,7 +4141,7 @@
             "weekly_s1": 1018.03,
             "wh2": 1080.3,
             "wl2": 1026.0,
-            "d_open": 1030
+            "d_open": 1030.0
         },
         {
             "symbol": "INOXWIND",
@@ -4428,7 +4428,7 @@
             "weekly_s1": 234.35,
             "wh2": 246.4,
             "wl2": 235.3,
-            "d_open": 237
+            "d_open": 237.0
         },
         {
             "symbol": "JSWENERGY",
@@ -4469,7 +4469,7 @@
             "weekly_s1": 564.32,
             "wh2": 586.35,
             "wl2": 566.15,
-            "d_open": 588
+            "d_open": 588.0
         },
         {
             "symbol": "JSWSTEEL",
@@ -4510,7 +4510,7 @@
             "weekly_s1": 1203.03,
             "wh2": 1296.9,
             "wl2": 1222.0,
-            "d_open": 1232
+            "d_open": 1232.0
         },
         {
             "symbol": "JUBLFOOD",
@@ -4551,7 +4551,7 @@
             "weekly_s1": 416.1,
             "wh2": 438.7,
             "wl2": 420.3,
-            "d_open": 420
+            "d_open": 420.0
         },
         {
             "symbol": "KALYANKJIL",
@@ -4633,7 +4633,7 @@
             "weekly_s1": 3167.87,
             "wh2": 3386.0,
             "wl2": 3180.1,
-            "d_open": 3175
+            "d_open": 3175.0
         },
         {
             "symbol": "KEI",
@@ -4674,7 +4674,7 @@
             "weekly_s1": 5096.0,
             "wh2": 5708.0,
             "wl2": 5230.0,
-            "d_open": 5390
+            "d_open": 5390.0
         },
         {
             "symbol": "KFINTECH",
@@ -4844,8 +4844,8 @@
             "symbol": "LICHSGFIN",
             "fyers_symbol": "NSE:LICHSGFIN-EQ",
             "category": "FNO",
-            "close": 564,
-            "live_price": 564,
+            "close": 564.0,
+            "live_price": 564.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2Pvt",
@@ -4879,7 +4879,7 @@
             "weekly_s1": 539.93,
             "wh2": 556.9,
             "wl2": 538.5,
-            "d_open": 564
+            "d_open": 564.0
         },
         {
             "symbol": "LICI",
@@ -4961,7 +4961,7 @@
             "weekly_s1": 911.53,
             "wh2": 972.0,
             "wl2": 905.85,
-            "d_open": 947
+            "d_open": 947.0
         },
         {
             "symbol": "LT",
@@ -5002,7 +5002,7 @@
             "weekly_s1": 4164.17,
             "wh2": 4272.3,
             "wl2": 4166.0,
-            "d_open": 4183
+            "d_open": 4183.0
         },
         {
             "symbol": "LTF",
@@ -5049,8 +5049,8 @@
             "symbol": "LTM",
             "fyers_symbol": "NSE:LTM-EQ",
             "category": "FNO",
-            "close": 3538,
-            "live_price": 3538,
+            "close": 3538.0,
+            "live_price": 3538.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcS2",
@@ -5090,8 +5090,8 @@
             "symbol": "LUPIN",
             "fyers_symbol": "NSE:LUPIN-EQ",
             "category": "FNO",
-            "close": 2419,
-            "live_price": 2419,
+            "close": 2419.0,
+            "live_price": 2419.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2Pvt",
@@ -5166,7 +5166,7 @@
             "weekly_s1": 3068.63,
             "wh2": 3208.5,
             "wl2": 3025.0,
-            "d_open": 3105
+            "d_open": 3105.0
         },
         {
             "symbol": "MANAPPURAM",
@@ -5207,7 +5207,7 @@
             "weekly_s1": 308.27,
             "wh2": 330.9,
             "wl2": 309.35,
-            "d_open": 315
+            "d_open": 315.0
         },
         {
             "symbol": "MANKIND",
@@ -5289,14 +5289,14 @@
             "weekly_s1": 810.9,
             "wh2": 832.9,
             "wl2": 807.0,
-            "d_open": 840
+            "d_open": 840.0
         },
         {
             "symbol": "MARUTI",
             "fyers_symbol": "NSE:MARUTI-EQ",
             "category": "FNO",
-            "close": 14115,
-            "live_price": 14115,
+            "close": 14115.0,
+            "live_price": 14115.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R2",
@@ -5330,7 +5330,7 @@
             "weekly_s1": 13325.0,
             "wh2": 13917.0,
             "wl2": 13201.0,
-            "d_open": 13744
+            "d_open": 13744.0
         },
         {
             "symbol": "MAXHEALTH",
@@ -5371,7 +5371,7 @@
             "weekly_s1": 1084.23,
             "wh2": 1139.8,
             "wl2": 1072.9,
-            "d_open": 1149
+            "d_open": 1149.0
         },
         {
             "symbol": "MAZDOCK",
@@ -5412,7 +5412,7 @@
             "weekly_s1": 2434.13,
             "wh2": 2569.0,
             "wl2": 2463.2,
-            "d_open": 2459
+            "d_open": 2459.0
         },
         {
             "symbol": "MCX",
@@ -5453,14 +5453,14 @@
             "weekly_s1": 2794.97,
             "wh2": 2882.7,
             "wl2": 2802.1,
-            "d_open": 2914
+            "d_open": 2914.0
         },
         {
             "symbol": "MFSL",
             "fyers_symbol": "NSE:MFSL-EQ",
             "category": "FNO",
-            "close": 1584,
-            "live_price": 1584,
+            "close": 1584.0,
+            "live_price": 1584.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -5664,8 +5664,8 @@
             "symbol": "NAM-INDIA",
             "fyers_symbol": "NSE:NAM-INDIA-EQ",
             "category": "FNO",
-            "close": 1162,
-            "live_price": 1162,
+            "close": 1162.0,
+            "live_price": 1162.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2Pvt",
@@ -5699,7 +5699,7 @@
             "weekly_s1": 1117.2,
             "wh2": 1194.0,
             "wl2": 1133.8,
-            "d_open": 1167
+            "d_open": 1167.0
         },
         {
             "symbol": "NATIONALUM",
@@ -5740,14 +5740,14 @@
             "weekly_s1": 315.8,
             "wh2": 379.7,
             "wl2": 331.4,
-            "d_open": 342
+            "d_open": 342.0
         },
         {
             "symbol": "NAUKRI",
             "fyers_symbol": "NSE:NAUKRI-EQ",
             "category": "FNO",
-            "close": 978,
-            "live_price": 978,
+            "close": 978.0,
+            "live_price": 978.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcS1",
@@ -5904,7 +5904,7 @@
             "weekly_s1": 76.54,
             "wh2": 80.49,
             "wl2": 75.65,
-            "d_open": 81
+            "d_open": 81.0
         },
         {
             "symbol": "NMDC",
@@ -6027,7 +6027,7 @@
             "weekly_s1": 1712.43,
             "wh2": 1779.9,
             "wl2": 1710.0,
-            "d_open": 1780
+            "d_open": 1780.0
         },
         {
             "symbol": "NYKAA",
@@ -6238,8 +6238,8 @@
             "symbol": "PAGEIND",
             "fyers_symbol": "NSE:PAGEIND-EQ",
             "category": "FNO",
-            "close": 41370,
-            "live_price": 41370,
+            "close": 41370.0,
+            "live_price": 41370.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R1",
@@ -6273,7 +6273,7 @@
             "weekly_s1": 39465.0,
             "wh2": 41905.0,
             "wl2": 39200.0,
-            "d_open": 40780
+            "d_open": 40780.0
         },
         {
             "symbol": "PATANJALI",
@@ -6314,7 +6314,7 @@
             "weekly_s1": 405.9,
             "wh2": 425.0,
             "wl2": 408.8,
-            "d_open": 413
+            "d_open": 413.0
         },
         {
             "symbol": "PAYTM",
@@ -6396,7 +6396,7 @@
             "weekly_s1": 4744.17,
             "wh2": 4976.5,
             "wl2": 4763.0,
-            "d_open": 4331
+            "d_open": 4331.0
         },
         {
             "symbol": "PETRONET",
@@ -6519,7 +6519,7 @@
             "weekly_s1": 534.1,
             "wh2": 579.0,
             "wl2": 544.75,
-            "d_open": 536
+            "d_open": 536.0
         },
         {
             "symbol": "PHOENIXLTD",
@@ -6601,7 +6601,7 @@
             "weekly_s1": 1561.1,
             "wh2": 1620.7,
             "wl2": 1555.0,
-            "d_open": 1607
+            "d_open": 1607.0
         },
         {
             "symbol": "PIIND",
@@ -6642,7 +6642,7 @@
             "weekly_s1": 2622.37,
             "wh2": 2842.7,
             "wl2": 2670.0,
-            "d_open": 2568
+            "d_open": 2568.0
         },
         {
             "symbol": "PNB",
@@ -6724,7 +6724,7 @@
             "weekly_s1": 1003.3,
             "wh2": 1079.9,
             "wl2": 1000.1,
-            "d_open": 1035
+            "d_open": 1035.0
         },
         {
             "symbol": "POLICYBZR",
@@ -6771,8 +6771,8 @@
             "symbol": "POLYCAB",
             "fyers_symbol": "NSE:POLYCAB-EQ",
             "category": "FNO",
-            "close": 9961,
-            "live_price": 9961,
+            "close": 9961.0,
+            "live_price": 9961.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2Pvt",
@@ -6806,7 +6806,7 @@
             "weekly_s1": 9323.0,
             "wh2": 10126.0,
             "wl2": 9516.5,
-            "d_open": 9710
+            "d_open": 9710.0
         },
         {
             "symbol": "POWERGRID",
@@ -6853,8 +6853,8 @@
             "symbol": "POWERINDIA",
             "fyers_symbol": "NSE:POWERINDIA-EQ",
             "category": "FNO",
-            "close": 34920,
-            "live_price": 34920,
+            "close": 34920.0,
+            "live_price": 34920.0,
             "eod_date": "2026-06-30",
             "bias": "NONE",
             "dZone": "\u25b2Pvt",
@@ -6888,14 +6888,14 @@
             "weekly_s1": 32651.67,
             "wh2": 37335.0,
             "wl2": 33680.0,
-            "d_open": 34750
+            "d_open": 34750.0
         },
         {
             "symbol": "PREMIERENE",
             "fyers_symbol": "NSE:PREMIERENE-EQ",
             "category": "FNO",
-            "close": 1051,
-            "live_price": 1051,
+            "close": 1051.0,
+            "live_price": 1051.0,
             "eod_date": "2026-06-30",
             "bias": "NONE",
             "dZone": "\u25b2Pvt",
@@ -6929,7 +6929,7 @@
             "weekly_s1": 1032.43,
             "wh2": 1085.9,
             "wl2": 1041.0,
-            "d_open": 1035
+            "d_open": 1035.0
         },
         {
             "symbol": "PRESTIGE",
@@ -7011,7 +7011,7 @@
             "weekly_s1": 3745.53,
             "wh2": 3843.0,
             "wl2": 3710.0,
-            "d_open": 3875
+            "d_open": 3875.0
         },
         {
             "symbol": "RBLBANK",
@@ -7175,7 +7175,7 @@
             "weekly_s1": 233.89,
             "wh2": 250.9,
             "wl2": 235.44,
-            "d_open": 238
+            "d_open": 238.0
         },
         {
             "symbol": "SAIL",
@@ -7217,47 +7217,6 @@
             "wh2": 180.79,
             "wl2": 165.36,
             "d_open": 174.5
-        },
-        {
-            "symbol": "SAMMAANCAP",
-            "fyers_symbol": "NSE:SAMMAANCAP-EQ",
-            "category": "FNO",
-            "close": 173.62,
-            "live_price": 173.62,
-            "eod_date": "2026-06-30",
-            "bias": "BULL",
-            "dZone": "\u25b2R2",
-            "wZone": "InCPR",
-            "icpr": false,
-            "setup": "0|999.0",
-            "nl_pct": 1.09,
-            "vRatio": 3.67,
-            "revStr": "",
-            "apB": false,
-            "apBr": false,
-            "narrow_cpr": false,
-            "inside_cpr": false,
-            "tc": 168.75,
-            "bc": 168.01,
-            "pivot": 168.38,
-            "r1": 170.26,
-            "r2": 172.88,
-            "s1": 165.76,
-            "s2": 163.88,
-            "dr3": 174.76,
-            "dr4": 179.26,
-            "ds3": 161.26,
-            "ds4": 156.76,
-            "pdh": 171.0,
-            "pdl": 166.5,
-            "weekly_pivot": 172.38,
-            "weekly_tc": 173.67,
-            "weekly_bc": 171.1,
-            "weekly_r1": 176.33,
-            "weekly_s1": 165.87,
-            "wh2": 178.9,
-            "wl2": 168.44,
-            "d_open": 170
         },
         {
             "symbol": "SBICARD",
@@ -7380,14 +7339,14 @@
             "weekly_s1": 1025.47,
             "wh2": 1055.4,
             "wl2": 1020.5,
-            "d_open": 1040
+            "d_open": 1040.0
         },
         {
             "symbol": "SHREECEM",
             "fyers_symbol": "NSE:SHREECEM-EQ",
             "category": "FNO",
-            "close": 25250,
-            "live_price": 25250,
+            "close": 25250.0,
+            "live_price": 25250.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -7421,7 +7380,7 @@
             "weekly_s1": 24888.33,
             "wh2": 26335.0,
             "wl2": 24765.0,
-            "d_open": 25280
+            "d_open": 25280.0
         },
         {
             "symbol": "SHRIRAMFIN",
@@ -7509,8 +7468,8 @@
             "symbol": "SOLARINDS",
             "fyers_symbol": "NSE:SOLARINDS-EQ",
             "category": "FNO",
-            "close": 18696,
-            "live_price": 18696,
+            "close": 18696.0,
+            "live_price": 18696.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R3",
@@ -7544,7 +7503,7 @@
             "weekly_s1": 17001.67,
             "wh2": 18539.0,
             "wl2": 17344.0,
-            "d_open": 17870
+            "d_open": 17870.0
         },
         {
             "symbol": "SONACOMS",
@@ -7591,8 +7550,8 @@
             "symbol": "SRF",
             "fyers_symbol": "NSE:SRF-EQ",
             "category": "FNO",
-            "close": 2739,
-            "live_price": 2739,
+            "close": 2739.0,
+            "live_price": 2739.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R1",
@@ -7667,7 +7626,7 @@
             "weekly_s1": 1830.4,
             "wh2": 1902.4,
             "wl2": 1834.0,
-            "d_open": 1885
+            "d_open": 1885.0
         },
         {
             "symbol": "SUPREMEIND",
@@ -7790,7 +7749,7 @@
             "weekly_s1": 234.23,
             "wh2": 258.2,
             "wl2": 239.7,
-            "d_open": 240
+            "d_open": 240.0
         },
         {
             "symbol": "TATACONSUM",
@@ -7831,7 +7790,7 @@
             "weekly_s1": 1103.77,
             "wh2": 1135.3,
             "wl2": 1092.0,
-            "d_open": 1089
+            "d_open": 1089.0
         },
         {
             "symbol": "TATAELXSI",
@@ -7872,7 +7831,7 @@
             "weekly_s1": 3979.83,
             "wh2": 4139.3,
             "wl2": 4011.1,
-            "d_open": 3990
+            "d_open": 3990.0
         },
         {
             "symbol": "TATAPOWER",
@@ -7995,7 +7954,7 @@
             "weekly_s1": 2047.47,
             "wh2": 2157.0,
             "wl2": 2055.0,
-            "d_open": 2090
+            "d_open": 2090.0
         },
         {
             "symbol": "TECHM",
@@ -8036,7 +7995,7 @@
             "weekly_s1": 1399.73,
             "wh2": 1476.0,
             "wl2": 1400.5,
-            "d_open": 1438
+            "d_open": 1438.0
         },
         {
             "symbol": "TIINDIA",
@@ -8083,8 +8042,8 @@
             "symbol": "TITAN",
             "fyers_symbol": "NSE:TITAN-EQ",
             "category": "FNO",
-            "close": 4404,
-            "live_price": 4404,
+            "close": 4404.0,
+            "live_price": 4404.0,
             "eod_date": "2026-06-30",
             "bias": "BULL",
             "dZone": "\u25b2R3",
@@ -8159,7 +8118,7 @@
             "weekly_s1": 343.97,
             "wh2": 370.5,
             "wl2": 348.0,
-            "d_open": 348
+            "d_open": 348.0
         },
         {
             "symbol": "TORNTPHARM",
@@ -8241,7 +8200,7 @@
             "weekly_s1": 3132.4,
             "wh2": 3309.2,
             "wl2": 3137.0,
-            "d_open": 3275
+            "d_open": 3275.0
         },
         {
             "symbol": "TVSMOTOR",
@@ -8288,8 +8247,8 @@
             "symbol": "ULTRACEMCO",
             "fyers_symbol": "NSE:ULTRACEMCO-EQ",
             "category": "FNO",
-            "close": 11253,
-            "live_price": 11253,
+            "close": 11253.0,
+            "live_price": 11253.0,
             "eod_date": "2026-06-30",
             "bias": "BEAR",
             "dZone": "\u25bcPvt",
@@ -8323,7 +8282,7 @@
             "weekly_s1": 11278.67,
             "wh2": 11674.0,
             "wl2": 11266.0,
-            "d_open": 11317
+            "d_open": 11317.0
         },
         {
             "symbol": "UNIONBANK",
@@ -8364,7 +8323,7 @@
             "weekly_s1": 173.4,
             "wh2": 176.95,
             "wl2": 173.86,
-            "d_open": 175
+            "d_open": 175.0
         },
         {
             "symbol": "UNITDSPR",
@@ -8446,7 +8405,7 @@
             "weekly_s1": 1099.03,
             "wh2": 1153.9,
             "wl2": 1089.0,
-            "d_open": 1093
+            "d_open": 1093.0
         },
         {
             "symbol": "UPL",
@@ -8487,7 +8446,7 @@
             "weekly_s1": 580.07,
             "wh2": 614.8,
             "wl2": 587.0,
-            "d_open": 574
+            "d_open": 574.0
         },
         {
             "symbol": "VBL",
@@ -8657,8 +8616,8 @@
             "symbol": "WAAREEENER",
             "fyers_symbol": "NSE:WAAREEENER-EQ",
             "category": "FNO",
-            "close": 2947,
-            "live_price": 2947,
+            "close": 2947.0,
+            "live_price": 2947.0,
             "eod_date": "2026-06-30",
             "bias": "NONE",
             "dZone": "\u25b2Pvt",
@@ -8692,7 +8651,7 @@
             "weekly_s1": 2957.33,
             "wh2": 3157.8,
             "wl2": 3005.5,
-            "d_open": 2900
+            "d_open": 2900.0
         },
         {
             "symbol": "WIPRO",
@@ -8733,7 +8692,7 @@
             "weekly_s1": 170.19,
             "wh2": 182.4,
             "wl2": 171.49,
-            "d_open": 175
+            "d_open": 175.0
         },
         {
             "symbol": "YESBANK",
