@@ -355,15 +355,25 @@
                     if (dates && dates.length > 0) {
                         const select = document.getElementById('date-select');
                         
-                        select.innerHTML = dates.map((d, index) => {
+                        // Get today's date in IST (UTC+5:30)
+                        const nowIST = new Date(new Date().getTime() + 5.5 * 3600000);
+                        const todayStr = nowIST.toISOString().slice(0, 10);
+                        const yesterdayIST = new Date(nowIST.getTime() - 86400000);
+                        const yesterdayStr = yesterdayIST.toISOString().slice(0, 10);
+                        
+                        // Find closest date <= today to select by default
+                        let defaultDate = dates.find(d => d <= todayStr) || dates[0];
+                        
+                        select.innerHTML = dates.map(d => {
                             let label = d;
-                            if (index === 0) label = "Today (" + d + ")";
-                            else if (index === 1) label = "Yesterday (" + d + ")";
-                            return `<option value="${d}">${label}</option>`;
+                            if (d === todayStr) label = "Today (" + d + ")";
+                            else if (d === yesterdayStr) label = "Yesterday (" + d + ")";
+                            else if (d > todayStr) label = "Tomorrow (" + d + ")";
+                            return `<option value="${d}"${d === defaultDate ? ' selected' : ''}>${label}</option>`;
                         }).join('');
                         
                         select.style.display = 'block';
-                        await fetchData(dates[0]);
+                        await fetchData(defaultDate);
                         return;
                     }
                 }
@@ -371,6 +381,7 @@
             // Fallback
             await fetchData(null);
         }
+
 
         async function onDateChange() {
             const date = document.getElementById('date-select').value;
