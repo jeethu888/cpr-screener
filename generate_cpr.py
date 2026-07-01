@@ -291,10 +291,21 @@ def build_results(now, targets, history_map, quotes_data, pct_elapsed):
         _yybc = (_dh2 + _dl2) / 2
         _yytc = max((_ypiv - _yybc) + _ypiv, _yybc)
         _yybc = min((_ypiv - _yybc) + _ypiv, _yybc)
-        _icpr = _dtc <= max(_yytc, _yybc) and _dbc >= min(_yytc, _yybc)
+        # Today CPR inside previous day's CPR (Pine: _is_today_icpr = _dtc <= _yytc and _dbc >= _yybc)
+        _is_today_icpr = _dtc <= _yytc and _dbc >= _yybc
 
-        _cpr_width = abs(_dtc - _dbc)
-        _narrow_cpr = abs(_dpiv - _dbc) < (_lc * 0.001) if _lc > 0 else False  # Chartink formula: |Pivot - BC| < Close * 0.001
+        # Tomorrow's CPR (from today's live candle) inside today's CPR
+        # Pine: _tpiv=(_currH+_currL+_lc)/3, _tbc_t=(_currH+_currL)/2
+        #       _ttc=max(2*_tpiv-_tbc_t,_tbc_t), _tbc=min(2*_tpiv-_tbc_t,_tbc_t)
+        #       _is_tmr_icpr = _ttc <= _dtc and _tbc >= _dbc
+        _tpiv = (_currH + _currL + _lc) / 3
+        _tbc_t = (_currH + _currL) / 2
+        _ttc = max(2 * _tpiv - _tbc_t, _tbc_t)
+        _tbc = min(2 * _tpiv - _tbc_t, _tbc_t)
+        _is_tmr_icpr = _ttc <= _dtc and _tbc >= _dbc
+
+        _icpr = _is_today_icpr or _is_tmr_icpr
+
         _inside_cpr = _icpr
 
         dCode = get_daily_code(_lc, _dtc, _dbc, _dr1, _ds1, _pdh, _pdl)
@@ -305,11 +316,14 @@ def build_results(now, targets, history_map, quotes_data, pct_elapsed):
 
         _vRatio = (_dvol / (_pdvol * pct_elapsed)) if (_pdvol * pct_elapsed) > 0 else 0.0
 
+        _cpr_width = abs(_dtc - _dbc)
+        _narrow_cpr = abs(_dpiv - _dbc) < (_lc * 0.001) if _lc > 0 else False  # Chartink formula: |Pivot - BC| < Close * 0.001
+
         _tol = 0.001
         _reachedTop = _currH >= min(_dr1, _pdh) * (1 - _tol)
         _reachedBot = _currL <= max(_ds1, _pdl) * (1 + _tol)
         _bearRev = _reachedTop and _currH < _dr2 and _lc < _dbc
-        _bullRev = _reachedBot and _currL > _ds2 and _lc > _dtc
+        _bullRev = _reachedBot and _currL > _ds2 and _lc > _dtc and _lc < _dr2  # Pine line 178: added _lc < _dr2
         _revStr = ""
         if _bearRev and _bullRev: _revStr = "BearRev" if _lc < _dpiv else "BullRev"
         elif _bearRev: _revStr = "BearRev"
