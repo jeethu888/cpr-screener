@@ -57,11 +57,9 @@ def get_fyers_client():
     access_token = os.environ.get("FYERS_ACCESS_TOKEN")
     
     if not access_token:
-        print("FYERS_ACCESS_TOKEN not set in environment.")
-        access_token = input("Enter your Fyers Access Token: ").strip()
-        if not access_token:
-            print("ERROR: No token provided.")
-            return None
+        print("\nFATAL ERROR: FYERS_ACCESS_TOKEN not set in environment!")
+        print("Please paste your token in the 'Run workflow' box, or save it in GitHub Settings → Secrets.")
+        raise SystemExit(1)
         
     return fyersModel.FyersModel(client_id=client_id, is_async=False, token=access_token, log_path="")
 
