@@ -8,6 +8,9 @@ from fyers_apiv3 import fyersModel
 import time
 import math
 
+# Fyers error codes that indicate auth failure - fail immediately, do not retry
+FATAL_AUTH_CODES = {-16, -17, -1200, -107}
+
 def get_nse_fno_symbols():
     print("Fetching FNO stock list from NSE...")
     try:
@@ -37,6 +40,11 @@ def fetch_live_quotes(fyers, symbols):
             if resp.get("s") == "ok":
                 for item in resp.get("d", []):
                     quotes_data[item["n"]] = item["v"]
+            elif resp.get("code") in FATAL_AUTH_CODES or "authenticate" in str(resp.get("message", "")).lower():
+                print(f"\nFATAL AUTH ERROR in quotes (code={resp.get('code')}): {resp.get('message')}")
+                raise SystemExit(1)
+        except SystemExit:
+            raise
         except Exception:
             pass
     return quotes_data
@@ -65,20 +73,23 @@ def fetch_history_for_symbol(fyers, symbol_fyers, range_from, range_to):
             if response.get("s") == "ok":
                 return response.get("candles", [])
             elif response.get("code") == -300:
-                return []  # Invalid symbol
+                return []  # Invalid symbol, skip
             elif response.get("code") == 429:
                 time.sleep(2)
                 continue
-            elif "token" in str(response.get("message", "")).lower() or response.get("code") in [-1200, -107]:
-                print(f"FATAL AUTH ERROR: {response.get('message')}")
-                raise Exception("Invalid or expired Fyers Access Token.")
+            elif response.get("code") in FATAL_AUTH_CODES or "authenticate" in str(response.get("message", "")).lower() or "token" in str(response.get("message", "")).lower():
+                # Auth failure - abort immediately, no point retrying 214 more symbols
+                msg = response.get('message', 'Unknown auth error')
+                print(f"\nFATAL AUTH ERROR (code={response.get('code')}): {msg}")
+                print("Check your FYERS_ACCESS_TOKEN secret in GitHub → Settings → Secrets.")
+                raise SystemExit(1)
             else:
                 if attempt == 0:
                     print(f"  API response for {symbol_fyers}: code={response.get('code')} msg={response.get('message','')[:80]}")
                 time.sleep(1)
+        except SystemExit:
+            raise  # Always propagate SystemExit
         except Exception as e:
-            if "Invalid or expired Fyers Access Token" in str(e):
-                raise e
             time.sleep(2)
     return []
 
@@ -172,7 +183,7 @@ def load_history_data(fyers, targets, range_from, range_to):
     history_map = {}
     total = len(targets)
     for idx, item in enumerate(targets):
-        candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)
+        candles = fetch_history_for_symbol(fyers, item["fyers"], range_from, range_to)  # raises SystemExit on auth failure
         if candles:
             history_map[item["fyers"]] = candles
         if (idx + 1) % 10 == 0 or (idx + 1) == total:
