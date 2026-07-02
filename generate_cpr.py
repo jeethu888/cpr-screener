@@ -497,7 +497,15 @@ def main(args):
         }
 
         # Use the date of the actual OHLC data for the filename, as requested by user
-        session_date = last_history_date.strftime("%Y-%m-%d")
+        session_dt = now.date()
+        for sym, candles in history_map.items():
+            if candles:
+                try:
+                    session_dt = datetime.fromtimestamp(candles[-1][0], pytz.timezone('Asia/Kolkata')).date()
+                    break
+                except:
+                    pass
+        session_date = session_dt.strftime("%Y-%m-%d")
         
         filename = f"cpr_data_{session_date}.json"
         
